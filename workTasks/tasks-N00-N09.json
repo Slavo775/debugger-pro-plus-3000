@@ -215,6 +215,26 @@
           "status": "changes-implemented",
           "at": "2026-05-19T20:13:09.435Z",
           "by": "implement-changes"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T20:13:44.528Z",
+          "by": "task-git"
+        },
+        {
+          "status": "changes-requested",
+          "at": "2026-05-19T20:19:09.533Z",
+          "by": "task-request-changes"
+        },
+        {
+          "status": "changes-implementing",
+          "at": "2026-05-19T20:19:09.608Z",
+          "by": "implement-changes"
+        },
+        {
+          "status": "changes-implemented",
+          "at": "2026-05-19T20:20:20.965Z",
+          "by": "implement-changes"
         }
       ],
       "implementation": {
@@ -250,6 +270,19 @@
           ],
           "comment": "Added button.size to DebuggerButtonConfig; default 50px (was hard-coded 40px). Loader validates as a finite positive number.",
           "implementedBy": "implement-changes"
+        },
+        {
+          "requestedAt": "2026-05-19T20:19:09.532Z",
+          "description": "Two changes: (1) Update the demo config.debugger.js to exercise the new button namespace: { draggable: true, size: 51 }. (2) Animate the FAB's position change after the user releases it mid-page: instead of teleporting to the snapped corner, transition smoothly from the release point to the corner's resting coordinates.",
+          "requestedBy": "task-request-changes",
+          "status": "implemented",
+          "implementedAt": "2026-05-19T20:20:20.965Z",
+          "filesChanged": [
+            "config.debugger.js",
+            "src/components/DebuggerFab.tsx"
+          ],
+          "comment": "Updated demo config.debugger.js to set button.draggable=true, button.size=51. Added snap-animation state machine to DebuggerFab: drop point -> snapped corner over 220ms via cubic-bezier(0.2,0.8,0.2,1) easing on left/top transitions. State has two phases (pre/animating) so React lays out the FAB at the release point first, then transitions to the corner on the next frame. After the animation completes, the FAB reverts to corner-inset positioning so window resizes don't drift it.",
+          "implementedBy": "implement-changes"
         }
       ],
       "incidents": [],
@@ -277,6 +310,11 @@
           "at": "2026-05-19T20:03:23.647Z",
           "commitHash": "da040c3461cbd4b12b8f936e9526a6feda83c775",
           "commitMessage": "feat(N01): draggable FAB entrypoint with config and localStorage"
+        },
+        {
+          "at": "2026-05-19T20:13:44.527Z",
+          "commitHash": "41ea54c02e1dad10e0aa02d49ef5de70f96829ae",
+          "commitMessage": "feat(N01): make FAB size configurable via button.size (default 50)"
         }
       ],
       "branch": "feat/N01-add-draggable-fab-entrypoint-with-config-driven-po",

@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDebuggerConfig } from '../config/useDebuggerConfig'
 import type { ButtonCorner } from '../config/types'
 
 const FAB_INSET = 16
 const CLICK_THRESHOLD_PX = 5
+const SNAP_DURATION_MS = 220
+const SNAP_EASING = 'cubic-bezier(0.2, 0.8, 0.2, 1)'
 
 export interface DebuggerFabProps {
   corner: ButtonCorner
@@ -20,15 +22,37 @@ interface DragState {
   startY: number
 }
 
+interface SnapState {
+  fromX: number
+  fromY: number
+  toX: number
+  toY: number
+  phase: 'pre' | 'animating'
+}
+
 export function DebuggerFab({ corner, onCornerChange, onOpen }: DebuggerFabProps) {
   const { style, button } = useDebuggerConfig()
   const draggable = button.draggable
   const size = button.size
   const [drag, setDrag] = useState<DragState | null>(null)
+  const [snap, setSnap] = useState<SnapState | null>(null)
   const [hovered, setHovered] = useState(false)
+
+  useEffect(() => {
+    if (!snap) return
+    if (snap.phase === 'pre') {
+      const raf = requestAnimationFrame(() => {
+        setSnap((s) => (s ? { ...s, phase: 'animating' } : null))
+      })
+      return () => cancelAnimationFrame(raf)
+    }
+    const t = setTimeout(() => setSnap(null), SNAP_DURATION_MS)
+    return () => clearTimeout(t)
+  }, [snap])
 
   const handlePointerDown = (e: React.PointerEvent<HTMLButtonElement>) => {
     if (e.button !== 0) return
+    if (snap) setSnap(null)
     const rect = e.currentTarget.getBoundingClientRect()
     e.currentTarget.setPointerCapture(e.pointerId)
     setDrag({
@@ -56,12 +80,17 @@ export function DebuggerFab({ corner, onCornerChange, onOpen }: DebuggerFabProps
     if (e.currentTarget.hasPointerCapture(e.pointerId)) {
       e.currentTarget.releasePointerCapture(e.pointerId)
     }
+    const releaseX = drag.x
+    const releaseY = drag.y
     setDrag(null)
     if (moved <= CLICK_THRESHOLD_PX) {
       onOpen()
       return
     }
-    onCornerChange(nearestCorner(e.clientX, e.clientY))
+    const newCorner = nearestCorner(e.clientX, e.clientY)
+    const target = cornerToAbsolutePx(newCorner, size)
+    setSnap({ fromX: releaseX, fromY: releaseY, toX: target.x, toY: target.y, phase: 'pre' })
+    onCornerChange(newCorner)
   }
 
   const handleClick = () => {
@@ -70,7 +99,18 @@ export function DebuggerFab({ corner, onCornerChange, onOpen }: DebuggerFabProps
 
   const positionStyle: React.CSSProperties = drag
     ? { position: 'fixed', left: drag.x, top: drag.y }
-    : { position: 'fixed', ...cornerCoords(corner) }
+    : snap
+      ? snap.phase === 'pre'
+        ? { position: 'fixed', left: snap.fromX, top: snap.fromY }
+        : { position: 'fixed', left: snap.toX, top: snap.toY }
+      : { position: 'fixed', ...cornerCoords(corner) }
+
+  const transition =
+    drag || (snap && snap.phase === 'pre')
+      ? 'none'
+      : snap
+        ? `left ${SNAP_DURATION_MS}ms ${SNAP_EASING}, top ${SNAP_DURATION_MS}ms ${SNAP_EASING}, box-shadow 120ms ease`
+        : 'transform 120ms ease, box-shadow 120ms ease'
 
   return (
     <button
@@ -99,8 +139,8 @@ export function DebuggerFab({ corner, onCornerChange, onOpen }: DebuggerFabProps
         boxShadow: hovered
           ? '0 6px 18px rgba(0, 0, 0, 0.4)'
           : '0 4px 12px rgba(0, 0, 0, 0.3)',
-        transform: hovered && !drag ? 'scale(1.05)' : 'scale(1)',
-        transition: drag ? 'none' : 'transform 120ms ease, box-shadow 120ms ease',
+        transform: hovered && !drag && !snap ? 'scale(1.05)' : 'scale(1)',
+        transition,
         userSelect: 'none',
         touchAction: 'none',
       }}
@@ -121,6 +161,23 @@ function cornerCoords(corner: ButtonCorner): React.CSSProperties {
     case 'rightBottom':
     default:
       return { bottom: FAB_INSET, right: FAB_INSET }
+  }
+}
+
+function cornerToAbsolutePx(corner: ButtonCorner, size: number): { x: number; y: number } {
+  if (typeof window === 'undefined') return { x: FAB_INSET, y: FAB_INSET }
+  const right = window.innerWidth - FAB_INSET - size
+  const bottom = window.innerHeight - FAB_INSET - size
+  switch (corner) {
+    case 'leftTop':
+      return { x: FAB_INSET, y: FAB_INSET }
+    case 'rightTop':
+      return { x: right, y: FAB_INSET }
+    case 'leftBottom':
+      return { x: FAB_INSET, y: bottom }
+    case 'rightBottom':
+    default:
+      return { x: right, y: bottom }
   }
 }
 
