@@ -6,4 +6,10 @@ export default {
     draggable: true,
     size: 51,
   },
+  panel: {
+    title: 'My App Debugger',
+    style: {
+      width: 360,
+    },
+  },
 }
