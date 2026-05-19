@@ -167,7 +167,7 @@
       "title": "Add draggable FAB entrypoint with config-driven position and localStorage persistence",
       "type": "feat",
       "priority": "high",
-      "status": "approved",
+      "status": "pushed",
       "folder": "workTasks/N01-add-draggable-fab-entrypoint-with-config-driven-po",
       "createdAt": "2026-05-19T19:39:46.836Z",
       "statusHistory": [
@@ -300,6 +300,11 @@
           "status": "approved",
           "at": "2026-05-19T21:08:05.165Z",
           "by": "task-human-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T21:10:03.161Z",
+          "by": "task-git"
         }
       ],
       "implementation": {
@@ -443,6 +448,11 @@
           "at": "2026-05-19T20:51:48.690Z",
           "commitHash": "29134b7e9c7df8c6ed54fe73c0900ca835e74d8b",
           "commitMessage": "chore(N01): record AI review round 2 (approved)"
+        },
+        {
+          "at": "2026-05-19T21:10:03.161Z",
+          "commitHash": "eae1a5c2b60d2707583183b2d427f29cf3fd356d",
+          "commitMessage": "chore(N01): record human review (approved)"
         }
       ],
       "branch": "feat/N01-add-draggable-fab-entrypoint-with-config-driven-po",
