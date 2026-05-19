@@ -167,7 +167,7 @@
       "title": "Add draggable FAB entrypoint with config-driven position and localStorage persistence",
       "type": "feat",
       "priority": "high",
-      "status": "changes-implemented",
+      "status": "approved",
       "folder": "workTasks/N01-add-draggable-fab-entrypoint-with-config-driven-po",
       "createdAt": "2026-05-19T19:39:46.836Z",
       "statusHistory": [
@@ -235,6 +235,21 @@
           "status": "changes-implemented",
           "at": "2026-05-19T20:20:20.965Z",
           "by": "implement-changes"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T20:21:01.183Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-19T20:28:08.408Z",
+          "by": "task-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-19T20:30:30.586Z",
+          "by": "task-review"
         }
       ],
       "implementation": {
@@ -254,7 +269,17 @@
         ],
         "tokensUsed": null
       },
-      "reviews": [],
+      "reviews": [
+        {
+          "startedAt": "2026-05-19T20:28:08.408Z",
+          "endedAt": "2026-05-19T20:30:30.585Z",
+          "verdict": "approved",
+          "comment": "Approved. All CHECKLIST items met, both follow-up change requests (button.size with default 50px; snap-to-corner animation) integrated cleanly. Gates pass: lint clean, build succeeds, 14 loader smoke-test cases pass (5 button + 7 size + 2 baseline). Snap animation uses correct two-phase (pre/animating) state machine to bootstrap CSS transitions from an arbitrary start position. Non-blocking findings for a follow-up: (1) nearestCorner uses cursor position instead of FAB center as the spec specified (off by <= size/2 px); (2) no onPointerCancel handler — drag could get stuck if a system gesture cancels the pointer; (3) setCorner in useFabPosition isn't memoized (minor re-renders); (4) leftover dead re-export of DEFAULT_DEBUGGER_CONFIG from loadDebuggerConfig.ts (pre-existing from N00); (5) configured prop changes don't reactively update useFabPosition state. None of these affect functional correctness. Manual browser verification recommended before merge.",
+          "type": "ai",
+          "by": "task-review",
+          "fix": null
+        }
+      ],
       "changesAfterImplementation": [
         {
           "requestedAt": "2026-05-19T20:06:51.684Z",
@@ -315,6 +340,11 @@
           "at": "2026-05-19T20:13:44.527Z",
           "commitHash": "41ea54c02e1dad10e0aa02d49ef5de70f96829ae",
           "commitMessage": "feat(N01): make FAB size configurable via button.size (default 50)"
+        },
+        {
+          "at": "2026-05-19T20:21:01.183Z",
+          "commitHash": "122af440a2ca13cc7054966a56781a0a51407443",
+          "commitMessage": "feat(N01): animate FAB snap-to-corner after drag release"
         }
       ],
       "branch": "feat/N01-add-draggable-fab-entrypoint-with-config-driven-po",
