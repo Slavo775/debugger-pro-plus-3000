@@ -167,7 +167,7 @@
       "title": "Add draggable FAB entrypoint with config-driven position and localStorage persistence",
       "type": "feat",
       "priority": "high",
-      "status": "ready",
+      "status": "implemented",
       "folder": "workTasks/N01-add-draggable-fab-entrypoint-with-config-driven-po",
       "createdAt": "2026-05-19T19:39:46.836Z",
       "statusHistory": [
@@ -175,12 +175,43 @@
           "status": "ready",
           "at": "2026-05-19T19:39:46.837Z",
           "by": "taskmaster"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T19:42:13.433Z",
+          "by": "task-git"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T19:45:35.336Z",
+          "by": "task-git"
+        },
+        {
+          "status": "in-progress",
+          "at": "2026-05-19T19:50:44.673Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "implemented",
+          "at": "2026-05-19T20:02:22.145Z",
+          "by": "task-implement"
         }
       ],
       "implementation": {
-        "startedAt": null,
-        "completedAt": null,
-        "filesChanged": [],
+        "startedAt": "2026-05-19T19:50:44.672Z",
+        "completedAt": "2026-05-19T20:02:22.144Z",
+        "filesChanged": [
+          "src/config/types.ts",
+          "src/config/defaults.ts",
+          "src/config/merge.ts",
+          "src/config/loadDebuggerConfig.ts",
+          "src/config/index.ts",
+          "src/components/DebuggerFab.tsx",
+          "src/components/useFabPosition.ts",
+          "src/components/Debugger.tsx",
+          "src/index.ts",
+          "src/main.tsx"
+        ],
         "tokensUsed": null
       },
       "reviews": [],
@@ -195,8 +226,19 @@
         "drag",
         "localStorage"
       ],
-      "pushes": [],
-      "branch": null,
+      "pushes": [
+        {
+          "at": "2026-05-19T19:42:13.433Z",
+          "commitHash": "c955f0f702871f585e7a431279dc688f0fb041d3",
+          "commitMessage": "docs(N01): add task spec for draggable FAB entrypoint"
+        },
+        {
+          "at": "2026-05-19T19:45:35.336Z",
+          "commitHash": "3796eaf69deaaf02e3d4f806a54cb9f9b1ee49de",
+          "commitMessage": "docs(N01): finalize decisions (fix localStorage key typo, confirm position prop removal)"
+        }
+      ],
+      "branch": "feat/N01-add-draggable-fab-entrypoint-with-config-driven-po",
       "mrUrl": null,
       "mergedAt": null
     }

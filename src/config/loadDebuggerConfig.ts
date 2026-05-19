@@ -1,6 +1,13 @@
 import { DEFAULT_DEBUGGER_CONFIG } from './defaults'
-import type { DebuggerConfig, ResolvedDebuggerConfig } from './types'
+import type { ButtonCorner, DebuggerConfig, ResolvedDebuggerConfig } from './types'
 import { mergeWithDefaults } from './merge'
+
+const ALLOWED_CORNERS: readonly ButtonCorner[] = [
+  'rightTop',
+  'leftTop',
+  'rightBottom',
+  'leftBottom',
+]
 
 declare const process: { cwd?: () => string } | undefined
 
@@ -103,6 +110,27 @@ function assertValidConfig(value: unknown, filePath: string): asserts value is D
     const style = config.style as Record<string, unknown>
     if (style.primaryColor !== undefined && typeof style.primaryColor !== 'string') {
       throw new Error(`${ERROR_PREFIX} \`style.primaryColor\` in ${filePath} must be a string.`)
+    }
+  }
+  if (config.button !== undefined) {
+    if (
+      typeof config.button !== 'object' ||
+      config.button === null ||
+      Array.isArray(config.button)
+    ) {
+      throw new Error(`${ERROR_PREFIX} \`button\` in ${filePath} must be a plain object.`)
+    }
+    const button = config.button as Record<string, unknown>
+    if (button.draggable !== undefined && typeof button.draggable !== 'boolean') {
+      throw new Error(`${ERROR_PREFIX} \`button.draggable\` in ${filePath} must be a boolean.`)
+    }
+    if (
+      button.position !== undefined &&
+      !ALLOWED_CORNERS.includes(button.position as ButtonCorner)
+    ) {
+      throw new Error(
+        `${ERROR_PREFIX} \`button.position\` in ${filePath} must be one of: ${ALLOWED_CORNERS.join(', ')}.`,
+      )
     }
   }
 }
