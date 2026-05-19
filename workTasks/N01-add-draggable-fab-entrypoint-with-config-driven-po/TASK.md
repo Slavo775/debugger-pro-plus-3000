@@ -61,7 +61,7 @@ The current `<button>DBG</button>` toggle is a placeholder. A FAB:
 
 - **Position persistence hook** (`src/components/useFabPosition.ts`):
   - `useFabPosition(configured: ButtonCorner, draggable: boolean): [ButtonCorner, (next: ButtonCorner) => void]`
-  - Storage key: `'debugger_fab_possition'` *(keeping the literal key requested in the spec — note the typo so we can revisit before stabilizing the API; see "Open questions")*
+  - Storage key: `'debugger_fab_position'`
   - When `draggable === false`: ignore localStorage entirely and always return the configured value (no read, no write)
   - When `draggable === true`: read once on mount; if a valid corner is stored, use it as the initial value; otherwise use `configured`. Write on every update.
   - Guard all `window`/`localStorage` access with `typeof window !== 'undefined'` (SSR-safe)
@@ -93,7 +93,7 @@ The current `<button>DBG</button>` toggle is a placeholder. A FAB:
 - `<Debugger />` (no config) renders a 40×40 px round FAB in the bottom-right corner, default blue (`#1a6eb5`).
 - Clicking the FAB opens the panel; clicking the panel's ✕ closes it back to the FAB.
 - With `config = { style: { primaryColor: '#ff00aa' }, button: { position: 'leftTop' } }`, the FAB renders pink in the top-left and the panel opens from the top-left.
-- With `config.button.draggable: true` (default), the FAB can be dragged with the mouse; on release it snaps to whichever of the four corners the cursor is nearest, and that corner is written to `localStorage['debugger_fab_possition']`.
+- With `config.button.draggable: true` (default), the FAB can be dragged with the mouse; on release it snaps to whichever of the four corners the cursor is nearest, and that corner is written to `localStorage['debugger_fab_position']`.
 - After a reload, the FAB reappears in the persisted corner (not the configured one), and so does the panel.
 - With `config.button.draggable: false`, the FAB is not draggable, no `localStorage` read or write happens, and the FAB always sits in `config.button.position`.
 - A 1-pixel jitter on `pointerdown`/`pointerup` is still recognized as a click (threshold = 5 px), so the FAB stays clickable.
@@ -113,16 +113,15 @@ The current `<button>DBG</button>` toggle is a placeholder. A FAB:
 - `src/index.ts` (edit) — re-export new types
 - `src/main.tsx` (edit) — dev preview no longer passes `position`
 
-## Decisions baked in (overridable)
+## Decisions
 
-- **`'debugger_fab_possition'` localStorage key kept verbatim** as written in the request, including the `possition` typo. Easy to rename in a follow-up if we want to clean it up before publishing.
-- **`position` prop on `<Debugger>` is removed** rather than mapped to `config.button.position`. Cleaner API at v0.1.0; nothing in tree relies on it. If you'd prefer a soft migration, we can keep it as a deprecation shim instead.
+- **localStorage key: `'debugger_fab_position'`** (typo from the original request corrected, per follow-up clarification).
+- **`position` prop on `<Debugger>` is removed**, not deprecated. Confirmed: nothing depends on it at v0.1.0.
 - **Snap by viewport midpoint**, not by FAB-distance-to-each-corner. Simpler and behaves identically except in edge cases where a FAB is dragged near the exact diagonals.
 - **Click threshold: 5 px** between `pointerdown` and `pointerup`. Common UI convention; tweakable.
 
 ## Open questions
 
-- Should the typo'd key `debugger_fab_possition` be corrected to `debugger_fab_position` now (and accept that any state stored under the old key is dropped), or keep it and rename in a later breaking task? Default: keep, as instructed.
 - Does the panel still need its own `defaultOpen` prop, or should we add a `button.defaultOpen` for symmetry with the FAB? Out of scope here; flag for a future task if useful.
 
 ## Risks

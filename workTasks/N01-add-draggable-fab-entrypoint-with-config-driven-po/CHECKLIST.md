@@ -28,7 +28,7 @@
 
 ## Position persistence hook (`src/components/useFabPosition.ts`)
 - [ ] Signature: `useFabPosition(configured: ButtonCorner, draggable: boolean): [ButtonCorner, (next: ButtonCorner) => void]`.
-- [ ] Storage key: `'debugger_fab_possition'` (literal, including the typo).
+- [ ] Storage key: `'debugger_fab_position'`.
 - [ ] Guard all `localStorage` / `window` access with `typeof window !== 'undefined'`.
 - [ ] When `draggable === false`, never read or write `localStorage`; always return the configured value.
 - [ ] When `draggable === true`, read once on mount; validate the stored value against the corner union; fall back to `configured` if invalid or missing.
