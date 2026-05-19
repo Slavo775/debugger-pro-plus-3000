@@ -474,7 +474,7 @@
       "title": "Add full-height debug panel wrapper with configurable title, width, and fullscreen toggle",
       "type": "feat",
       "priority": "high",
-      "status": "fix-needed",
+      "status": "fixed",
       "folder": "workTasks/N02-add-full-height-debug-panel-wrapper-with-configura",
       "createdAt": "2026-05-19T21:32:02.812Z",
       "statusHistory": [
@@ -527,6 +527,21 @@
           "status": "fix-needed",
           "at": "2026-05-19T21:45:53.769Z",
           "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T21:46:26.221Z",
+          "by": "task-git"
+        },
+        {
+          "status": "fixing",
+          "at": "2026-05-19T21:47:49.753Z",
+          "by": "task-review-fix"
+        },
+        {
+          "status": "fixed",
+          "at": "2026-05-19T21:50:44.769Z",
+          "by": "task-review-fix"
         }
       ],
       "implementation": {
@@ -562,7 +577,16 @@
           "comment": "AI review concurs with human verdict on header icon size, and adds five more sizing/UI items to bundle into the same fix: (1) iconButtonStyle.fontSize 14 -> 18 with hit area grown to 28-32, (2) panelStyle over-constrains box with top+bottom+height, drop bottom:0, (3) tab buttons need inline-flex centering so label sits in middle of minHeight:24 box, (4) titleStyle needs minWidth:0/flex:1 so long titles ellipsize instead of pushing header actions off, (5) DRY: useEffect inlines close logic instead of calling closePanel — memoize with useCallback, (6) aria-label falls back to 'Debugger panel' when panel.title is empty. All checklist items met functionally; these are UI polish + sizing issues. Gates clean. See REVIEW.md for details.",
           "type": "ai",
           "by": "task-review",
-          "fix": null
+          "fix": {
+            "startedAt": "2026-05-19T21:47:49.753Z",
+            "endedAt": "2026-05-19T21:50:44.769Z",
+            "status": "fixed",
+            "filesChanged": [
+              "src/components/Debugger.tsx"
+            ],
+            "comment": "Applied all six bundled findings from AI + human reviews. (1) Header icons: glyph font 14->18, hit area 24->32, plus brighter color (#aaa -> #d8d8d8). Header minHeight 44->48 to accommodate the larger chips. (2) panelStyle no longer over-constrains: kept top:0 + height:100dvh, dropped bottom:0. (3) Tab buttons now inline-flex centered with brighter inactive color and font bumped 11->12 to read more comfortably; tab hit target = 28. (4) Title gets minWidth:0 + flex:1 so long titles ellipsize without pushing header actions off the right edge. (5) closePanel memoized with useCallback([]) and called from both the close button and the Escape handler. (6) aria-label falls back to 'Debugger panel' when panel.title is empty. Gates clean: lint, build.",
+            "by": "task-review-fix"
+          }
         }
       ],
       "changesAfterImplementation": [],
@@ -591,6 +615,11 @@
           "at": "2026-05-19T21:43:20.780Z",
           "commitHash": "dc772f6ec355506ee6e110479a0fa7d041b97c4d",
           "commitMessage": "chore(N02): record human review (fix-needed: header icons too small)"
+        },
+        {
+          "at": "2026-05-19T21:46:26.221Z",
+          "commitHash": "0eeee5ef2be57852ed381f5a0d122bfc7f2f88bb",
+          "commitMessage": "chore(N02): record AI review (fix-needed, bundled findings)"
         }
       ],
       "branch": "feat/N02-add-full-height-debug-panel-wrapper-with-configura",

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { DebuggerConfigProvider } from '../config/DebuggerConfigProvider'
 import { useDebuggerConfig } from '../config/useDebuggerConfig'
 import type { ButtonCorner, DebuggerConfig } from '../config/types'
@@ -38,22 +38,19 @@ function DebuggerPanel({ plugins = [], defaultOpen = false }: Omit<DebuggerProps
   const [activePlugin, setActivePlugin] = useState<string | null>(plugins[0]?.id ?? null)
   const [isFullscreen, setIsFullscreen] = useState(false)
 
-  const closePanel = () => {
+  const closePanel = useCallback(() => {
     setOpen(false)
     setIsFullscreen(false)
-  }
+  }, [])
 
   useEffect(() => {
     if (!open) return
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setOpen(false)
-        setIsFullscreen(false)
-      }
+      if (e.key === 'Escape') closePanel()
     }
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
-  }, [open])
+  }, [open, closePanel])
 
   if (!open) {
     return <DebuggerFab corner={corner} onCornerChange={setCorner} onOpen={() => setOpen(true)} />
@@ -66,7 +63,7 @@ function DebuggerPanel({ plugins = [], defaultOpen = false }: Omit<DebuggerProps
   return (
     <section
       role="complementary"
-      aria-label={panel.title}
+      aria-label={panel.title || 'Debugger panel'}
       style={panelStyle(side, panel.style.width, isFullscreen)}
     >
       <header style={headerStyle}>
@@ -129,7 +126,6 @@ function panelStyle(
   return {
     position: 'fixed',
     top: 0,
-    bottom: 0,
     [side]: 0,
     width,
     height: '100dvh',
@@ -147,7 +143,9 @@ function panelStyle(
   }
 }
 
-const HIT_TARGET_PX = 24
+const HIT_TARGET_PX = 32
+const TAB_HIT_TARGET_PX = 28
+const ICON_GLYPH_PX = 18
 
 const headerStyle: React.CSSProperties = {
   display: 'flex',
@@ -157,7 +155,7 @@ const headerStyle: React.CSSProperties = {
   padding: '8px 12px',
   borderBottom: '1px solid #333',
   background: '#16213e',
-  minHeight: 44,
+  minHeight: 48,
   flexShrink: 0,
 }
 
@@ -170,6 +168,8 @@ const titleStyle: React.CSSProperties = {
   textOverflow: 'ellipsis',
   fontFamily: 'monospace',
   color: '#e2e2e2',
+  minWidth: 0,
+  flex: 1,
 }
 
 const headerActionsStyle: React.CSSProperties = {
@@ -187,11 +187,11 @@ const iconButtonStyle: React.CSSProperties = {
   justifyContent: 'center',
   background: 'transparent',
   border: '1px solid transparent',
-  borderRadius: 4,
-  color: '#aaa',
+  borderRadius: 6,
+  color: '#d8d8d8',
   cursor: 'pointer',
   fontFamily: 'monospace',
-  fontSize: 14,
+  fontSize: ICON_GLYPH_PX,
   lineHeight: 1,
   padding: 0,
 }
@@ -207,15 +207,19 @@ const tabBarStyle: React.CSSProperties = {
 
 function tabStyle(active: boolean, primaryColor: string): React.CSSProperties {
   return {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     background: active ? primaryColor : 'transparent',
     border: active ? `1px solid ${primaryColor}` : '1px solid transparent',
-    color: active ? '#fff' : '#aaa',
+    color: active ? '#fff' : '#cfcfcf',
     borderRadius: 4,
-    padding: '4px 10px',
-    minHeight: HIT_TARGET_PX,
-    fontSize: 11,
+    padding: '4px 12px',
+    minHeight: TAB_HIT_TARGET_PX,
+    fontSize: 12,
     cursor: 'pointer',
     fontFamily: 'monospace',
+    lineHeight: 1,
   }
 }
 
