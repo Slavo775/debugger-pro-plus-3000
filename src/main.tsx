@@ -41,16 +41,16 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <div style={{ fontFamily: 'sans-serif', padding: 40 }}>
       <h1>Debugger Pro Plus 3000 — Dev Preview</h1>
-      <p>The debugger panel is in the bottom-right corner.</p>
+      <p>
+        Click the floating button to open the debugger. Drag it to any corner — the position is
+        saved to <code>localStorage[&quot;debugger_fab_position&quot;]</code> and survives
+        reloads.
+      </p>
       <p style={{ color: '#666', fontSize: 13 }}>
         Loaded <code>config.debugger.js</code> →{' '}
-        <code>primaryColor: {debuggerConfig.style.primaryColor}</code>
+        <code>primaryColor: {debuggerConfig.style?.primaryColor}</code>
       </p>
     </div>
-    <Debugger
-      plugins={[demoPlugin, configEchoPlugin]}
-      defaultOpen={true}
-      config={debuggerConfig}
-    />
+    <Debugger plugins={[demoPlugin, configEchoPlugin]} config={debuggerConfig} />
   </StrictMode>,
 )

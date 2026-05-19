@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { DebuggerConfigProvider } from '../config/DebuggerConfigProvider'
 import { useDebuggerConfig } from '../config/useDebuggerConfig'
-import type { DebuggerConfig } from '../config/types'
+import type { ButtonCorner, DebuggerConfig } from '../config/types'
+import { DebuggerFab } from './DebuggerFab'
+import { useFabPosition } from './useFabPosition'
 
 export interface DebuggerPlugin {
   id: string
@@ -12,11 +14,8 @@ export interface DebuggerPlugin {
 export interface DebuggerProps {
   plugins?: DebuggerPlugin[]
   defaultOpen?: boolean
-  position?: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left'
   config?: DebuggerConfig
 }
-
-type Position = NonNullable<DebuggerProps['position']>
 
 export function Debugger({ config, ...rest }: DebuggerProps) {
   return (
@@ -26,32 +25,21 @@ export function Debugger({ config, ...rest }: DebuggerProps) {
   )
 }
 
-function DebuggerPanel({
-  plugins = [],
-  defaultOpen = false,
-  position = 'bottom-right',
-}: Omit<DebuggerProps, 'config'>) {
-  const { style } = useDebuggerConfig()
-  const primaryColor = style.primaryColor
+function DebuggerPanel({ plugins = [], defaultOpen = false }: Omit<DebuggerProps, 'config'>) {
+  const { style, button } = useDebuggerConfig()
+  const [corner, setCorner] = useFabPosition(button.position, button.draggable)
   const [open, setOpen] = useState(defaultOpen)
   const [activePlugin, setActivePlugin] = useState<string | null>(plugins[0]?.id ?? null)
 
   if (!open) {
-    return (
-      <button
-        onClick={() => setOpen(true)}
-        style={toggleButtonStyle(position)}
-        aria-label="Open debugger"
-      >
-        DBG
-      </button>
-    )
+    return <DebuggerFab corner={corner} onCornerChange={setCorner} onOpen={() => setOpen(true)} />
   }
 
   const active = plugins.find((p) => p.id === activePlugin)
+  const primaryColor = style.primaryColor
 
   return (
-    <div style={panelStyle(position)}>
+    <div style={panelStyle(corner)}>
       <div style={headerStyle}>
         <span style={{ fontWeight: 600, fontSize: 12 }}>Debugger Pro Plus 3000</span>
         <button onClick={() => setOpen(false)} style={closeButtonStyle} aria-label="Close debugger">
@@ -84,27 +72,10 @@ function DebuggerPanel({
   )
 }
 
-function toggleButtonStyle(position: Position): React.CSSProperties {
+function panelStyle(corner: ButtonCorner): React.CSSProperties {
   return {
     position: 'fixed',
-    ...positionCoords(position),
-    zIndex: 9999,
-    background: '#1a1a2e',
-    color: '#e2e2e2',
-    border: '1px solid #444',
-    borderRadius: 6,
-    padding: '6px 10px',
-    fontSize: 11,
-    fontFamily: 'monospace',
-    cursor: 'pointer',
-    letterSpacing: 1,
-  }
-}
-
-function panelStyle(position: Position): React.CSSProperties {
-  return {
-    position: 'fixed',
-    ...positionCoords(position),
+    ...cornerCoords(corner),
     zIndex: 9999,
     width: 360,
     maxHeight: 480,
@@ -121,14 +92,15 @@ function panelStyle(position: Position): React.CSSProperties {
   }
 }
 
-function positionCoords(position: Position): React.CSSProperties {
-  switch (position) {
-    case 'bottom-left':
-      return { bottom: 16, left: 16 }
-    case 'top-right':
-      return { top: 16, right: 16 }
-    case 'top-left':
+function cornerCoords(corner: ButtonCorner): React.CSSProperties {
+  switch (corner) {
+    case 'leftTop':
       return { top: 16, left: 16 }
+    case 'rightTop':
+      return { top: 16, right: 16 }
+    case 'leftBottom':
+      return { bottom: 16, left: 16 }
+    case 'rightBottom':
     default:
       return { bottom: 16, right: 16 }
   }

@@ -7,5 +7,9 @@ export function mergeWithDefaults(userConfig: DebuggerConfig): ResolvedDebuggerC
       ...DEFAULT_DEBUGGER_CONFIG.style,
       ...userConfig.style,
     },
+    button: {
+      ...DEFAULT_DEBUGGER_CONFIG.button,
+      ...userConfig.button,
+    },
   }
 }

@@ -161,6 +161,303 @@
       "branch": "feat/N00-add-config-debugger-js-loader-with-react-context-a",
       "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/1",
       "mergedAt": "2026-05-19T19:12:41.662Z"
+    },
+    {
+      "id": "N01",
+      "title": "Add draggable FAB entrypoint with config-driven position and localStorage persistence",
+      "type": "feat",
+      "priority": "high",
+      "status": "pushed",
+      "folder": "workTasks/N01-add-draggable-fab-entrypoint-with-config-driven-po",
+      "createdAt": "2026-05-19T19:39:46.836Z",
+      "statusHistory": [
+        {
+          "status": "ready",
+          "at": "2026-05-19T19:39:46.837Z",
+          "by": "taskmaster"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T19:42:13.433Z",
+          "by": "task-git"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T19:45:35.336Z",
+          "by": "task-git"
+        },
+        {
+          "status": "in-progress",
+          "at": "2026-05-19T19:50:44.673Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "implemented",
+          "at": "2026-05-19T20:02:22.145Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T20:03:23.647Z",
+          "by": "task-git"
+        },
+        {
+          "status": "changes-requested",
+          "at": "2026-05-19T20:06:51.684Z",
+          "by": "task-request-changes"
+        },
+        {
+          "status": "changes-implementing",
+          "at": "2026-05-19T20:07:09.592Z",
+          "by": "implement-changes"
+        },
+        {
+          "status": "changes-implemented",
+          "at": "2026-05-19T20:13:09.435Z",
+          "by": "implement-changes"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T20:13:44.528Z",
+          "by": "task-git"
+        },
+        {
+          "status": "changes-requested",
+          "at": "2026-05-19T20:19:09.533Z",
+          "by": "task-request-changes"
+        },
+        {
+          "status": "changes-implementing",
+          "at": "2026-05-19T20:19:09.608Z",
+          "by": "implement-changes"
+        },
+        {
+          "status": "changes-implemented",
+          "at": "2026-05-19T20:20:20.965Z",
+          "by": "implement-changes"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T20:21:01.183Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-19T20:28:08.408Z",
+          "by": "task-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-19T20:30:30.586Z",
+          "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T20:33:02.340Z",
+          "by": "task-git"
+        },
+        {
+          "status": "changes-requested",
+          "at": "2026-05-19T20:42:22.461Z",
+          "by": "task-request-changes"
+        },
+        {
+          "status": "changes-implementing",
+          "at": "2026-05-19T20:42:22.550Z",
+          "by": "implement-changes"
+        },
+        {
+          "status": "changes-implemented",
+          "at": "2026-05-19T20:45:34.256Z",
+          "by": "implement-changes"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T20:46:10.092Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-19T20:48:47.662Z",
+          "by": "task-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-19T20:50:26.448Z",
+          "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T20:51:48.690Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-19T21:07:46.098Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-19T21:08:05.165Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T21:10:03.161Z",
+          "by": "task-git"
+        }
+      ],
+      "implementation": {
+        "startedAt": "2026-05-19T19:50:44.672Z",
+        "completedAt": "2026-05-19T20:02:22.144Z",
+        "filesChanged": [
+          "src/config/types.ts",
+          "src/config/defaults.ts",
+          "src/config/merge.ts",
+          "src/config/loadDebuggerConfig.ts",
+          "src/config/index.ts",
+          "src/components/DebuggerFab.tsx",
+          "src/components/useFabPosition.ts",
+          "src/components/Debugger.tsx",
+          "src/index.ts",
+          "src/main.tsx"
+        ],
+        "tokensUsed": null
+      },
+      "reviews": [
+        {
+          "startedAt": "2026-05-19T20:28:08.408Z",
+          "endedAt": "2026-05-19T20:30:30.585Z",
+          "verdict": "approved",
+          "comment": "Approved. All CHECKLIST items met, both follow-up change requests (button.size with default 50px; snap-to-corner animation) integrated cleanly. Gates pass: lint clean, build succeeds, 14 loader smoke-test cases pass (5 button + 7 size + 2 baseline). Snap animation uses correct two-phase (pre/animating) state machine to bootstrap CSS transitions from an arbitrary start position. Non-blocking findings for a follow-up: (1) nearestCorner uses cursor position instead of FAB center as the spec specified (off by <= size/2 px); (2) no onPointerCancel handler — drag could get stuck if a system gesture cancels the pointer; (3) setCorner in useFabPosition isn't memoized (minor re-renders); (4) leftover dead re-export of DEFAULT_DEBUGGER_CONFIG from loadDebuggerConfig.ts (pre-existing from N00); (5) configured prop changes don't reactively update useFabPosition state. None of these affect functional correctness. Manual browser verification recommended before merge.",
+          "type": "ai",
+          "by": "task-review",
+          "fix": null
+        },
+        {
+          "startedAt": "2026-05-19T20:48:47.662Z",
+          "endedAt": "2026-05-19T20:50:26.448Z",
+          "verdict": "approved",
+          "comment": "Round 2 review — fixes verified. All five non-blocking items applied correctly with no regressions: (1) nearestCorner uses FAB center (releaseX/Y + size/2); (2) onPointerCancel handler mirrors pointerup minus snap; (3) useFabPosition derives corner from configured + userChosen with stable useCallback identity — handles all relevant scenarios (draggable toggles, configured changes, user override precedence); (4) dead DEFAULT_DEBUGGER_CONFIG re-export removed, constant still importable from package entry via defaults barrel; (5) checklist boxes all flipped. Gates clean. One minor exotic gap remaining (not flagged for follow-up): draggable=false→true at runtime won't re-read storage. Approved.",
+          "type": "ai",
+          "by": "task-review",
+          "fix": null
+        },
+        {
+          "startedAt": "2026-05-19T21:07:46.098Z",
+          "endedAt": "2026-05-19T21:08:05.164Z",
+          "verdict": "approved",
+          "comment": "Approved by human reviewer. Manual verification covered desktop dev preview and mobile (LAN access via http://192.168.0.77:4242). FAB drag, snap animation, localStorage persistence, and size/draggable config knobs all work as specified. Ready to merge.",
+          "type": "human",
+          "by": "task-human-review",
+          "fix": null
+        }
+      ],
+      "changesAfterImplementation": [
+        {
+          "requestedAt": "2026-05-19T20:06:51.684Z",
+          "description": "Increase default FAB size from 40px to 50px and make it configurable: add button.size (number, px) to DebuggerButtonConfig. Validate as a finite positive number; default 50. Reject 0, negative, non-finite, and non-number values with a [debugger-pro-plus-3000]-prefixed error.",
+          "requestedBy": "task-request-changes",
+          "status": "implemented",
+          "implementedAt": "2026-05-19T20:13:09.435Z",
+          "filesChanged": [
+            "src/config/types.ts",
+            "src/config/defaults.ts",
+            "src/config/loadDebuggerConfig.ts",
+            "src/components/DebuggerFab.tsx"
+          ],
+          "comment": "Added button.size to DebuggerButtonConfig; default 50px (was hard-coded 40px). Loader validates as a finite positive number.",
+          "implementedBy": "implement-changes"
+        },
+        {
+          "requestedAt": "2026-05-19T20:19:09.532Z",
+          "description": "Two changes: (1) Update the demo config.debugger.js to exercise the new button namespace: { draggable: true, size: 51 }. (2) Animate the FAB's position change after the user releases it mid-page: instead of teleporting to the snapped corner, transition smoothly from the release point to the corner's resting coordinates.",
+          "requestedBy": "task-request-changes",
+          "status": "implemented",
+          "implementedAt": "2026-05-19T20:20:20.965Z",
+          "filesChanged": [
+            "config.debugger.js",
+            "src/components/DebuggerFab.tsx"
+          ],
+          "comment": "Updated demo config.debugger.js to set button.draggable=true, button.size=51. Added snap-animation state machine to DebuggerFab: drop point -> snapped corner over 220ms via cubic-bezier(0.2,0.8,0.2,1) easing on left/top transitions. State has two phases (pre/animating) so React lays out the FAB at the release point first, then transitions to the corner on the next frame. After the animation completes, the FAB reverts to corner-inset positioning so window resizes don't drift it.",
+          "implementedBy": "implement-changes"
+        },
+        {
+          "requestedAt": "2026-05-19T20:42:22.461Z",
+          "description": "Address five non-blocking findings from the AI review: (1) nearestCorner — use FAB center, not cursor position, when picking the snap corner; (2) onPointerCancel — release pointer capture and clear drag state on cancellation so the FAB never gets stuck mid-drag; (3) useFabPosition — memoize setCorner with useCallback and derive corner reactively from configured + a userChosen state, so configured prop changes update the displayed corner; (4) remove dead DEFAULT_DEBUGGER_CONFIG re-export from loadDebuggerConfig.ts (pre-existing from N00); (5) flip the N01 CHECKLIST items to checked.",
+          "requestedBy": "task-request-changes",
+          "status": "implemented",
+          "implementedAt": "2026-05-19T20:45:34.256Z",
+          "filesChanged": [
+            "src/components/DebuggerFab.tsx",
+            "src/components/useFabPosition.ts",
+            "src/config/loadDebuggerConfig.ts",
+            "workTasks/N01-add-draggable-fab-entrypoint-with-config-driven-po/CHECKLIST.md"
+          ],
+          "comment": "Applied all five non-blocking review items. (1) nearestCorner now feeds FAB-center coords instead of cursor coords. (2) onPointerCancel mirrors pointerup cleanup minus the snap so the FAB never gets stuck. (3) useFabPosition memoizes setCorner via useCallback and derives corner from configured + a separate userChosen state so configured prop changes flow through. (4) Removed the dead DEFAULT_DEBUGGER_CONFIG re-export from loadDebuggerConfig.ts (the type is still publicly available via the defaults barrel). (5) Flipped the N01 CHECKLIST boxes to checked. Gates clean; loader smoke test confirms DEFAULT_DEBUGGER_CONFIG remains importable from the package entry.",
+          "implementedBy": "implement-changes"
+        }
+      ],
+      "incidents": [],
+      "committedAt": null,
+      "totalDurationMinutes": null,
+      "tags": [
+        "ui",
+        "fab",
+        "config",
+        "drag",
+        "localStorage"
+      ],
+      "pushes": [
+        {
+          "at": "2026-05-19T19:42:13.433Z",
+          "commitHash": "c955f0f702871f585e7a431279dc688f0fb041d3",
+          "commitMessage": "docs(N01): add task spec for draggable FAB entrypoint"
+        },
+        {
+          "at": "2026-05-19T19:45:35.336Z",
+          "commitHash": "3796eaf69deaaf02e3d4f806a54cb9f9b1ee49de",
+          "commitMessage": "docs(N01): finalize decisions (fix localStorage key typo, confirm position prop removal)"
+        },
+        {
+          "at": "2026-05-19T20:03:23.647Z",
+          "commitHash": "da040c3461cbd4b12b8f936e9526a6feda83c775",
+          "commitMessage": "feat(N01): draggable FAB entrypoint with config and localStorage"
+        },
+        {
+          "at": "2026-05-19T20:13:44.527Z",
+          "commitHash": "41ea54c02e1dad10e0aa02d49ef5de70f96829ae",
+          "commitMessage": "feat(N01): make FAB size configurable via button.size (default 50)"
+        },
+        {
+          "at": "2026-05-19T20:21:01.183Z",
+          "commitHash": "122af440a2ca13cc7054966a56781a0a51407443",
+          "commitMessage": "feat(N01): animate FAB snap-to-corner after drag release"
+        },
+        {
+          "at": "2026-05-19T20:33:02.340Z",
+          "commitHash": "414473a242cff2ad1684b417d01584ae73e2a668",
+          "commitMessage": "chore(N01): record AI review (approved)"
+        },
+        {
+          "at": "2026-05-19T20:46:10.092Z",
+          "commitHash": "a1f3b3194d6d0936eee250ee2ed96e21a1b871a0",
+          "commitMessage": "refactor(N01): apply non-blocking review fixes"
+        },
+        {
+          "at": "2026-05-19T20:51:48.690Z",
+          "commitHash": "29134b7e9c7df8c6ed54fe73c0900ca835e74d8b",
+          "commitMessage": "chore(N01): record AI review round 2 (approved)"
+        },
+        {
+          "at": "2026-05-19T21:10:03.161Z",
+          "commitHash": "eae1a5c2b60d2707583183b2d427f29cf3fd356d",
+          "commitMessage": "chore(N01): record human review (approved)"
+        }
+      ],
+      "branch": "feat/N01-add-draggable-fab-entrypoint-with-config-driven-po",
+      "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/2",
+      "mergedAt": null
     }
   ]
 }

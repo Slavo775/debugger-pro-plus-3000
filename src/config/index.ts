@@ -5,4 +5,10 @@ export type { DebuggerConfigProviderProps } from './DebuggerConfigProvider'
 export { useDebuggerConfig } from './useDebuggerConfig'
 export { loadDebuggerConfig } from './loadDebuggerConfig'
 export type { LoadDebuggerConfigOptions } from './loadDebuggerConfig'
-export type { DebuggerConfig, DebuggerStyleConfig, ResolvedDebuggerConfig } from './types'
+export type {
+  ButtonCorner,
+  DebuggerButtonConfig,
+  DebuggerConfig,
+  DebuggerStyleConfig,
+  ResolvedDebuggerConfig,
+} from './types'
