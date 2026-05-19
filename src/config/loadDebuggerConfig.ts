@@ -139,4 +139,34 @@ function assertValidConfig(value: unknown, filePath: string): asserts value is D
       }
     }
   }
+  if (config.panel !== undefined) {
+    if (
+      typeof config.panel !== 'object' ||
+      config.panel === null ||
+      Array.isArray(config.panel)
+    ) {
+      throw new Error(`${ERROR_PREFIX} \`panel\` in ${filePath} must be a plain object.`)
+    }
+    const panel = config.panel as Record<string, unknown>
+    if (panel.title !== undefined && typeof panel.title !== 'string') {
+      throw new Error(`${ERROR_PREFIX} \`panel.title\` in ${filePath} must be a string.`)
+    }
+    if (panel.style !== undefined) {
+      if (typeof panel.style !== 'object' || panel.style === null || Array.isArray(panel.style)) {
+        throw new Error(`${ERROR_PREFIX} \`panel.style\` in ${filePath} must be a plain object.`)
+      }
+      const panelStyle = panel.style as Record<string, unknown>
+      if (panelStyle.width !== undefined) {
+        if (
+          typeof panelStyle.width !== 'number' ||
+          !Number.isFinite(panelStyle.width) ||
+          panelStyle.width <= 0
+        ) {
+          throw new Error(
+            `${ERROR_PREFIX} \`panel.style.width\` in ${filePath} must be a finite positive number (pixels).`,
+          )
+        }
+      }
+    }
+  }
 }

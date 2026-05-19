@@ -11,5 +11,13 @@ export function mergeWithDefaults(userConfig: DebuggerConfig): ResolvedDebuggerC
       ...DEFAULT_DEBUGGER_CONFIG.button,
       ...userConfig.button,
     },
+    panel: {
+      ...DEFAULT_DEBUGGER_CONFIG.panel,
+      ...userConfig.panel,
+      style: {
+        ...DEFAULT_DEBUGGER_CONFIG.panel.style,
+        ...userConfig.panel?.style,
+      },
+    },
   }
 }

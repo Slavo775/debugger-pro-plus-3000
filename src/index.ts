@@ -11,6 +11,8 @@ export type {
   ButtonCorner,
   DebuggerButtonConfig,
   DebuggerConfig,
+  DebuggerPanelConfig,
+  DebuggerPanelStyleConfig,
   DebuggerStyleConfig,
   ResolvedDebuggerConfig,
 } from './config/types'

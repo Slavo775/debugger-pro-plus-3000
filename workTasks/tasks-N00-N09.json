@@ -468,6 +468,202 @@
       "branch": "feat/N01-add-draggable-fab-entrypoint-with-config-driven-po",
       "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/2",
       "mergedAt": "2026-05-19T21:13:34.047Z"
+    },
+    {
+      "id": "N02",
+      "title": "Add full-height debug panel wrapper with configurable title, width, and fullscreen toggle",
+      "type": "feat",
+      "priority": "high",
+      "status": "pushed",
+      "folder": "workTasks/N02-add-full-height-debug-panel-wrapper-with-configura",
+      "createdAt": "2026-05-19T21:32:02.812Z",
+      "statusHistory": [
+        {
+          "status": "ready",
+          "at": "2026-05-19T21:32:02.812Z",
+          "by": "taskmaster"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T21:34:09.761Z",
+          "by": "task-git"
+        },
+        {
+          "status": "in-progress",
+          "at": "2026-05-19T21:36:10.888Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "implemented",
+          "at": "2026-05-19T21:40:26.619Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T21:41:08.621Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-19T21:42:24.373Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "fix-needed",
+          "at": "2026-05-19T21:42:44.294Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T21:43:20.780Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-19T21:43:55.639Z",
+          "by": "task-review"
+        },
+        {
+          "status": "fix-needed",
+          "at": "2026-05-19T21:45:53.769Z",
+          "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T21:46:26.221Z",
+          "by": "task-git"
+        },
+        {
+          "status": "fixing",
+          "at": "2026-05-19T21:47:49.753Z",
+          "by": "task-review-fix"
+        },
+        {
+          "status": "fixed",
+          "at": "2026-05-19T21:50:44.769Z",
+          "by": "task-review-fix"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T21:51:20.362Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-19T21:52:31.110Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-19T21:52:55.866Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T21:56:02.974Z",
+          "by": "task-git"
+        }
+      ],
+      "implementation": {
+        "startedAt": "2026-05-19T21:36:10.887Z",
+        "completedAt": "2026-05-19T21:40:26.619Z",
+        "filesChanged": [
+          "src/config/types.ts",
+          "src/config/defaults.ts",
+          "src/config/merge.ts",
+          "src/config/loadDebuggerConfig.ts",
+          "src/config/index.ts",
+          "src/components/Debugger.tsx",
+          "src/index.ts",
+          "src/main.tsx",
+          "config.debugger.js"
+        ],
+        "tokensUsed": null
+      },
+      "reviews": [
+        {
+          "startedAt": "2026-05-19T21:42:24.373Z",
+          "endedAt": "2026-05-19T21:42:44.294Z",
+          "verdict": "fix-needed",
+          "comment": "Header icon buttons (fullscreen, close) feel too small. The 24x24 hit area is fine, but the icon glyphs at fontSize 14 look cramped. Bump the icon font size and grow the hit area if needed; apply consistent treatment to tab buttons. All other panel behavior verified working.",
+          "type": "human",
+          "by": "task-human-review",
+          "fix": null
+        },
+        {
+          "startedAt": "2026-05-19T21:43:55.640Z",
+          "endedAt": "2026-05-19T21:45:53.768Z",
+          "verdict": "fix-needed",
+          "comment": "AI review concurs with human verdict on header icon size, and adds five more sizing/UI items to bundle into the same fix: (1) iconButtonStyle.fontSize 14 -> 18 with hit area grown to 28-32, (2) panelStyle over-constrains box with top+bottom+height, drop bottom:0, (3) tab buttons need inline-flex centering so label sits in middle of minHeight:24 box, (4) titleStyle needs minWidth:0/flex:1 so long titles ellipsize instead of pushing header actions off, (5) DRY: useEffect inlines close logic instead of calling closePanel — memoize with useCallback, (6) aria-label falls back to 'Debugger panel' when panel.title is empty. All checklist items met functionally; these are UI polish + sizing issues. Gates clean. See REVIEW.md for details.",
+          "type": "ai",
+          "by": "task-review",
+          "fix": {
+            "startedAt": "2026-05-19T21:47:49.753Z",
+            "endedAt": "2026-05-19T21:50:44.769Z",
+            "status": "fixed",
+            "filesChanged": [
+              "src/components/Debugger.tsx"
+            ],
+            "comment": "Applied all six bundled findings from AI + human reviews. (1) Header icons: glyph font 14->18, hit area 24->32, plus brighter color (#aaa -> #d8d8d8). Header minHeight 44->48 to accommodate the larger chips. (2) panelStyle no longer over-constrains: kept top:0 + height:100dvh, dropped bottom:0. (3) Tab buttons now inline-flex centered with brighter inactive color and font bumped 11->12 to read more comfortably; tab hit target = 28. (4) Title gets minWidth:0 + flex:1 so long titles ellipsize without pushing header actions off the right edge. (5) closePanel memoized with useCallback([]) and called from both the close button and the Escape handler. (6) aria-label falls back to 'Debugger panel' when panel.title is empty. Gates clean: lint, build.",
+            "by": "task-review-fix"
+          }
+        },
+        {
+          "startedAt": "2026-05-19T21:52:31.111Z",
+          "endedAt": "2026-05-19T21:52:55.866Z",
+          "verdict": "approved",
+          "comment": "Approved after fix round. All six bundled items (icon size, panelStyle, tab centering, title overflow, closePanel memoization, aria-label fallback) verified working on desktop and mobile. Ready to merge.",
+          "type": "human",
+          "by": "task-human-review",
+          "fix": null
+        }
+      ],
+      "changesAfterImplementation": [],
+      "incidents": [],
+      "committedAt": null,
+      "totalDurationMinutes": null,
+      "tags": [
+        "ui",
+        "panel",
+        "config",
+        "accessibility",
+        "responsive"
+      ],
+      "pushes": [
+        {
+          "at": "2026-05-19T21:34:09.761Z",
+          "commitHash": "85ea9d92aceeeab1629863d65491a2f353ce581d",
+          "commitMessage": "docs(N02): add task spec for full-height panel wrapper"
+        },
+        {
+          "at": "2026-05-19T21:41:08.620Z",
+          "commitHash": "0ad3f1002beb9b21c625b3f47a4de59baa591df5",
+          "commitMessage": "feat(N02): full-height panel wrapper with title, width, fullscreen"
+        },
+        {
+          "at": "2026-05-19T21:43:20.780Z",
+          "commitHash": "dc772f6ec355506ee6e110479a0fa7d041b97c4d",
+          "commitMessage": "chore(N02): record human review (fix-needed: header icons too small)"
+        },
+        {
+          "at": "2026-05-19T21:46:26.221Z",
+          "commitHash": "0eeee5ef2be57852ed381f5a0d122bfc7f2f88bb",
+          "commitMessage": "chore(N02): record AI review (fix-needed, bundled findings)"
+        },
+        {
+          "at": "2026-05-19T21:51:20.362Z",
+          "commitHash": "d90b0520991e1f5669a8729c95f16d77a42dbfb6",
+          "commitMessage": "refactor(N02): bump icon sizes and apply bundled review fixes"
+        },
+        {
+          "at": "2026-05-19T21:56:02.973Z",
+          "commitHash": "2ec166a7a22efcdda4f7ca62b8d44f418aab21ff",
+          "commitMessage": "chore(N02): record human review round 2 (approved)"
+        }
+      ],
+      "branch": "feat/N02-add-full-height-debug-panel-wrapper-with-configura",
+      "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/3",
+      "mergedAt": null
     }
   ]
 }

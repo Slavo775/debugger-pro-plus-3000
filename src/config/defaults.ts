@@ -9,4 +9,10 @@ export const DEFAULT_DEBUGGER_CONFIG: ResolvedDebuggerConfig = {
     position: 'rightBottom',
     size: 50,
   },
+  panel: {
+    title: 'Debugger Pro Plus 3000',
+    style: {
+      width: 320,
+    },
+  },
 }
