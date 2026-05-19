@@ -52,6 +52,11 @@
           "status": "pushed",
           "at": "2026-05-19T18:52:17.182Z",
           "by": "task-git"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T19:03:51.632Z",
+          "by": "task-git"
         }
       ],
       "implementation": {
@@ -107,6 +112,11 @@
           "at": "2026-05-19T18:52:17.181Z",
           "commitHash": "5c8ce796c85b10987eddca4b955c05c784b63213",
           "commitMessage": "chore(N00): record AI review (approved)"
+        },
+        {
+          "at": "2026-05-19T19:03:51.631Z",
+          "commitHash": "7b9c177d2e7469b57dfe64e92f6b5fa62da45b57",
+          "commitMessage": "chore(N00): wire dev preview to load config.debugger.js"
         }
       ],
       "branch": "feat/N00-add-config-debugger-js-loader-with-react-context-a",
