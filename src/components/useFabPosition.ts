@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import type { ButtonCorner } from '../config/types'
 
 const STORAGE_KEY = 'debugger_fab_position'
@@ -35,16 +35,19 @@ export function useFabPosition(
   configured: ButtonCorner,
   draggable: boolean,
 ): [ButtonCorner, (next: ButtonCorner) => void] {
-  const [corner, setCornerState] = useState<ButtonCorner>(() =>
-    draggable ? (readStored() ?? configured) : configured,
+  const [userChosen, setUserChosen] = useState<ButtonCorner | null>(() =>
+    draggable ? readStored() : null,
   )
 
-  const setCorner = (next: ButtonCorner): void => {
-    setCornerState(next)
-    if (draggable) {
-      writeStored(next)
-    }
-  }
+  const corner: ButtonCorner = draggable && userChosen !== null ? userChosen : configured
+
+  const setCorner = useCallback(
+    (next: ButtonCorner): void => {
+      setUserChosen(next)
+      if (draggable) writeStored(next)
+    },
+    [draggable],
+  )
 
   return [corner, setCorner]
 }

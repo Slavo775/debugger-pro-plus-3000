@@ -167,7 +167,7 @@
       "title": "Add draggable FAB entrypoint with config-driven position and localStorage persistence",
       "type": "feat",
       "priority": "high",
-      "status": "approved",
+      "status": "changes-implemented",
       "folder": "workTasks/N01-add-draggable-fab-entrypoint-with-config-driven-po",
       "createdAt": "2026-05-19T19:39:46.836Z",
       "statusHistory": [
@@ -250,6 +250,26 @@
           "status": "approved",
           "at": "2026-05-19T20:30:30.586Z",
           "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T20:33:02.340Z",
+          "by": "task-git"
+        },
+        {
+          "status": "changes-requested",
+          "at": "2026-05-19T20:42:22.461Z",
+          "by": "task-request-changes"
+        },
+        {
+          "status": "changes-implementing",
+          "at": "2026-05-19T20:42:22.550Z",
+          "by": "implement-changes"
+        },
+        {
+          "status": "changes-implemented",
+          "at": "2026-05-19T20:45:34.256Z",
+          "by": "implement-changes"
         }
       ],
       "implementation": {
@@ -308,6 +328,21 @@
           ],
           "comment": "Updated demo config.debugger.js to set button.draggable=true, button.size=51. Added snap-animation state machine to DebuggerFab: drop point -> snapped corner over 220ms via cubic-bezier(0.2,0.8,0.2,1) easing on left/top transitions. State has two phases (pre/animating) so React lays out the FAB at the release point first, then transitions to the corner on the next frame. After the animation completes, the FAB reverts to corner-inset positioning so window resizes don't drift it.",
           "implementedBy": "implement-changes"
+        },
+        {
+          "requestedAt": "2026-05-19T20:42:22.461Z",
+          "description": "Address five non-blocking findings from the AI review: (1) nearestCorner — use FAB center, not cursor position, when picking the snap corner; (2) onPointerCancel — release pointer capture and clear drag state on cancellation so the FAB never gets stuck mid-drag; (3) useFabPosition — memoize setCorner with useCallback and derive corner reactively from configured + a userChosen state, so configured prop changes update the displayed corner; (4) remove dead DEFAULT_DEBUGGER_CONFIG re-export from loadDebuggerConfig.ts (pre-existing from N00); (5) flip the N01 CHECKLIST items to checked.",
+          "requestedBy": "task-request-changes",
+          "status": "implemented",
+          "implementedAt": "2026-05-19T20:45:34.256Z",
+          "filesChanged": [
+            "src/components/DebuggerFab.tsx",
+            "src/components/useFabPosition.ts",
+            "src/config/loadDebuggerConfig.ts",
+            "workTasks/N01-add-draggable-fab-entrypoint-with-config-driven-po/CHECKLIST.md"
+          ],
+          "comment": "Applied all five non-blocking review items. (1) nearestCorner now feeds FAB-center coords instead of cursor coords. (2) onPointerCancel mirrors pointerup cleanup minus the snap so the FAB never gets stuck. (3) useFabPosition memoizes setCorner via useCallback and derives corner from configured + a separate userChosen state so configured prop changes flow through. (4) Removed the dead DEFAULT_DEBUGGER_CONFIG re-export from loadDebuggerConfig.ts (the type is still publicly available via the defaults barrel). (5) Flipped the N01 CHECKLIST boxes to checked. Gates clean; loader smoke test confirms DEFAULT_DEBUGGER_CONFIG remains importable from the package entry.",
+          "implementedBy": "implement-changes"
         }
       ],
       "incidents": [],
@@ -345,6 +380,11 @@
           "at": "2026-05-19T20:21:01.183Z",
           "commitHash": "122af440a2ca13cc7054966a56781a0a51407443",
           "commitMessage": "feat(N01): animate FAB snap-to-corner after drag release"
+        },
+        {
+          "at": "2026-05-19T20:33:02.340Z",
+          "commitHash": "414473a242cff2ad1684b417d01584ae73e2a668",
+          "commitMessage": "chore(N01): record AI review (approved)"
         }
       ],
       "branch": "feat/N01-add-draggable-fab-entrypoint-with-config-driven-po",

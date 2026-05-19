@@ -87,10 +87,18 @@ export function DebuggerFab({ corner, onCornerChange, onOpen }: DebuggerFabProps
       onOpen()
       return
     }
-    const newCorner = nearestCorner(e.clientX, e.clientY)
+    const newCorner = nearestCorner(releaseX + size / 2, releaseY + size / 2)
     const target = cornerToAbsolutePx(newCorner, size)
     setSnap({ fromX: releaseX, fromY: releaseY, toX: target.x, toY: target.y, phase: 'pre' })
     onCornerChange(newCorner)
+  }
+
+  const handlePointerCancel = (e: React.PointerEvent<HTMLButtonElement>) => {
+    if (!drag) return
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+      e.currentTarget.releasePointerCapture(e.pointerId)
+    }
+    setDrag(null)
   }
 
   const handleClick = () => {
@@ -119,6 +127,7 @@ export function DebuggerFab({ corner, onCornerChange, onOpen }: DebuggerFabProps
       onPointerDown={draggable ? handlePointerDown : undefined}
       onPointerMove={draggable && drag ? handlePointerMove : undefined}
       onPointerUp={draggable ? handlePointerUp : undefined}
+      onPointerCancel={draggable ? handlePointerCancel : undefined}
       onClick={handleClick}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}

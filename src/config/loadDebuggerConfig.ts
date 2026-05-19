@@ -1,4 +1,3 @@
-import { DEFAULT_DEBUGGER_CONFIG } from './defaults'
 import type { ButtonCorner, DebuggerConfig, ResolvedDebuggerConfig } from './types'
 import { mergeWithDefaults } from './merge'
 
@@ -141,5 +140,3 @@ function assertValidConfig(value: unknown, filePath: string): asserts value is D
     }
   }
 }
-
-export { DEFAULT_DEBUGGER_CONFIG }
