@@ -474,7 +474,7 @@
       "title": "Add full-height debug panel wrapper with configurable title, width, and fullscreen toggle",
       "type": "feat",
       "priority": "high",
-      "status": "approved",
+      "status": "pushed",
       "folder": "workTasks/N02-add-full-height-debug-panel-wrapper-with-configura",
       "createdAt": "2026-05-19T21:32:02.812Z",
       "statusHistory": [
@@ -557,6 +557,11 @@
           "status": "approved",
           "at": "2026-05-19T21:52:55.866Z",
           "by": "task-human-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T21:56:02.974Z",
+          "by": "task-git"
         }
       ],
       "implementation": {
@@ -649,10 +654,15 @@
           "at": "2026-05-19T21:51:20.362Z",
           "commitHash": "d90b0520991e1f5669a8729c95f16d77a42dbfb6",
           "commitMessage": "refactor(N02): bump icon sizes and apply bundled review fixes"
+        },
+        {
+          "at": "2026-05-19T21:56:02.973Z",
+          "commitHash": "2ec166a7a22efcdda4f7ca62b8d44f418aab21ff",
+          "commitMessage": "chore(N02): record human review round 2 (approved)"
         }
       ],
       "branch": "feat/N02-add-full-height-debug-panel-wrapper-with-configura",
-      "mrUrl": null,
+      "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/3",
       "mergedAt": null
     }
   ]
