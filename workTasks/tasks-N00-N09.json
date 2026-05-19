@@ -161,6 +161,44 @@
       "branch": "feat/N00-add-config-debugger-js-loader-with-react-context-a",
       "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/1",
       "mergedAt": "2026-05-19T19:12:41.662Z"
+    },
+    {
+      "id": "N01",
+      "title": "Add draggable FAB entrypoint with config-driven position and localStorage persistence",
+      "type": "feat",
+      "priority": "high",
+      "status": "ready",
+      "folder": "workTasks/N01-add-draggable-fab-entrypoint-with-config-driven-po",
+      "createdAt": "2026-05-19T19:39:46.836Z",
+      "statusHistory": [
+        {
+          "status": "ready",
+          "at": "2026-05-19T19:39:46.837Z",
+          "by": "taskmaster"
+        }
+      ],
+      "implementation": {
+        "startedAt": null,
+        "completedAt": null,
+        "filesChanged": [],
+        "tokensUsed": null
+      },
+      "reviews": [],
+      "changesAfterImplementation": [],
+      "incidents": [],
+      "committedAt": null,
+      "totalDurationMinutes": null,
+      "tags": [
+        "ui",
+        "fab",
+        "config",
+        "drag",
+        "localStorage"
+      ],
+      "pushes": [],
+      "branch": null,
+      "mrUrl": null,
+      "mergedAt": null
     }
   ]
 }
