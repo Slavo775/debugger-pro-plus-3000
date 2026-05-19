@@ -7,5 +7,6 @@ export const DEFAULT_DEBUGGER_CONFIG: ResolvedDebuggerConfig = {
   button: {
     draggable: true,
     position: 'rightBottom',
+    size: 50,
   },
 }

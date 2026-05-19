@@ -132,6 +132,13 @@ function assertValidConfig(value: unknown, filePath: string): asserts value is D
         `${ERROR_PREFIX} \`button.position\` in ${filePath} must be one of: ${ALLOWED_CORNERS.join(', ')}.`,
       )
     }
+    if (button.size !== undefined) {
+      if (typeof button.size !== 'number' || !Number.isFinite(button.size) || button.size <= 0) {
+        throw new Error(
+          `${ERROR_PREFIX} \`button.size\` in ${filePath} must be a finite positive number (pixels).`,
+        )
+      }
+    }
   }
 }
 

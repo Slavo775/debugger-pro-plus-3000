@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useDebuggerConfig } from '../config/useDebuggerConfig'
 import type { ButtonCorner } from '../config/types'
 
-const FAB_SIZE = 40
 const FAB_INSET = 16
 const CLICK_THRESHOLD_PX = 5
 
@@ -24,6 +23,7 @@ interface DragState {
 export function DebuggerFab({ corner, onCornerChange, onOpen }: DebuggerFabProps) {
   const { style, button } = useDebuggerConfig()
   const draggable = button.draggable
+  const size = button.size
   const [drag, setDrag] = useState<DragState | null>(null)
   const [hovered, setHovered] = useState(false)
 
@@ -84,8 +84,8 @@ export function DebuggerFab({ corner, onCornerChange, onOpen }: DebuggerFabProps
       onMouseLeave={() => setHovered(false)}
       style={{
         ...positionStyle,
-        width: FAB_SIZE,
-        height: FAB_SIZE,
+        width: size,
+        height: size,
         borderRadius: '50%',
         background: style.primaryColor,
         border: 'none',

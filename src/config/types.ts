@@ -7,6 +7,7 @@ export interface DebuggerStyleConfig {
 export interface DebuggerButtonConfig {
   draggable?: boolean
   position?: ButtonCorner
+  size?: number
 }
 
 export interface DebuggerConfig {
