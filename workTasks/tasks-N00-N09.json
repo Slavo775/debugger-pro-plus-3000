@@ -167,7 +167,7 @@
       "title": "Add draggable FAB entrypoint with config-driven position and localStorage persistence",
       "type": "feat",
       "priority": "high",
-      "status": "changes-implemented",
+      "status": "approved",
       "folder": "workTasks/N01-add-draggable-fab-entrypoint-with-config-driven-po",
       "createdAt": "2026-05-19T19:39:46.836Z",
       "statusHistory": [
@@ -270,6 +270,21 @@
           "status": "changes-implemented",
           "at": "2026-05-19T20:45:34.256Z",
           "by": "implement-changes"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T20:46:10.092Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-19T20:48:47.662Z",
+          "by": "task-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-19T20:50:26.448Z",
+          "by": "task-review"
         }
       ],
       "implementation": {
@@ -295,6 +310,15 @@
           "endedAt": "2026-05-19T20:30:30.585Z",
           "verdict": "approved",
           "comment": "Approved. All CHECKLIST items met, both follow-up change requests (button.size with default 50px; snap-to-corner animation) integrated cleanly. Gates pass: lint clean, build succeeds, 14 loader smoke-test cases pass (5 button + 7 size + 2 baseline). Snap animation uses correct two-phase (pre/animating) state machine to bootstrap CSS transitions from an arbitrary start position. Non-blocking findings for a follow-up: (1) nearestCorner uses cursor position instead of FAB center as the spec specified (off by <= size/2 px); (2) no onPointerCancel handler — drag could get stuck if a system gesture cancels the pointer; (3) setCorner in useFabPosition isn't memoized (minor re-renders); (4) leftover dead re-export of DEFAULT_DEBUGGER_CONFIG from loadDebuggerConfig.ts (pre-existing from N00); (5) configured prop changes don't reactively update useFabPosition state. None of these affect functional correctness. Manual browser verification recommended before merge.",
+          "type": "ai",
+          "by": "task-review",
+          "fix": null
+        },
+        {
+          "startedAt": "2026-05-19T20:48:47.662Z",
+          "endedAt": "2026-05-19T20:50:26.448Z",
+          "verdict": "approved",
+          "comment": "Round 2 review — fixes verified. All five non-blocking items applied correctly with no regressions: (1) nearestCorner uses FAB center (releaseX/Y + size/2); (2) onPointerCancel handler mirrors pointerup minus snap; (3) useFabPosition derives corner from configured + userChosen with stable useCallback identity — handles all relevant scenarios (draggable toggles, configured changes, user override precedence); (4) dead DEFAULT_DEBUGGER_CONFIG re-export removed, constant still importable from package entry via defaults barrel; (5) checklist boxes all flipped. Gates clean. One minor exotic gap remaining (not flagged for follow-up): draggable=false→true at runtime won't re-read storage. Approved.",
           "type": "ai",
           "by": "task-review",
           "fix": null
@@ -385,6 +409,11 @@
           "at": "2026-05-19T20:33:02.340Z",
           "commitHash": "414473a242cff2ad1684b417d01584ae73e2a668",
           "commitMessage": "chore(N01): record AI review (approved)"
+        },
+        {
+          "at": "2026-05-19T20:46:10.092Z",
+          "commitHash": "a1f3b3194d6d0936eee250ee2ed96e21a1b871a0",
+          "commitMessage": "refactor(N01): apply non-blocking review fixes"
         }
       ],
       "branch": "feat/N01-add-draggable-fab-entrypoint-with-config-driven-po",
