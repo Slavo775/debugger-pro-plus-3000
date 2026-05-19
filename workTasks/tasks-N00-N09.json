@@ -167,7 +167,7 @@
       "title": "Add draggable FAB entrypoint with config-driven position and localStorage persistence",
       "type": "feat",
       "priority": "high",
-      "status": "pushed",
+      "status": "done",
       "folder": "workTasks/N01-add-draggable-fab-entrypoint-with-config-driven-po",
       "createdAt": "2026-05-19T19:39:46.836Z",
       "statusHistory": [
@@ -305,6 +305,16 @@
           "status": "pushed",
           "at": "2026-05-19T21:10:03.161Z",
           "by": "task-git"
+        },
+        {
+          "status": "merged",
+          "at": "2026-05-19T21:13:34.048Z",
+          "by": "task-git"
+        },
+        {
+          "status": "done",
+          "at": "2026-05-19T21:13:34.134Z",
+          "by": "git-agent"
         }
       ],
       "implementation": {
@@ -399,8 +409,8 @@
         }
       ],
       "incidents": [],
-      "committedAt": null,
-      "totalDurationMinutes": null,
+      "committedAt": "2026-05-19T21:13:34.134Z",
+      "totalDurationMinutes": 94,
       "tags": [
         "ui",
         "fab",
@@ -457,7 +467,7 @@
       ],
       "branch": "feat/N01-add-draggable-fab-entrypoint-with-config-driven-po",
       "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/2",
-      "mergedAt": null
+      "mergedAt": "2026-05-19T21:13:34.047Z"
     }
   ]
 }
