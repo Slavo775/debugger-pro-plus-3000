@@ -9,7 +9,7 @@
       "title": "Add config.debugger.js loader with React context and hook",
       "type": "feat",
       "priority": "high",
-      "status": "approved",
+      "status": "pushed",
       "folder": "workTasks/N00-add-config-debugger-js-loader-with-react-context-a",
       "createdAt": "2026-05-19T18:16:12.394Z",
       "statusHistory": [
@@ -47,6 +47,11 @@
           "status": "approved",
           "at": "2026-05-19T18:49:54.241Z",
           "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T18:52:17.182Z",
+          "by": "task-git"
         }
       ],
       "implementation": {
@@ -97,6 +102,11 @@
           "at": "2026-05-19T18:29:57.891Z",
           "commitHash": "357ac8f68c217655cc813e76050cc32930ce4adb",
           "commitMessage": "feat(N00): load config.debugger.js via React context and hook"
+        },
+        {
+          "at": "2026-05-19T18:52:17.181Z",
+          "commitHash": "5c8ce796c85b10987eddca4b955c05c784b63213",
+          "commitMessage": "chore(N00): record AI review (approved)"
         }
       ],
       "branch": "feat/N00-add-config-debugger-js-loader-with-react-context-a",
