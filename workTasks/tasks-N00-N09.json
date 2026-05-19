@@ -1,0 +1,156 @@
+{
+  "range": {
+    "from": 0,
+    "to": 9
+  },
+  "tasks": [
+    {
+      "id": "N00",
+      "title": "Add config.debugger.js loader with React context and hook",
+      "type": "feat",
+      "priority": "high",
+      "status": "pushed",
+      "folder": "workTasks/N00-add-config-debugger-js-loader-with-react-context-a",
+      "createdAt": "2026-05-19T18:16:12.394Z",
+      "statusHistory": [
+        {
+          "status": "ready",
+          "at": "2026-05-19T18:16:12.394Z",
+          "by": "taskmaster"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T18:19:18.464Z",
+          "by": "task-git"
+        },
+        {
+          "status": "in-progress",
+          "at": "2026-05-19T18:21:29.353Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "implemented",
+          "at": "2026-05-19T18:28:16.352Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T18:29:57.891Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-19T18:46:51.510Z",
+          "by": "task-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-19T18:49:54.241Z",
+          "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T18:52:17.182Z",
+          "by": "task-git"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T19:03:51.632Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-19T19:06:19.760Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-19T19:06:37.174Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T19:07:35.001Z",
+          "by": "task-git"
+        }
+      ],
+      "implementation": {
+        "startedAt": "2026-05-19T18:21:29.353Z",
+        "completedAt": "2026-05-19T18:28:16.352Z",
+        "filesChanged": [
+          "src/config/types.ts",
+          "src/config/defaults.ts",
+          "src/config/merge.ts",
+          "src/config/loadDebuggerConfig.ts",
+          "src/config/DebuggerConfigContext.ts",
+          "src/config/DebuggerConfigProvider.tsx",
+          "src/config/useDebuggerConfig.ts",
+          "src/config/index.ts",
+          "src/components/Debugger.tsx",
+          "src/index.ts"
+        ],
+        "tokensUsed": null
+      },
+      "reviews": [
+        {
+          "startedAt": "2026-05-19T18:46:51.510Z",
+          "endedAt": "2026-05-19T18:49:54.240Z",
+          "verdict": "approved",
+          "comment": "Approved. All CHECKLIST items met; lint + build clean; loader Node smoke test covered missing file, valid ESM, malformed style, bad primaryColor type, empty object. Public API surface is tight; ResolvedDebuggerConfig is a nice stronger return type; provider/context file split is the right call for react-refresh. Non-blocking polish noted for follow-up: (1) remove dead re-export of DEFAULT_DEBUGGER_CONFIG from loadDebuggerConfig.ts:110, (2) drop redundant process?.cwd optional chaining at loadDebuggerConfig.ts:53, (3) consider throwing a clear error instead of falling back to cwd='.' in non-Node contexts, (4) decide whether unknown config keys should warn or be silently ignored before locking schema. Manual pnpm dev visual check still recommended before merge.",
+          "type": "ai",
+          "by": "task-review",
+          "fix": null
+        },
+        {
+          "startedAt": "2026-05-19T19:06:19.761Z",
+          "endedAt": "2026-05-19T19:06:37.174Z",
+          "verdict": "approved",
+          "comment": "Approved by human reviewer. Visual verification at http://localhost:4242 confirmed end-to-end: config.debugger.js at root sets the active tab color via the provider/hook, and the Config tab echoes the same value through useDebuggerConfig(). Polish items from AI review may be deferred to a follow-up.",
+          "type": "human",
+          "by": "task-human-review",
+          "fix": null
+        }
+      ],
+      "changesAfterImplementation": [],
+      "incidents": [],
+      "committedAt": null,
+      "totalDurationMinutes": null,
+      "tags": [
+        "config",
+        "context",
+        "hook",
+        "customization"
+      ],
+      "pushes": [
+        {
+          "at": "2026-05-19T18:19:18.464Z",
+          "commitHash": "9b1aab085bbcb19bb691812e0ae55f04ff93880d",
+          "commitMessage": "docs(N00): add task spec for config.debugger.js loader"
+        },
+        {
+          "at": "2026-05-19T18:29:57.891Z",
+          "commitHash": "357ac8f68c217655cc813e76050cc32930ce4adb",
+          "commitMessage": "feat(N00): load config.debugger.js via React context and hook"
+        },
+        {
+          "at": "2026-05-19T18:52:17.181Z",
+          "commitHash": "5c8ce796c85b10987eddca4b955c05c784b63213",
+          "commitMessage": "chore(N00): record AI review (approved)"
+        },
+        {
+          "at": "2026-05-19T19:03:51.631Z",
+          "commitHash": "7b9c177d2e7469b57dfe64e92f6b5fa62da45b57",
+          "commitMessage": "chore(N00): wire dev preview to load config.debugger.js"
+        },
+        {
+          "at": "2026-05-19T19:07:35.001Z",
+          "commitHash": "4472e61c8252cefe376f69b8d30b10831ec15114",
+          "commitMessage": "chore(N00): record human review (approved)"
+        }
+      ],
+      "branch": "feat/N00-add-config-debugger-js-loader-with-react-context-a",
+      "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/1",
+      "mergedAt": null
+    }
+  ]
+}
