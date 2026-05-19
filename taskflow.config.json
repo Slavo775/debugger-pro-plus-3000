@@ -1,0 +1,14 @@
+{
+  "workDir": "workTasks",
+  "shardSize": 10,
+  "projectName": "debugger-pro-plus-3000",
+  "rolesDir": ".claude/roles",
+  "server": {
+    "port": 6007
+  },
+  "activityEngine": {
+    "enabled": true,
+    "logFile": ".taskflow-activity.jsonl",
+    "maxEvents": 200
+  }
+}
