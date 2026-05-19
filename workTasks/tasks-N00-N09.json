@@ -468,6 +468,44 @@
       "branch": "feat/N01-add-draggable-fab-entrypoint-with-config-driven-po",
       "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/2",
       "mergedAt": "2026-05-19T21:13:34.047Z"
+    },
+    {
+      "id": "N02",
+      "title": "Add full-height debug panel wrapper with configurable title, width, and fullscreen toggle",
+      "type": "feat",
+      "priority": "high",
+      "status": "ready",
+      "folder": "workTasks/N02-add-full-height-debug-panel-wrapper-with-configura",
+      "createdAt": "2026-05-19T21:32:02.812Z",
+      "statusHistory": [
+        {
+          "status": "ready",
+          "at": "2026-05-19T21:32:02.812Z",
+          "by": "taskmaster"
+        }
+      ],
+      "implementation": {
+        "startedAt": null,
+        "completedAt": null,
+        "filesChanged": [],
+        "tokensUsed": null
+      },
+      "reviews": [],
+      "changesAfterImplementation": [],
+      "incidents": [],
+      "committedAt": null,
+      "totalDurationMinutes": null,
+      "tags": [
+        "ui",
+        "panel",
+        "config",
+        "accessibility",
+        "responsive"
+      ],
+      "pushes": [],
+      "branch": null,
+      "mrUrl": null,
+      "mergedAt": null
     }
   ]
 }
