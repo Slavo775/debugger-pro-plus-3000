@@ -1,0 +1,45 @@
+{
+  "range": {
+    "from": 0,
+    "to": 9
+  },
+  "tasks": [
+    {
+      "id": "N00",
+      "title": "Add config.debugger.js loader with React context and hook",
+      "type": "feat",
+      "priority": "high",
+      "status": "ready",
+      "folder": "workTasks/N00-add-config-debugger-js-loader-with-react-context-a",
+      "createdAt": "2026-05-19T18:16:12.394Z",
+      "statusHistory": [
+        {
+          "status": "ready",
+          "at": "2026-05-19T18:16:12.394Z",
+          "by": "taskmaster"
+        }
+      ],
+      "implementation": {
+        "startedAt": null,
+        "completedAt": null,
+        "filesChanged": [],
+        "tokensUsed": null
+      },
+      "reviews": [],
+      "changesAfterImplementation": [],
+      "incidents": [],
+      "committedAt": null,
+      "totalDurationMinutes": null,
+      "tags": [
+        "config",
+        "context",
+        "hook",
+        "customization"
+      ],
+      "pushes": [],
+      "branch": null,
+      "mrUrl": null,
+      "mergedAt": null
+    }
+  ]
+}
