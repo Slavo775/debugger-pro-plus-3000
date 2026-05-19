@@ -77,3 +77,15 @@ useless. Fallback: `aria-label={panel.title || 'Debugger panel'}`.
 - `closePanel` reused by the Escape handler.
 - Empty `panel.title` still produces a meaningful `aria-label`.
 - All gates remain clean.
+
+---
+
+## Round 2 — Human re-review after fix
+
+**Verdict:** ✅ Approved
+**Date:** 2026-05-19
+
+All six items applied in commit `d90b052` are working as expected.
+Header icons feel tappable on both desktop and mobile, tab labels are
+centered, long titles ellipsize, panel behavior unchanged. Ready to
+merge.
