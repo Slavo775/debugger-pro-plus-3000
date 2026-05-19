@@ -474,7 +474,7 @@
       "title": "Add full-height debug panel wrapper with configurable title, width, and fullscreen toggle",
       "type": "feat",
       "priority": "high",
-      "status": "implemented",
+      "status": "fix-needed",
       "folder": "workTasks/N02-add-full-height-debug-panel-wrapper-with-configura",
       "createdAt": "2026-05-19T21:32:02.812Z",
       "statusHistory": [
@@ -497,6 +497,21 @@
           "status": "implemented",
           "at": "2026-05-19T21:40:26.619Z",
           "by": "task-implement"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-19T21:41:08.621Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-19T21:42:24.373Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "fix-needed",
+          "at": "2026-05-19T21:42:44.294Z",
+          "by": "task-human-review"
         }
       ],
       "implementation": {
@@ -515,7 +530,17 @@
         ],
         "tokensUsed": null
       },
-      "reviews": [],
+      "reviews": [
+        {
+          "startedAt": "2026-05-19T21:42:24.373Z",
+          "endedAt": "2026-05-19T21:42:44.294Z",
+          "verdict": "fix-needed",
+          "comment": "Header icon buttons (fullscreen, close) feel too small. The 24x24 hit area is fine, but the icon glyphs at fontSize 14 look cramped. Bump the icon font size and grow the hit area if needed; apply consistent treatment to tab buttons. All other panel behavior verified working.",
+          "type": "human",
+          "by": "task-human-review",
+          "fix": null
+        }
+      ],
       "changesAfterImplementation": [],
       "incidents": [],
       "committedAt": null,
@@ -532,6 +557,11 @@
           "at": "2026-05-19T21:34:09.761Z",
           "commitHash": "85ea9d92aceeeab1629863d65491a2f353ce581d",
           "commitMessage": "docs(N02): add task spec for full-height panel wrapper"
+        },
+        {
+          "at": "2026-05-19T21:41:08.620Z",
+          "commitHash": "0ad3f1002beb9b21c625b3f47a4de59baa591df5",
+          "commitMessage": "feat(N02): full-height panel wrapper with title, width, fullscreen"
         }
       ],
       "branch": "feat/N02-add-full-height-debug-panel-wrapper-with-configura",
