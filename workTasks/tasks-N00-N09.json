@@ -680,7 +680,7 @@
       "title": "Add module registry with accordion stack, auto-registration wrapper, and Debugger API",
       "type": "feat",
       "priority": "high",
-      "status": "pushed",
+      "status": "merged",
       "folder": "workTasks/N03-add-module-registry-with-accordion-stack-auto-regi",
       "createdAt": "2026-05-20T15:20:44.315Z",
       "statusHistory": [
@@ -713,6 +713,16 @@
           "status": "pushed",
           "at": "2026-05-20T16:04:39.135Z",
           "by": "task-git"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T16:07:37.908Z",
+          "by": "task-git"
+        },
+        {
+          "status": "merged",
+          "at": "2026-05-20T16:07:54.695Z",
+          "by": "task-git"
         }
       ],
       "implementation": {
@@ -739,7 +749,7 @@
       "changesAfterImplementation": [],
       "incidents": [],
       "committedAt": null,
-      "totalDurationMinutes": null,
+      "totalDurationMinutes": 47,
       "tags": [
         "modules",
         "registry",
@@ -762,11 +772,16 @@
           "at": "2026-05-20T16:04:39.135Z",
           "commitHash": "26b6e2b",
           "commitMessage": "feat(N03): module registry with accordion stack, render-prop API, and Debugger event bus"
+        },
+        {
+          "at": "2026-05-20T16:07:37.908Z",
+          "commitHash": "a48bb094c9dfbd095c33e2c6729e57e379de6f7c",
+          "commitMessage": "Merge feat(N03): module registry with accordion stack, render-prop modules, and Debugger API (#4)"
         }
       ],
-      "branch": "feat/N03-module-registry-accordion-stack-debugger-api",
+      "branch": "main",
       "mrUrl": null,
-      "mergedAt": null
+      "mergedAt": "2026-05-20T16:07:54.695Z"
     }
   ]
 }
