@@ -1362,7 +1362,7 @@
       "title": "Add predefined DeviceInfo module with snapshot integration",
       "type": "feat",
       "priority": "high",
-      "status": "fix-needed",
+      "status": "approved",
       "folder": "workTasks/N06-add-predefined-deviceinfo-module-with-snapshot-int",
       "createdAt": "2026-05-20T20:10:28.694Z",
       "statusHistory": [
@@ -1400,6 +1400,21 @@
           "status": "fix-needed",
           "at": "2026-05-20T20:31:13.395Z",
           "by": "task-human-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T20:32:17.710Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-20T20:33:23.607Z",
+          "by": "task-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-20T20:34:40.532Z",
+          "by": "task-review"
         }
       ],
       "implementation": {
@@ -1421,6 +1436,15 @@
           "comment": "deviceInfoModule not wired into dev preview (main.tsx) — add it to the modules array so it renders in the panel",
           "type": "human",
           "by": "task-human-review",
+          "fix": null
+        },
+        {
+          "startedAt": "2026-05-20T20:33:23.608Z",
+          "endedAt": "2026-05-20T20:34:40.532Z",
+          "verdict": "approved",
+          "comment": "All checklist items satisfied. collectDeviceData() called twice per render (once in effect, once for display) — minor inefficiency, not a bug. navigator.platform is deprecated but acceptable for a debug module. File split (.tsx/.ts) to satisfy react-refresh ESLint rule is the right call. createElement in the .ts module file is correct. All guards in place (orientation, connection). Snapshot integration, responsiveness, public API, and quality gates all pass.",
+          "type": "ai",
+          "by": "task-review",
           "fix": null
         }
       ],
@@ -1444,6 +1468,11 @@
           "at": "2026-05-20T20:23:48.415Z",
           "commitHash": "8c38ba6",
           "commitMessage": "feat(N06): add predefined DeviceInfo module with snapshot integration"
+        },
+        {
+          "at": "2026-05-20T20:32:17.710Z",
+          "commitHash": "8d40775",
+          "commitMessage": "fix(N06): wire deviceInfoModule into dev preview"
         }
       ],
       "branch": "feat/N06-predefined-deviceinfo-module",
