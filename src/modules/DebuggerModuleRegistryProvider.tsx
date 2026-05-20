@@ -77,6 +77,21 @@ export function DebuggerModuleRegistryProvider({
     })
   }, [])
 
+  const runtimeDataRef = useRef(new Map<string, Record<string, unknown>>())
+
+  const _updateData = useCallback((moduleId: string, patch: Record<string, unknown>) => {
+    const prev = runtimeDataRef.current.get(moduleId) ?? {}
+    runtimeDataRef.current.set(moduleId, { ...prev, ...patch })
+  }, [])
+
+  const _getDebugSnapshot = useCallback((): Record<string, Record<string, unknown>> => {
+    const snapshot: Record<string, Record<string, unknown>> = {}
+    for (const m of modules) {
+      snapshot[m.id] = { ...m.data, ...runtimeDataRef.current.get(m.id) }
+    }
+    return snapshot
+  }, [modules])
+
   const listenersRef = useRef(new Map<string, Map<string, Set<ModuleEventHandler>>>())
 
   const _subscribe = useCallback(
@@ -107,8 +122,8 @@ export function DebuggerModuleRegistryProvider({
   }, [])
 
   const ctx: DebuggerApiContextValue = useMemo(
-    () => ({ _modules: modules, _toggleExpanded, _emit, _subscribe, _send }),
-    [modules, _toggleExpanded, _emit, _subscribe, _send],
+    () => ({ _modules: modules, _toggleExpanded, _emit, _subscribe, _send, _updateData, _getDebugSnapshot }),
+    [modules, _toggleExpanded, _emit, _subscribe, _send, _updateData, _getDebugSnapshot],
   )
 
   return (

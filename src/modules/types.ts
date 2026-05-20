@@ -22,6 +22,7 @@ export interface DebuggerApi {
   emit(event: string, payload?: unknown): void
   subscribe(event: string, handler: ModuleEventHandler): () => void
   moduleData: Record<string, unknown>
+  updateData(patch: Record<string, unknown>): void
 }
 
 export interface DebuggerApiContextValue {
@@ -30,4 +31,6 @@ export interface DebuggerApiContextValue {
   _emit(moduleId: string, event: string, payload: unknown): void
   _subscribe(moduleId: string, event: string, handler: ModuleEventHandler): () => void
   _send(moduleId: string, event: string, payload: unknown): void
+  _updateData(moduleId: string, patch: Record<string, unknown>): void
+  _getDebugSnapshot(): Record<string, Record<string, unknown>>
 }

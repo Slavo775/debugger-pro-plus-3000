@@ -922,7 +922,7 @@
       "title": "Add module debug-data registration, runtime updates, and header copy/export button",
       "type": "feat",
       "priority": "high",
-      "status": "ready",
+      "status": "implemented",
       "folder": "workTasks/N04-add-module-debug-data-registration-runtime-updates",
       "createdAt": "2026-05-20T17:06:26.766Z",
       "statusHistory": [
@@ -930,12 +930,32 @@
           "status": "ready",
           "at": "2026-05-20T17:06:26.767Z",
           "by": "taskmaster"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T17:08:04.708Z",
+          "by": "task-git"
+        },
+        {
+          "status": "in-progress",
+          "at": "2026-05-20T17:11:15.326Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "implemented",
+          "at": "2026-05-20T17:13:40.086Z",
+          "by": "task-implement"
         }
       ],
       "implementation": {
-        "startedAt": null,
-        "completedAt": null,
-        "filesChanged": [],
+        "startedAt": "2026-05-20T17:11:15.326Z",
+        "completedAt": "2026-05-20T17:13:40.086Z",
+        "filesChanged": [
+          "src/modules/types.ts",
+          "src/modules/DebuggerModuleRegistryProvider.tsx",
+          "src/modules/useDebuggerApi.ts",
+          "src/components/Debugger.tsx"
+        ],
         "tokensUsed": null
       },
       "reviews": [],
@@ -949,8 +969,14 @@
         "debugger",
         "export"
       ],
-      "pushes": [],
-      "branch": null,
+      "pushes": [
+        {
+          "at": "2026-05-20T17:08:04.708Z",
+          "commitHash": "45e3cac",
+          "commitMessage": "docs(N04): add task spec for module debug-data registration and copy/export button"
+        }
+      ],
+      "branch": "feat/N04-module-debug-data-registration-copy-export",
       "mrUrl": null,
       "mergedAt": null
     }
