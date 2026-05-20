@@ -1122,7 +1122,7 @@
       "title": "Rewrite README with full API docs and architecture diagrams",
       "type": "rework",
       "priority": "medium",
-      "status": "fixed",
+      "status": "approved",
       "folder": "workTasks/N05-rewrite-readme-with-full-api-docs-and-architecture",
       "createdAt": "2026-05-20T19:03:34.538Z",
       "statusHistory": [
@@ -1200,6 +1200,21 @@
           "status": "fixed",
           "at": "2026-05-20T19:47:11.341Z",
           "by": "task-review-fix"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T19:47:39.596Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-20T19:53:56.915Z",
+          "by": "task-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-20T19:54:24.277Z",
+          "by": "task-review"
         }
       ],
       "implementation": {
@@ -1247,6 +1262,15 @@
             "comment": "Stripped Architecture section from README; moved 3 Mermaid diagrams + design notes to docs/architecture.md; added link from README dev section",
             "by": "task-review-fix"
           }
+        },
+        {
+          "startedAt": "2026-05-20T19:53:56.915Z",
+          "endedAt": "2026-05-20T19:54:24.276Z",
+          "verdict": "approved",
+          "comment": "Round 2: README correctly slimmed to consumer guide. Architecture diagrams moved to docs/architecture.md with accurate content. moduleData fix from round 1 intact. Build and lint clean. Approved.",
+          "type": "ai",
+          "by": "task-review",
+          "fix": null
         }
       ],
       "changesAfterImplementation": [],
@@ -1278,6 +1302,11 @@
           "at": "2026-05-20T19:44:17.763Z",
           "commitHash": "e4320ac",
           "commitMessage": "chore(N05): record human review (fix-needed: move architecture to docs/, slim README)"
+        },
+        {
+          "at": "2026-05-20T19:47:39.596Z",
+          "commitHash": "24dd500",
+          "commitMessage": "docs(N05): slim README to consumer guide, move architecture diagrams to docs/"
         }
       ],
       "branch": "rework/N05-rewrite-readme-api-docs-diagrams",
