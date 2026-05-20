@@ -680,7 +680,7 @@
       "title": "Add module registry with accordion stack, auto-registration wrapper, and Debugger API",
       "type": "feat",
       "priority": "high",
-      "status": "pushed",
+      "status": "merged",
       "folder": "workTasks/N03-add-module-registry-with-accordion-stack-auto-regi",
       "createdAt": "2026-05-20T15:20:44.315Z",
       "statusHistory": [
@@ -793,6 +793,11 @@
           "status": "pushed",
           "at": "2026-05-20T16:55:22.489Z",
           "by": "task-git"
+        },
+        {
+          "status": "merged",
+          "at": "2026-05-20T18:47:53.662Z",
+          "by": "task-git"
         }
       ],
       "implementation": {
@@ -858,7 +863,7 @@
       "changesAfterImplementation": [],
       "incidents": [],
       "committedAt": null,
-      "totalDurationMinutes": 92,
+      "totalDurationMinutes": 207,
       "tags": [
         "modules",
         "registry",
@@ -915,14 +920,14 @@
       ],
       "branch": "main",
       "mrUrl": null,
-      "mergedAt": "2026-05-20T16:52:40.093Z"
+      "mergedAt": "2026-05-20T18:47:53.662Z"
     },
     {
       "id": "N04",
       "title": "Add module debug-data registration, runtime updates, and header copy/export button",
       "type": "feat",
       "priority": "high",
-      "status": "pushed",
+      "status": "merged",
       "folder": "workTasks/N04-add-module-debug-data-registration-runtime-updates",
       "createdAt": "2026-05-20T17:06:26.766Z",
       "statusHistory": [
@@ -1010,6 +1015,11 @@
           "status": "pushed",
           "at": "2026-05-20T18:42:55.446Z",
           "by": "task-git"
+        },
+        {
+          "status": "merged",
+          "at": "2026-05-20T18:46:36.651Z",
+          "by": "task-git"
         }
       ],
       "implementation": {
@@ -1064,7 +1074,7 @@
       "changesAfterImplementation": [],
       "incidents": [],
       "committedAt": null,
-      "totalDurationMinutes": null,
+      "totalDurationMinutes": 100,
       "tags": [
         "api",
         "ui",
@@ -1105,7 +1115,7 @@
       ],
       "branch": "feat/N04-module-debug-data-registration-copy-export",
       "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/5",
-      "mergedAt": null
+      "mergedAt": "2026-05-20T18:46:36.651Z"
     }
   ]
 }
