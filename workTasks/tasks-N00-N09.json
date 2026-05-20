@@ -922,7 +922,7 @@
       "title": "Add module debug-data registration, runtime updates, and header copy/export button",
       "type": "feat",
       "priority": "high",
-      "status": "approved",
+      "status": "pushed",
       "folder": "workTasks/N04-add-module-debug-data-registration-runtime-updates",
       "createdAt": "2026-05-20T17:06:26.766Z",
       "statusHistory": [
@@ -990,6 +990,11 @@
           "status": "approved",
           "at": "2026-05-20T17:34:56.202Z",
           "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T17:35:22.270Z",
+          "by": "task-git"
         }
       ],
       "implementation": {
@@ -1062,10 +1067,15 @@
           "at": "2026-05-20T17:22:33.967Z",
           "commitHash": "4f454ba",
           "commitMessage": "fix(N04): stopPropagation on Escape in dropdown to prevent panel closing"
+        },
+        {
+          "at": "2026-05-20T17:35:22.269Z",
+          "commitHash": "1995d8a",
+          "commitMessage": "chore(N04): record AI review round 2 (approved)"
         }
       ],
       "branch": "feat/N04-module-debug-data-registration-copy-export",
-      "mrUrl": null,
+      "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/5",
       "mergedAt": null
     }
   ]
