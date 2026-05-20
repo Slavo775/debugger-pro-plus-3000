@@ -674,6 +674,44 @@
       "branch": "feat/N02-add-full-height-debug-panel-wrapper-with-configura",
       "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/3",
       "mergedAt": "2026-05-19T22:04:56.917Z"
+    },
+    {
+      "id": "N03",
+      "title": "Add module registry with accordion stack, auto-registration wrapper, and Debugger API",
+      "type": "feat",
+      "priority": "high",
+      "status": "ready",
+      "folder": "workTasks/N03-add-module-registry-with-accordion-stack-auto-regi",
+      "createdAt": "2026-05-20T15:20:44.315Z",
+      "statusHistory": [
+        {
+          "status": "ready",
+          "at": "2026-05-20T15:20:44.315Z",
+          "by": "taskmaster"
+        }
+      ],
+      "implementation": {
+        "startedAt": null,
+        "completedAt": null,
+        "filesChanged": [],
+        "tokensUsed": null
+      },
+      "reviews": [],
+      "changesAfterImplementation": [],
+      "incidents": [],
+      "committedAt": null,
+      "totalDurationMinutes": null,
+      "tags": [
+        "modules",
+        "registry",
+        "accordion",
+        "api",
+        "pub-sub"
+      ],
+      "pushes": [],
+      "branch": null,
+      "mrUrl": null,
+      "mergedAt": null
     }
   ]
 }
