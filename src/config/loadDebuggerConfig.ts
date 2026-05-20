@@ -169,4 +169,44 @@ function assertValidConfig(value: unknown, filePath: string): asserts value is D
       }
     }
   }
+  if (config.modules !== undefined) {
+    if (!Array.isArray(config.modules)) {
+      throw new Error(`${ERROR_PREFIX} \`modules\` in ${filePath} must be an array.`)
+    }
+    config.modules.forEach((entry, i) => validateModuleEntry(entry, i, filePath))
+  }
+}
+
+function validateModuleEntry(entry: unknown, index: number, filePath: string): void {
+  if (typeof entry === 'string') {
+    if (entry.length === 0) {
+      throw new Error(
+        `${ERROR_PREFIX} \`modules[${index}]\` in ${filePath} must be a non-empty string id.`,
+      )
+    }
+    return
+  }
+  if (typeof entry !== 'object' || entry === null || Array.isArray(entry)) {
+    throw new Error(
+      `${ERROR_PREFIX} \`modules[${index}]\` in ${filePath} must be a non-empty string id or a plain object with an \`id\` field.`,
+    )
+  }
+  const obj = entry as Record<string, unknown>
+  if (typeof obj.id !== 'string' || obj.id.length === 0) {
+    throw new Error(
+      `${ERROR_PREFIX} \`modules[${index}].id\` in ${filePath} must be a non-empty string.`,
+    )
+  }
+  if (obj.title !== undefined && typeof obj.title !== 'string') {
+    throw new Error(
+      `${ERROR_PREFIX} \`modules[${index}].title\` in ${filePath} must be a string.`,
+    )
+  }
+  if (obj.settings !== undefined) {
+    if (typeof obj.settings !== 'object' || obj.settings === null || Array.isArray(obj.settings)) {
+      throw new Error(
+        `${ERROR_PREFIX} \`modules[${index}].settings\` in ${filePath} must be a plain object.`,
+      )
+    }
+  }
 }

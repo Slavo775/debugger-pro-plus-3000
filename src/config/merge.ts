@@ -19,5 +19,6 @@ export function mergeWithDefaults(userConfig: DebuggerConfig): ResolvedDebuggerC
         ...userConfig.panel?.style,
       },
     },
+    modules: userConfig.modules ? [...userConfig.modules] : [...DEFAULT_DEBUGGER_CONFIG.modules],
   }
 }

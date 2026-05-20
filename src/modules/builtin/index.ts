@@ -1,0 +1,1 @@
+export { deviceInfoModule } from './deviceInfo'

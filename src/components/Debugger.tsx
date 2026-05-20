@@ -1,18 +1,15 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { DebuggerConfigProvider } from '../config/DebuggerConfigProvider'
 import { useDebuggerConfig } from '../config/useDebuggerConfig'
 import type { ButtonCorner, DebuggerConfig } from '../config/types'
 import { DebuggerFab } from './DebuggerFab'
 import { useFabPosition } from './useFabPosition'
-
-export interface DebuggerPlugin {
-  id: string
-  label: string
-  render: () => React.ReactNode
-}
+import type { DebuggerModule } from '../modules/types'
+import { BUILT_IN_MODULES } from '../modules/registry'
+import { resolveModules } from '../modules/resolve'
 
 export interface DebuggerProps {
-  plugins?: DebuggerPlugin[]
+  modules?: DebuggerModule<unknown>[]
   defaultOpen?: boolean
   config?: DebuggerConfig
 }
@@ -31,12 +28,30 @@ function sideFromCorner(corner: ButtonCorner): PanelSide {
   return corner === 'leftTop' || corner === 'leftBottom' ? 'left' : 'right'
 }
 
-function DebuggerPanel({ plugins = [], defaultOpen = false }: Omit<DebuggerProps, 'config'>) {
-  const { style, button, panel } = useDebuggerConfig()
+function DebuggerPanel({ modules = [], defaultOpen = false }: Omit<DebuggerProps, 'config'>) {
+  const { style, button, panel, modules: configModules } = useDebuggerConfig()
   const [corner, setCorner] = useFabPosition(button.position, button.draggable)
   const [open, setOpen] = useState(defaultOpen)
-  const [activePlugin, setActivePlugin] = useState<string | null>(plugins[0]?.id ?? null)
   const [isFullscreen, setIsFullscreen] = useState(false)
+
+  const resolved = useMemo(
+    () => resolveModules(configModules, modules, BUILT_IN_MODULES),
+    [configModules, modules],
+  )
+
+  const [activeModuleId, setActiveModuleId] = useState<string | null>(
+    resolved[0]?.instanceKey ?? null,
+  )
+
+  useEffect(() => {
+    if (resolved.length === 0) {
+      setActiveModuleId(null)
+      return
+    }
+    if (!resolved.some((m) => m.instanceKey === activeModuleId)) {
+      setActiveModuleId(resolved[0].instanceKey)
+    }
+  }, [resolved, activeModuleId])
 
   const closePanel = useCallback(() => {
     setOpen(false)
@@ -58,7 +73,7 @@ function DebuggerPanel({ plugins = [], defaultOpen = false }: Omit<DebuggerProps
 
   const side = sideFromCorner(corner)
   const primaryColor = style.primaryColor
-  const active = plugins.find((p) => p.id === activePlugin)
+  const active = resolved.find((m) => m.instanceKey === activeModuleId)
 
   return (
     <section
@@ -89,18 +104,18 @@ function DebuggerPanel({ plugins = [], defaultOpen = false }: Omit<DebuggerProps
         </div>
       </header>
 
-      {plugins.length > 0 && (
+      {resolved.length > 0 && (
         <div style={tabBarStyle} role="tablist">
-          {plugins.map((p) => (
+          {resolved.map((m) => (
             <button
-              key={p.id}
+              key={m.instanceKey}
               type="button"
               role="tab"
-              aria-selected={p.id === activePlugin}
-              onClick={() => setActivePlugin(p.id)}
-              style={tabStyle(p.id === activePlugin, primaryColor)}
+              aria-selected={m.instanceKey === activeModuleId}
+              onClick={() => setActiveModuleId(m.instanceKey)}
+              style={tabStyle(m.instanceKey === activeModuleId, primaryColor)}
             >
-              {p.label}
+              {m.title}
             </button>
           ))}
         </div>
@@ -110,7 +125,7 @@ function DebuggerPanel({ plugins = [], defaultOpen = false }: Omit<DebuggerProps
         {active ? (
           active.render()
         ) : (
-          <span style={{ color: '#888', fontSize: 12 }}>No plugins loaded.</span>
+          <span style={{ color: '#888', fontSize: 12 }}>No modules loaded.</span>
         )}
       </div>
     </section>

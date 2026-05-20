@@ -680,7 +680,7 @@
       "title": "Introduce module system with config-driven selection and first built-in (device-info)",
       "type": "feat",
       "priority": "high",
-      "status": "ready",
+      "status": "implemented",
       "folder": "workTasks/N03-introduce-module-system-with-config-driven-selecti",
       "createdAt": "2026-05-20T09:03:10.772Z",
       "statusHistory": [
@@ -688,12 +688,43 @@
           "status": "ready",
           "at": "2026-05-20T09:03:10.773Z",
           "by": "taskmaster"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T09:23:05.921Z",
+          "by": "task-git"
+        },
+        {
+          "status": "in-progress",
+          "at": "2026-05-20T10:37:08.673Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "implemented",
+          "at": "2026-05-20T10:47:20.267Z",
+          "by": "task-implement"
         }
       ],
       "implementation": {
-        "startedAt": null,
-        "completedAt": null,
-        "filesChanged": [],
+        "startedAt": "2026-05-20T10:37:08.673Z",
+        "completedAt": "2026-05-20T10:47:20.267Z",
+        "filesChanged": [
+          "src/modules/types.ts",
+          "src/modules/registry.ts",
+          "src/modules/resolve.ts",
+          "src/modules/builtin/deviceInfo.tsx",
+          "src/modules/builtin/index.ts",
+          "src/modules/index.ts",
+          "src/config/types.ts",
+          "src/config/defaults.ts",
+          "src/config/merge.ts",
+          "src/config/loadDebuggerConfig.ts",
+          "src/config/index.ts",
+          "src/components/Debugger.tsx",
+          "src/index.ts",
+          "src/main.tsx",
+          "config.debugger.js"
+        ],
         "tokensUsed": null
       },
       "reviews": [],
@@ -708,8 +739,14 @@
         "builtins",
         "breaking"
       ],
-      "pushes": [],
-      "branch": null,
+      "pushes": [
+        {
+          "at": "2026-05-20T09:23:05.921Z",
+          "commitHash": "af434776f1c04a8552b399a458fbb5a168240caa",
+          "commitMessage": "docs(N03): add task spec for module system + first built-in"
+        }
+      ],
+      "branch": "feat/N03-introduce-module-system-with-config-driven-selecti",
       "mrUrl": null,
       "mergedAt": null
     }

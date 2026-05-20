@@ -12,4 +12,5 @@ export default {
       width: 360,
     },
   },
+  modules: [{ id: 'device-info', title: 'Device' }],
 }

@@ -1,3 +1,5 @@
+import type { DebuggerModuleEntry } from '../modules/types'
+
 export type ButtonCorner = 'rightTop' | 'leftTop' | 'rightBottom' | 'leftBottom'
 
 export interface DebuggerStyleConfig {
@@ -23,6 +25,7 @@ export interface DebuggerConfig {
   style?: DebuggerStyleConfig
   button?: DebuggerButtonConfig
   panel?: DebuggerPanelConfig
+  modules?: DebuggerModuleEntry[]
 }
 
 export type ResolvedDebuggerConfig = Required<{
@@ -32,4 +35,5 @@ export type ResolvedDebuggerConfig = Required<{
     title: string
     style: Required<DebuggerPanelStyleConfig>
   }>
+  modules: DebuggerModuleEntry[]
 }>

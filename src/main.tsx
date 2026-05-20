@@ -2,6 +2,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Debugger, useDebuggerConfig } from './index'
+import type { DebuggerModule } from './index'
 import debuggerConfig from '../config.debugger.js'
 
 function ConfigEcho() {
@@ -18,22 +19,11 @@ function ConfigEcho() {
   )
 }
 
-const demoPlugin = {
-  id: 'demo',
-  label: 'Demo',
-  render: () => (
-    <div>
-      <p style={{ color: '#aef', margin: 0 }}>Hello from plugin!</p>
-      <pre style={{ color: '#8f8', fontSize: 11, marginTop: 8 }}>
-        {JSON.stringify({ time: new Date().toISOString() }, null, 2)}
-      </pre>
-    </div>
-  ),
-}
-
-const configEchoPlugin = {
-  id: 'config',
-  label: 'Config',
+// A custom module passed at runtime via the `modules` prop — appears in
+// the tab bar after any modules selected through `config.modules`.
+const configEchoModule: DebuggerModule<void> = {
+  id: 'config-echo',
+  defaultTitle: 'Config',
   render: () => <ConfigEcho />,
 }
 
@@ -44,18 +34,17 @@ createRoot(document.getElementById('root')!).render(
       <p>
         Click the floating button to open the debugger. Drag the FAB to any corner — the position
         is saved to <code>localStorage[&quot;debugger_fab_position&quot;]</code> and survives
-        reloads. The panel now opens full-height on the same side the FAB is anchored to.
+        reloads. The panel opens full-height on the same side the FAB is anchored to.
       </p>
       <p style={{ color: '#666', fontSize: 13 }}>
-        Loaded <code>config.debugger.js</code> →{' '}
-        <code>primaryColor: {debuggerConfig.style?.primaryColor}</code>,{' '}
-        <code>panel.title: {debuggerConfig.panel?.title}</code>,{' '}
-        <code>panel.style.width: {debuggerConfig.panel?.style?.width}</code>
+        Built-in modules come from <code>config.modules</code>. Custom modules can still be passed
+        at runtime via the <code>modules</code> prop on <code>&lt;Debugger&gt;</code> (the
+        &quot;Config&quot; tab below is one).
       </p>
       <p style={{ color: '#666', fontSize: 13 }}>
         Use the ⤢ button in the panel header to toggle fullscreen. Press <kbd>Esc</kbd> to close.
       </p>
     </div>
-    <Debugger plugins={[demoPlugin, configEchoPlugin]} config={debuggerConfig} />
+    <Debugger modules={[configEchoModule]} config={debuggerConfig} />
   </StrictMode>,
 )

@@ -14,3 +14,4 @@ export type {
   DebuggerStyleConfig,
   ResolvedDebuggerConfig,
 } from './types'
+export type { DebuggerModuleEntry } from '../modules/types'
