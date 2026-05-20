@@ -680,7 +680,7 @@
       "title": "Add module registry with accordion stack, auto-registration wrapper, and Debugger API",
       "type": "feat",
       "priority": "high",
-      "status": "fixed",
+      "status": "approved",
       "folder": "workTasks/N03-add-module-registry-with-accordion-stack-auto-regi",
       "createdAt": "2026-05-20T15:20:44.315Z",
       "statusHistory": [
@@ -748,6 +748,21 @@
           "status": "fixed",
           "at": "2026-05-20T16:27:54.278Z",
           "by": "task-review-fix"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T16:28:13.779Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-20T16:47:20.686Z",
+          "by": "task-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-20T16:48:25.302Z",
+          "by": "task-review"
         }
       ],
       "implementation": {
@@ -790,6 +805,15 @@
             "comment": "Fixed all four review items. (1) Expand animation: set maxHeight(0) before double-rAF to maxHeight(measured) so CSS transition has a start state. (2) Plugin toggle: added pluginExpanded local state in ModuleStack seeded per plugin id; synthetic and registered modules now use separate onToggle callbacks. (3) Stable EMPTY_DATA constant in useDebuggerApi to avoid new object on every render. (4) Removed DebuggerModuleRegistryProvider from src/modules/index.ts barrel.",
             "by": "task-review-fix"
           }
+        },
+        {
+          "startedAt": "2026-05-20T16:47:20.686Z",
+          "endedAt": "2026-05-20T16:48:25.302Z",
+          "verdict": "approved",
+          "comment": "Round 2 review — all four fixes verified. (1) Expand animation: double-rAF pattern correctly applied; when collapsed state already has maxHeight:0, setup calls are no-ops so rAF transitions cleanly 0→measured. (2) Plugin toggle: pluginExpanded local state reads correctly, onToggle paths properly split between synthetic and registered. New plugins added post-mount default to true via ?? true. (3) EMPTY_DATA stable constant confirmed at module level. (4) DebuggerModuleRegistryProvider removed from barrel. No regressions introduced. Lint clean, build clean. Manual browser verification of accordion expand/collapse and emit round-trip recommended before merge.",
+          "type": "ai",
+          "by": "task-review",
+          "fix": null
         }
       ],
       "changesAfterImplementation": [],
@@ -828,6 +852,11 @@
           "at": "2026-05-20T16:17:23.718Z",
           "commitHash": "8285df883ed8f06c914f789db374c6925402d944",
           "commitMessage": "chore(N03): record AI review (fix-needed: expand animation, plugin toggle)"
+        },
+        {
+          "at": "2026-05-20T16:28:13.778Z",
+          "commitHash": "792353b",
+          "commitMessage": "fix(N03): apply review fixes — expand animation, plugin toggle, stable moduleData ref"
         }
       ],
       "branch": "main",
