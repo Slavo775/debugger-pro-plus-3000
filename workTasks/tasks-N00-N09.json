@@ -1362,7 +1362,7 @@
       "title": "Add predefined DeviceInfo module with snapshot integration",
       "type": "feat",
       "priority": "high",
-      "status": "approved",
+      "status": "fix-needed",
       "folder": "workTasks/N06-add-predefined-deviceinfo-module-with-snapshot-int",
       "createdAt": "2026-05-20T20:10:28.694Z",
       "statusHistory": [
@@ -1415,6 +1415,16 @@
           "status": "approved",
           "at": "2026-05-20T20:34:40.532Z",
           "by": "task-review"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-20T20:45:27.397Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "fix-needed",
+          "at": "2026-05-20T20:46:30.240Z",
+          "by": "task-human-review"
         }
       ],
       "implementation": {
@@ -1445,6 +1455,15 @@
           "comment": "All checklist items satisfied. collectDeviceData() called twice per render (once in effect, once for display) — minor inefficiency, not a bug. navigator.platform is deprecated but acceptable for a debug module. File split (.tsx/.ts) to satisfy react-refresh ESLint rule is the right call. createElement in the .ts module file is correct. All guards in place (orientation, connection). Snapshot integration, responsiveness, public API, and quality gates all pass.",
           "type": "ai",
           "by": "task-review",
+          "fix": null
+        },
+        {
+          "startedAt": "2026-05-20T20:45:27.398Z",
+          "endedAt": "2026-05-20T20:46:30.239Z",
+          "verdict": "fix-needed",
+          "comment": "Registry should own window resize/orientationchange listeners and broadcast 'viewport-change' via _send to all modules. DeviceInfoPanel should subscribe via useDebuggerApi().subscribe() instead of touching window directly. Add ViewportChangePayload type and export it publicly.",
+          "type": "human",
+          "by": "task-human-review",
           "fix": null
         }
       ],
