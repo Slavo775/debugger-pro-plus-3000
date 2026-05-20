@@ -922,7 +922,7 @@
       "title": "Add module debug-data registration, runtime updates, and header copy/export button",
       "type": "feat",
       "priority": "high",
-      "status": "fixed",
+      "status": "approved",
       "folder": "workTasks/N04-add-module-debug-data-registration-runtime-updates",
       "createdAt": "2026-05-20T17:06:26.766Z",
       "statusHistory": [
@@ -975,6 +975,21 @@
           "status": "fixed",
           "at": "2026-05-20T17:22:05.594Z",
           "by": "task-review-fix"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T17:22:33.967Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-20T17:34:34.979Z",
+          "by": "task-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-20T17:34:56.202Z",
+          "by": "task-review"
         }
       ],
       "implementation": {
@@ -1006,6 +1021,15 @@
             "comment": "Added e.stopPropagation() to CopyExportButton Escape handler so dropdown close does not bubble to panel close listener",
             "by": "task-review-fix"
           }
+        },
+        {
+          "startedAt": "2026-05-20T17:34:34.979Z",
+          "endedAt": "2026-05-20T17:34:56.201Z",
+          "verdict": "approved",
+          "comment": "Round 2: Escape stopPropagation fix confirmed correct. All checklist items implemented — API (updateData, _updateData, _getDebugSnapshot, runtimeDataRef), UI (CopyExportButton split-button, clipboard copy with 1.5s feedback, JSON/TXT blob download, dropdown with all three dismissal paths). Build and lint clean. Approved.",
+          "type": "ai",
+          "by": "task-review",
+          "fix": null
         }
       ],
       "changesAfterImplementation": [],
@@ -1033,6 +1057,11 @@
           "at": "2026-05-20T17:19:25.265Z",
           "commitHash": "9fe0175",
           "commitMessage": "chore(N04): record AI review round 1 (fix-needed: Escape key conflict)"
+        },
+        {
+          "at": "2026-05-20T17:22:33.967Z",
+          "commitHash": "4f454ba",
+          "commitMessage": "fix(N04): stopPropagation on Escape in dropdown to prevent panel closing"
         }
       ],
       "branch": "feat/N04-module-debug-data-registration-copy-export",
