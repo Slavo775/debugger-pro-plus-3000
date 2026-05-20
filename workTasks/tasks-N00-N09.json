@@ -1215,6 +1215,21 @@
           "status": "approved",
           "at": "2026-05-20T19:54:24.277Z",
           "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T19:54:48.952Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-20T19:55:48.234Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-20T19:56:00.301Z",
+          "by": "task-human-review"
         }
       ],
       "implementation": {
@@ -1271,6 +1286,15 @@
           "type": "ai",
           "by": "task-review",
           "fix": null
+        },
+        {
+          "startedAt": "2026-05-20T19:55:48.235Z",
+          "endedAt": "2026-05-20T19:56:00.300Z",
+          "verdict": "approved",
+          "comment": "Human approved: approved",
+          "type": "human",
+          "by": "task-human-review",
+          "fix": null
         }
       ],
       "changesAfterImplementation": [],
@@ -1307,6 +1331,11 @@
           "at": "2026-05-20T19:47:39.596Z",
           "commitHash": "24dd500",
           "commitMessage": "docs(N05): slim README to consumer guide, move architecture diagrams to docs/"
+        },
+        {
+          "at": "2026-05-20T19:54:48.952Z",
+          "commitHash": "6ccf68b",
+          "commitMessage": "chore(N05): record AI review round 2 (approved)"
         }
       ],
       "branch": "rework/N05-rewrite-readme-api-docs-diagrams",
