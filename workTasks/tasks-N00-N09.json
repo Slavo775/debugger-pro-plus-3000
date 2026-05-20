@@ -680,7 +680,7 @@
       "title": "Add module registry with accordion stack, auto-registration wrapper, and Debugger API",
       "type": "feat",
       "priority": "high",
-      "status": "implemented",
+      "status": "pushed",
       "folder": "workTasks/N03-add-module-registry-with-accordion-stack-auto-regi",
       "createdAt": "2026-05-20T15:20:44.315Z",
       "statusHistory": [
@@ -708,6 +708,11 @@
           "status": "implemented",
           "at": "2026-05-20T16:04:02.562Z",
           "by": "task-implement"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T16:04:39.135Z",
+          "by": "task-git"
         }
       ],
       "implementation": {
@@ -752,9 +757,14 @@
           "at": "2026-05-20T15:55:06.257Z",
           "commitHash": "8e5105f",
           "commitMessage": "docs(N03): revise spec — render-prop modules array, framework-agnostic evolution path"
+        },
+        {
+          "at": "2026-05-20T16:04:39.135Z",
+          "commitHash": "26b6e2b",
+          "commitMessage": "feat(N03): module registry with accordion stack, render-prop API, and Debugger event bus"
         }
       ],
-      "branch": "main",
+      "branch": "feat/N03-module-registry-accordion-stack-debugger-api",
       "mrUrl": null,
       "mergedAt": null
     }
