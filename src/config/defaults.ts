@@ -15,4 +15,5 @@ export const DEFAULT_DEBUGGER_CONFIG: ResolvedDebuggerConfig = {
       width: 320,
     },
   },
+  modules: [],
 }

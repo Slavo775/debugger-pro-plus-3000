@@ -169,4 +169,36 @@ function assertValidConfig(value: unknown, filePath: string): asserts value is D
       }
     }
   }
+  if (config.modules !== undefined) {
+    if (!Array.isArray(config.modules)) {
+      throw new Error(`${ERROR_PREFIX} \`modules\` in ${filePath} must be an array.`)
+    }
+    config.modules = (config.modules as unknown[]).filter((entry, i) => {
+      if (!entry || typeof entry !== 'object' || Array.isArray(entry)) {
+        console.warn(`${ERROR_PREFIX} \`modules[${i}]\` in ${filePath} must be a plain object; skipping.`)
+        return false
+      }
+      const m = entry as Record<string, unknown>
+      if (typeof m.id !== 'string' || m.id.trim() === '') {
+        console.warn(`${ERROR_PREFIX} \`modules[${i}].id\` in ${filePath} must be a non-empty string; skipping.`)
+        return false
+      }
+      if (m.title !== undefined && typeof m.title !== 'string') {
+        console.warn(`${ERROR_PREFIX} \`modules[${i}].title\` in ${filePath} must be a string; skipping.`)
+        return false
+      }
+      if (m.defaultExpanded !== undefined && typeof m.defaultExpanded !== 'boolean') {
+        console.warn(`${ERROR_PREFIX} \`modules[${i}].defaultExpanded\` in ${filePath} must be a boolean; skipping.`)
+        return false
+      }
+      if (
+        m.data !== undefined &&
+        (typeof m.data !== 'object' || m.data === null || Array.isArray(m.data))
+      ) {
+        console.warn(`${ERROR_PREFIX} \`modules[${i}].data\` in ${filePath} must be a plain object; skipping.`)
+        return false
+      }
+      return true
+    })
+  }
 }

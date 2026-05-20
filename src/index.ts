@@ -11,8 +11,17 @@ export type {
   ButtonCorner,
   DebuggerButtonConfig,
   DebuggerConfig,
+  DebuggerModuleConfig,
   DebuggerPanelConfig,
   DebuggerPanelStyleConfig,
   DebuggerStyleConfig,
   ResolvedDebuggerConfig,
 } from './config/types'
+
+export { useDebuggerApi } from './modules/useDebuggerApi'
+export type {
+  DebuggerApi,
+  DebuggerModuleDefinition,
+  ModuleEventHandler,
+  RegisteredModule,
+} from './modules/types'

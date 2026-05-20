@@ -1,5 +1,5 @@
 import { DEFAULT_DEBUGGER_CONFIG } from './defaults'
-import type { DebuggerConfig, ResolvedDebuggerConfig } from './types'
+import type { DebuggerConfig, DebuggerModuleConfig, ResolvedDebuggerConfig } from './types'
 
 export function mergeWithDefaults(userConfig: DebuggerConfig): ResolvedDebuggerConfig {
   return {
@@ -19,5 +19,16 @@ export function mergeWithDefaults(userConfig: DebuggerConfig): ResolvedDebuggerC
         ...userConfig.panel?.style,
       },
     },
+    modules: mergeModules(DEFAULT_DEBUGGER_CONFIG.modules, userConfig.modules ?? []),
   }
+}
+
+function mergeModules(
+  base: DebuggerModuleConfig[],
+  overrides: DebuggerModuleConfig[],
+): DebuggerModuleConfig[] {
+  const map = new Map<string, DebuggerModuleConfig>()
+  for (const m of base) map.set(m.id, m)
+  for (const m of overrides) map.set(m.id, { ...map.get(m.id), ...m })
+  return Array.from(map.values())
 }

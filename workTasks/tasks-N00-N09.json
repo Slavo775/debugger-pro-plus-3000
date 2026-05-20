@@ -680,7 +680,7 @@
       "title": "Add module registry with accordion stack, auto-registration wrapper, and Debugger API",
       "type": "feat",
       "priority": "high",
-      "status": "ready",
+      "status": "implemented",
       "folder": "workTasks/N03-add-module-registry-with-accordion-stack-auto-regi",
       "createdAt": "2026-05-20T15:20:44.315Z",
       "statusHistory": [
@@ -688,12 +688,46 @@
           "status": "ready",
           "at": "2026-05-20T15:20:44.315Z",
           "by": "taskmaster"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T15:33:57.908Z",
+          "by": "task-git"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T15:55:06.257Z",
+          "by": "task-git"
+        },
+        {
+          "status": "in-progress",
+          "at": "2026-05-20T15:58:43.062Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "implemented",
+          "at": "2026-05-20T16:04:02.562Z",
+          "by": "task-implement"
         }
       ],
       "implementation": {
-        "startedAt": null,
-        "completedAt": null,
-        "filesChanged": [],
+        "startedAt": "2026-05-20T15:58:43.062Z",
+        "completedAt": "2026-05-20T16:04:02.562Z",
+        "filesChanged": [
+          "src/config/types.ts",
+          "src/config/defaults.ts",
+          "src/config/merge.ts",
+          "src/config/loadDebuggerConfig.ts",
+          "src/modules/types.ts",
+          "src/modules/DebuggerModuleRegistryContext.ts",
+          "src/modules/DebuggerModuleRegistryProvider.tsx",
+          "src/modules/useDebuggerApi.ts",
+          "src/modules/index.ts",
+          "src/components/Debugger.tsx",
+          "src/index.ts",
+          "config.debugger.js",
+          "src/main.tsx"
+        ],
         "tokensUsed": null
       },
       "reviews": [],
@@ -708,8 +742,19 @@
         "api",
         "pub-sub"
       ],
-      "pushes": [],
-      "branch": null,
+      "pushes": [
+        {
+          "at": "2026-05-20T15:33:57.908Z",
+          "commitHash": "42fce03",
+          "commitMessage": "docs(N03): add task spec for module registry, accordion stack, and Debugger API"
+        },
+        {
+          "at": "2026-05-20T15:55:06.257Z",
+          "commitHash": "8e5105f",
+          "commitMessage": "docs(N03): revise spec — render-prop modules array, framework-agnostic evolution path"
+        }
+      ],
+      "branch": "main",
       "mrUrl": null,
       "mergedAt": null
     }
