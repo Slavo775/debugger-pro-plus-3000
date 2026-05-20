@@ -1460,6 +1460,11 @@
           "status": "merged",
           "at": "2026-05-20T21:20:10.662Z",
           "by": "task-git"
+        },
+        {
+          "status": "merged",
+          "at": "2026-05-20T21:21:44.027Z",
+          "by": "task-git"
         }
       ],
       "implementation": {
@@ -1526,7 +1531,7 @@
       "changesAfterImplementation": [],
       "incidents": [],
       "committedAt": null,
-      "totalDurationMinutes": 70,
+      "totalDurationMinutes": 71,
       "tags": [
         "modules",
         "predefined",
@@ -1562,7 +1567,7 @@
       ],
       "branch": "feat/N06-predefined-deviceinfo-module",
       "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/7",
-      "mergedAt": "2026-05-20T21:20:10.661Z"
+      "mergedAt": "2026-05-20T21:21:44.027Z"
     }
   ]
 }
