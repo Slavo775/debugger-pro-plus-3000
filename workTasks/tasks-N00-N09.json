@@ -1116,6 +1116,54 @@
       "branch": "feat/N04-module-debug-data-registration-copy-export",
       "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/5",
       "mergedAt": "2026-05-20T18:46:36.651Z"
+    },
+    {
+      "id": "N05",
+      "title": "Rewrite README with full API docs and architecture diagrams",
+      "type": "rework",
+      "priority": "medium",
+      "status": "implemented",
+      "folder": "workTasks/N05-rewrite-readme-with-full-api-docs-and-architecture",
+      "createdAt": "2026-05-20T19:03:34.538Z",
+      "statusHistory": [
+        {
+          "status": "ready",
+          "at": "2026-05-20T19:03:34.541Z",
+          "by": "taskmaster"
+        },
+        {
+          "status": "in-progress",
+          "at": "2026-05-20T19:04:45.377Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "implemented",
+          "at": "2026-05-20T19:06:24.699Z",
+          "by": "task-implement"
+        }
+      ],
+      "implementation": {
+        "startedAt": "2026-05-20T19:04:45.377Z",
+        "completedAt": "2026-05-20T19:06:24.699Z",
+        "filesChanged": [
+          "README.md"
+        ],
+        "tokensUsed": null
+      },
+      "reviews": [],
+      "changesAfterImplementation": [],
+      "incidents": [],
+      "committedAt": null,
+      "totalDurationMinutes": null,
+      "tags": [
+        "docs",
+        "readme",
+        "diagrams"
+      ],
+      "pushes": [],
+      "branch": null,
+      "mrUrl": null,
+      "mergedAt": null
     }
   ]
 }
