@@ -1122,7 +1122,7 @@
       "title": "Rewrite README with full API docs and architecture diagrams",
       "type": "rework",
       "priority": "medium",
-      "status": "fix-needed",
+      "status": "fixed",
       "folder": "workTasks/N05-rewrite-readme-with-full-api-docs-and-architecture",
       "createdAt": "2026-05-20T19:03:34.538Z",
       "statusHistory": [
@@ -1185,6 +1185,21 @@
           "status": "fix-needed",
           "at": "2026-05-20T19:43:45.124Z",
           "by": "task-human-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T19:44:17.763Z",
+          "by": "task-git"
+        },
+        {
+          "status": "fixing",
+          "at": "2026-05-20T19:46:08.780Z",
+          "by": "task-review-fix"
+        },
+        {
+          "status": "fixed",
+          "at": "2026-05-20T19:47:11.341Z",
+          "by": "task-review-fix"
         }
       ],
       "implementation": {
@@ -1221,7 +1236,17 @@
           "comment": "README too detailed — remove Architecture section from README, move Mermaid diagrams to docs/architecture.md. README should be a black-box consumer guide only.",
           "type": "human",
           "by": "task-human-review",
-          "fix": null
+          "fix": {
+            "startedAt": "2026-05-20T19:46:08.780Z",
+            "endedAt": "2026-05-20T19:47:11.341Z",
+            "status": "fixed",
+            "filesChanged": [
+              "README.md",
+              "docs/architecture.md"
+            ],
+            "comment": "Stripped Architecture section from README; moved 3 Mermaid diagrams + design notes to docs/architecture.md; added link from README dev section",
+            "by": "task-review-fix"
+          }
         }
       ],
       "changesAfterImplementation": [],
@@ -1248,6 +1273,11 @@
           "at": "2026-05-20T19:34:15.774Z",
           "commitHash": "79debdf",
           "commitMessage": "docs(N05): fix moduleData description — static-only, not static+runtime"
+        },
+        {
+          "at": "2026-05-20T19:44:17.763Z",
+          "commitHash": "e4320ac",
+          "commitMessage": "chore(N05): record human review (fix-needed: move architecture to docs/, slim README)"
         }
       ],
       "branch": "rework/N05-rewrite-readme-api-docs-diagrams",
