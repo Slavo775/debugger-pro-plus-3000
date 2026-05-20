@@ -1122,7 +1122,7 @@
       "title": "Rewrite README with full API docs and architecture diagrams",
       "type": "rework",
       "priority": "medium",
-      "status": "fixed",
+      "status": "fix-needed",
       "folder": "workTasks/N05-rewrite-readme-with-full-api-docs-and-architecture",
       "createdAt": "2026-05-20T19:03:34.538Z",
       "statusHistory": [
@@ -1170,6 +1170,21 @@
           "status": "fixed",
           "at": "2026-05-20T19:33:27.042Z",
           "by": "task-review-fix"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T19:34:15.774Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-20T19:43:27.518Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "fix-needed",
+          "at": "2026-05-20T19:43:45.124Z",
+          "by": "task-human-review"
         }
       ],
       "implementation": {
@@ -1198,6 +1213,15 @@
             "comment": "Corrected moduleData description: static-only, runtime patches from updateData() only appear in Copy/Export snapshot",
             "by": "task-review-fix"
           }
+        },
+        {
+          "startedAt": "2026-05-20T19:43:27.518Z",
+          "endedAt": "2026-05-20T19:43:45.124Z",
+          "verdict": "fix-needed",
+          "comment": "README too detailed — remove Architecture section from README, move Mermaid diagrams to docs/architecture.md. README should be a black-box consumer guide only.",
+          "type": "human",
+          "by": "task-human-review",
+          "fix": null
         }
       ],
       "changesAfterImplementation": [],
@@ -1219,6 +1243,11 @@
           "at": "2026-05-20T19:17:36.752Z",
           "commitHash": "90c145b",
           "commitMessage": "chore(N05): record AI review round 1 (fix-needed: moduleData description inaccuracy)"
+        },
+        {
+          "at": "2026-05-20T19:34:15.774Z",
+          "commitHash": "79debdf",
+          "commitMessage": "docs(N05): fix moduleData description — static-only, not static+runtime"
         }
       ],
       "branch": "rework/N05-rewrite-readme-api-docs-diagrams",
