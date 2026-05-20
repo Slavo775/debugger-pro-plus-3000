@@ -15,10 +15,12 @@ export type {
   DebuggerPanelConfig,
   DebuggerPanelStyleConfig,
   DebuggerStyleConfig,
+  LogConfig,
   ResolvedDebuggerConfig,
 } from './config/types'
 
-export { deviceInfoModule } from './modules/predefined'
+export { deviceInfoModule, logsModule, useDebuggerLog } from './modules/predefined'
+export type { LogEntry } from './modules/predefined'
 
 export { useDebuggerApi } from './modules/useDebuggerApi'
 export type {
@@ -26,5 +28,6 @@ export type {
   DebuggerModuleDefinition,
   ModuleEventHandler,
   RegisteredModule,
+  RouteChangePayload,
   ViewportChangePayload,
 } from './modules/types'

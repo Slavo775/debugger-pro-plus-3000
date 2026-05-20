@@ -1574,7 +1574,7 @@
       "title": "Add Logs module with configurable log channels, route tracking, and debugger API hook",
       "type": "feat",
       "priority": "high",
-      "status": "ready",
+      "status": "implemented",
       "folder": "workTasks/N07-add-logs-module-with-configurable-log-channels-rou",
       "createdAt": "2026-05-20T21:55:37.285Z",
       "statusHistory": [
@@ -1582,12 +1582,43 @@
           "status": "ready",
           "at": "2026-05-20T21:55:37.285Z",
           "by": "taskmaster"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T21:57:39.479Z",
+          "by": "task-git"
+        },
+        {
+          "status": "in-progress",
+          "at": "2026-05-20T22:02:05.568Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "implemented",
+          "at": "2026-05-20T22:06:03.557Z",
+          "by": "task-implement"
         }
       ],
       "implementation": {
-        "startedAt": null,
-        "completedAt": null,
-        "filesChanged": [],
+        "startedAt": "2026-05-20T22:02:05.567Z",
+        "completedAt": "2026-05-20T22:06:03.556Z",
+        "filesChanged": [
+          "src/config/types.ts",
+          "src/config/defaults.ts",
+          "src/config/merge.ts",
+          "src/modules/types.ts",
+          "src/modules/DebuggerModuleRegistryProvider.tsx",
+          "src/modules/predefined/logs/logsStore.ts",
+          "src/modules/predefined/logs/useDebuggerLog.ts",
+          "src/modules/predefined/logs/LogsPanel.tsx",
+          "src/modules/predefined/logs/LogsModule.ts",
+          "src/modules/predefined/logs/index.ts",
+          "src/modules/predefined/index.ts",
+          "src/components/Debugger.tsx",
+          "src/index.ts",
+          "config.debugger.js",
+          "src/main.tsx"
+        ],
         "tokensUsed": null
       },
       "reviews": [],
@@ -1602,8 +1633,14 @@
         "routing",
         "api"
       ],
-      "pushes": [],
-      "branch": null,
+      "pushes": [
+        {
+          "at": "2026-05-20T21:57:39.478Z",
+          "commitHash": "e953152",
+          "commitMessage": "chore(N07): add task spec for Logs module, route tracking, and useDebuggerLog hook"
+        }
+      ],
+      "branch": "feat/N07-logs-module-route-tracking-debugger-hook",
       "mrUrl": null,
       "mergedAt": null
     }

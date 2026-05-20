@@ -17,4 +17,9 @@ export default {
     { id: 'state', title: 'App State', defaultExpanded: false },
     { id: 'config', title: 'Config', defaultExpanded: false },
   ],
+  logs: [
+    { id: 'api', prefix: 'API' },
+    { id: 'auth', prefix: 'Auth' },
+    { id: 'router', prefix: 'Router' },
+  ],
 }

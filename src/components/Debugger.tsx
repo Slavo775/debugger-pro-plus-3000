@@ -1,4 +1,5 @@
 import { useCallback, useContext, useEffect, useRef, useState, type CSSProperties } from 'react'
+import { initLogsStore } from '../modules/predefined/logs/logsStore'
 import { DebuggerConfigProvider } from '../config/DebuggerConfigProvider'
 import { useDebuggerConfig } from '../config/useDebuggerConfig'
 import type { ButtonCorner, DebuggerConfig } from '../config/types'
@@ -40,7 +41,8 @@ interface SetupProps {
 }
 
 function DebuggerModuleSetup({ modules, onModuleEvent, panelProps }: SetupProps) {
-  const { modules: moduleConfigs } = useDebuggerConfig()
+  const { modules: moduleConfigs, logs } = useDebuggerConfig()
+  useEffect(() => { initLogsStore(logs) }, [logs])
   return (
     <DebuggerModuleRegistryProvider
       moduleDefinitions={modules}

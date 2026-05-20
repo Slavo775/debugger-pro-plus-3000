@@ -26,11 +26,17 @@ export interface DebuggerModuleConfig {
   data?: Record<string, unknown>
 }
 
+export interface LogConfig {
+  id: string
+  prefix: string
+}
+
 export interface DebuggerConfig {
   style?: DebuggerStyleConfig
   button?: DebuggerButtonConfig
   panel?: DebuggerPanelConfig
   modules?: DebuggerModuleConfig[]
+  logs?: LogConfig[]
 }
 
 export type ResolvedDebuggerConfig = Required<{
@@ -41,4 +47,5 @@ export type ResolvedDebuggerConfig = Required<{
     style: Required<DebuggerPanelStyleConfig>
   }>
   modules: DebuggerModuleConfig[]
+  logs: LogConfig[]
 }>

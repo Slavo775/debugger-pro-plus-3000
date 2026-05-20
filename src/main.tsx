@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components -- dev preview entry, not consumed by HMR boundaries */
 import { StrictMode, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
-import { Debugger, useDebuggerConfig, useDebuggerApi, deviceInfoModule } from './index'
+import { Debugger, useDebuggerConfig, useDebuggerApi, deviceInfoModule, logsModule, useDebuggerLog } from './index'
 import debuggerConfig from '../config.debugger.js'
 
 function ConfigPanel() {
@@ -15,6 +15,27 @@ function ConfigPanel() {
       <pre style={{ color: '#8f8', fontSize: 11, marginTop: 8 }}>
         {JSON.stringify({ moduleData, config: cfg }, null, 2)}
       </pre>
+    </div>
+  )
+}
+
+function DemoLogger() {
+  const logApi = useDebuggerLog('api')
+  const logAuth = useDebuggerLog('auth')
+  return (
+    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', margin: '16px 0' }}>
+      <button
+        onClick={() => logApi(`fetch /api/users — ${Date.now()}`)}
+        style={{ background: '#1a2a3e', border: '1px solid #1a6eb5', color: '#7ab8f5', borderRadius: 4, padding: '4px 10px', cursor: 'pointer', fontFamily: 'monospace', fontSize: 12 }}
+      >
+        Log API
+      </button>
+      <button
+        onClick={() => logAuth('token refreshed')}
+        style={{ background: '#1a2a3e', border: '1px solid #1a6eb5', color: '#7ab8f5', borderRadius: 4, padding: '4px 10px', cursor: 'pointer', fontFamily: 'monospace', fontSize: 12 }}
+      >
+        Log Auth
+      </button>
     </div>
   )
 }
@@ -81,10 +102,12 @@ createRoot(document.getElementById('root')!).render(
         <code>primaryColor: {debuggerConfig.style?.primaryColor}</code>,{' '}
         <code>panel.title: {debuggerConfig.panel?.title}</code>
       </p>
+      <DemoLogger />
     </div>
     <Debugger
       config={debuggerConfig}
       modules={[
+        logsModule,
         deviceInfoModule,
         { id: 'network', render: () => <NetworkPanel /> },
         { id: 'state', render: () => <StatePanel /> },

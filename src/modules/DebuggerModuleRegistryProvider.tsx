@@ -5,8 +5,10 @@ import type {
   DebuggerApiContextValue,
   ModuleEventHandler,
   RegisteredModule,
+  RouteChangePayload,
 } from './types'
 import type { DebuggerModuleConfig } from '../config/types'
+import { pushEntry } from './predefined/logs/logsStore'
 
 interface Props {
   moduleDefinitions: DebuggerModuleDefinition[]
@@ -141,6 +143,36 @@ export function DebuggerModuleRegistryProvider({
     return () => {
       window.removeEventListener('resize', onViewportChange)
       window.removeEventListener('orientationchange', onViewportChange)
+    }
+  }, [_send])
+
+  useEffect(() => {
+    const notify = () => {
+      const path = location.pathname + location.search + location.hash
+      const payload: RouteChangePayload = { path, timestamp: Date.now() }
+      for (const m of modulesRef.current) {
+        _send(m.id, 'route-change', payload)
+      }
+      pushEntry({ id: '__route__', prefix: 'Navigation', text: path, timestamp: payload.timestamp })
+    }
+
+    const origPush = history.pushState
+    const origReplace = history.replaceState
+
+    history.pushState = function (...args: Parameters<typeof history.pushState>) {
+      origPush.apply(this, args)
+      notify()
+    }
+    history.replaceState = function (...args: Parameters<typeof history.replaceState>) {
+      origReplace.apply(this, args)
+      notify()
+    }
+    window.addEventListener('popstate', notify)
+
+    return () => {
+      history.pushState = origPush
+      history.replaceState = origReplace
+      window.removeEventListener('popstate', notify)
     }
   }, [_send])
 

@@ -18,6 +18,11 @@ export interface RegisteredModule {
   render: () => React.ReactNode
 }
 
+export interface RouteChangePayload {
+  path: string
+  timestamp: number
+}
+
 export interface ViewportChangePayload {
   width: number
   height: number
