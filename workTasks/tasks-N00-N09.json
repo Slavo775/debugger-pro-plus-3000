@@ -1122,7 +1122,7 @@
       "title": "Rewrite README with full API docs and architecture diagrams",
       "type": "rework",
       "priority": "medium",
-      "status": "approved",
+      "status": "pushed",
       "folder": "workTasks/N05-rewrite-readme-with-full-api-docs-and-architecture",
       "createdAt": "2026-05-20T19:03:34.538Z",
       "statusHistory": [
@@ -1230,6 +1230,11 @@
           "status": "approved",
           "at": "2026-05-20T19:56:00.301Z",
           "by": "task-human-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T19:56:24.283Z",
+          "by": "task-git"
         }
       ],
       "implementation": {
@@ -1336,6 +1341,11 @@
           "at": "2026-05-20T19:54:48.952Z",
           "commitHash": "6ccf68b",
           "commitMessage": "chore(N05): record AI review round 2 (approved)"
+        },
+        {
+          "at": "2026-05-20T19:56:24.282Z",
+          "commitHash": "ecae6bd",
+          "commitMessage": "chore(N05): record human review (approved)"
         }
       ],
       "branch": "rework/N05-rewrite-readme-api-docs-diagrams",
