@@ -922,7 +922,7 @@
       "title": "Add module debug-data registration, runtime updates, and header copy/export button",
       "type": "feat",
       "priority": "high",
-      "status": "pushed",
+      "status": "approved",
       "folder": "workTasks/N04-add-module-debug-data-registration-runtime-updates",
       "createdAt": "2026-05-20T17:06:26.766Z",
       "statusHistory": [
@@ -995,6 +995,16 @@
           "status": "pushed",
           "at": "2026-05-20T17:35:22.270Z",
           "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-20T18:42:18.675Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-20T18:42:28.917Z",
+          "by": "task-human-review"
         }
       ],
       "implementation": {
@@ -1034,6 +1044,15 @@
           "comment": "Round 2: Escape stopPropagation fix confirmed correct. All checklist items implemented — API (updateData, _updateData, _getDebugSnapshot, runtimeDataRef), UI (CopyExportButton split-button, clipboard copy with 1.5s feedback, JSON/TXT blob download, dropdown with all three dismissal paths). Build and lint clean. Approved.",
           "type": "ai",
           "by": "task-review",
+          "fix": null
+        },
+        {
+          "startedAt": "2026-05-20T18:42:18.675Z",
+          "endedAt": "2026-05-20T18:42:28.917Z",
+          "verdict": "approved",
+          "comment": "Human approved: approved!",
+          "type": "human",
+          "by": "task-human-review",
           "fix": null
         }
       ],
