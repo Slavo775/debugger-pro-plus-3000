@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components -- dev preview entry, not consumed by HMR boundaries */
 import { StrictMode, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
-import { Debugger, useDebuggerConfig, useDebuggerApi } from './index'
+import { Debugger, useDebuggerConfig, useDebuggerApi, deviceInfoModule } from './index'
 import debuggerConfig from '../config.debugger.js'
 
 function ConfigPanel() {
@@ -85,6 +85,7 @@ createRoot(document.getElementById('root')!).render(
     <Debugger
       config={debuggerConfig}
       modules={[
+        deviceInfoModule,
         { id: 'network', render: () => <NetworkPanel /> },
         { id: 'state', render: () => <StatePanel /> },
         { id: 'config', render: () => <ConfigPanel /> },

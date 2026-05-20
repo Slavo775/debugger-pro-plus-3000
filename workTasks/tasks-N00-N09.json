@@ -1356,6 +1356,213 @@
       "branch": "rework/N05-rewrite-readme-api-docs-diagrams",
       "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/6",
       "mergedAt": "2026-05-20T19:56:45.202Z"
+    },
+    {
+      "id": "N06",
+      "title": "Add predefined DeviceInfo module with snapshot integration",
+      "type": "feat",
+      "priority": "high",
+      "status": "merged",
+      "folder": "workTasks/N06-add-predefined-deviceinfo-module-with-snapshot-int",
+      "createdAt": "2026-05-20T20:10:28.694Z",
+      "statusHistory": [
+        {
+          "status": "ready",
+          "at": "2026-05-20T20:10:28.695Z",
+          "by": "taskmaster"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T20:11:54.715Z",
+          "by": "task-git"
+        },
+        {
+          "status": "in-progress",
+          "at": "2026-05-20T20:16:25.654Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "implemented",
+          "at": "2026-05-20T20:23:11.605Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T20:23:48.415Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-20T20:30:55.940Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "fix-needed",
+          "at": "2026-05-20T20:31:13.395Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T20:32:17.710Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-20T20:33:23.607Z",
+          "by": "task-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-20T20:34:40.532Z",
+          "by": "task-review"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-20T20:45:27.397Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "fix-needed",
+          "at": "2026-05-20T20:46:30.240Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "fixing",
+          "at": "2026-05-20T20:52:23.256Z",
+          "by": "task-review-fix"
+        },
+        {
+          "status": "fixed",
+          "at": "2026-05-20T20:53:21.660Z",
+          "by": "task-review-fix"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-20T20:55:38.073Z",
+          "by": "task-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-20T20:56:34.316Z",
+          "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T21:06:37.549Z",
+          "by": "task-git"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T21:16:32.730Z",
+          "by": "task-git"
+        },
+        {
+          "status": "merged",
+          "at": "2026-05-20T21:20:10.662Z",
+          "by": "task-git"
+        }
+      ],
+      "implementation": {
+        "startedAt": "2026-05-20T20:16:25.654Z",
+        "completedAt": "2026-05-20T20:23:11.605Z",
+        "filesChanged": [
+          "src/modules/predefined/DeviceInfoPanel.tsx",
+          "src/modules/predefined/DeviceInfoModule.ts",
+          "src/modules/predefined/index.ts",
+          "src/index.ts"
+        ],
+        "tokensUsed": null
+      },
+      "reviews": [
+        {
+          "startedAt": "2026-05-20T20:30:55.940Z",
+          "endedAt": "2026-05-20T20:31:13.395Z",
+          "verdict": "fix-needed",
+          "comment": "deviceInfoModule not wired into dev preview (main.tsx) — add it to the modules array so it renders in the panel",
+          "type": "human",
+          "by": "task-human-review",
+          "fix": null
+        },
+        {
+          "startedAt": "2026-05-20T20:33:23.608Z",
+          "endedAt": "2026-05-20T20:34:40.532Z",
+          "verdict": "approved",
+          "comment": "All checklist items satisfied. collectDeviceData() called twice per render (once in effect, once for display) — minor inefficiency, not a bug. navigator.platform is deprecated but acceptable for a debug module. File split (.tsx/.ts) to satisfy react-refresh ESLint rule is the right call. createElement in the .ts module file is correct. All guards in place (orientation, connection). Snapshot integration, responsiveness, public API, and quality gates all pass.",
+          "type": "ai",
+          "by": "task-review",
+          "fix": null
+        },
+        {
+          "startedAt": "2026-05-20T20:45:27.398Z",
+          "endedAt": "2026-05-20T20:46:30.239Z",
+          "verdict": "fix-needed",
+          "comment": "Registry should own window resize/orientationchange listeners and broadcast 'viewport-change' via _send to all modules. DeviceInfoPanel should subscribe via useDebuggerApi().subscribe() instead of touching window directly. Add ViewportChangePayload type and export it publicly.",
+          "type": "human",
+          "by": "task-human-review",
+          "fix": {
+            "startedAt": "2026-05-20T20:52:23.256Z",
+            "endedAt": "2026-05-20T20:53:21.659Z",
+            "status": "fixed",
+            "filesChanged": [
+              "src/modules/types.ts",
+              "src/modules/DebuggerModuleRegistryProvider.tsx",
+              "src/modules/predefined/DeviceInfoPanel.tsx",
+              "src/index.ts"
+            ],
+            "comment": "Registry now owns resize/orientationchange listeners and broadcasts 'viewport-change' to all modules via _send. DeviceInfoPanel uses useState + subscribe('viewport-change') instead of direct window listeners. ViewportChangePayload exported publicly.",
+            "by": "task-review-fix"
+          }
+        },
+        {
+          "startedAt": "2026-05-20T20:55:38.074Z",
+          "endedAt": "2026-05-20T20:56:34.315Z",
+          "verdict": "approved",
+          "comment": "All three blockers resolved. Registry owns the single resize/orientationchange listener pair and broadcasts via modulesRef to avoid stale closure. DeviceInfoPanel is clean — no window access, two focused effects (data→updateData, subscribe→setData). ViewportChangePayload typed and exported publicly. Quality gates pass.",
+          "type": "ai",
+          "by": "task-review",
+          "fix": null
+        }
+      ],
+      "changesAfterImplementation": [],
+      "incidents": [],
+      "committedAt": null,
+      "totalDurationMinutes": 70,
+      "tags": [
+        "modules",
+        "predefined",
+        "device",
+        "snapshot"
+      ],
+      "pushes": [
+        {
+          "at": "2026-05-20T20:11:54.715Z",
+          "commitHash": "0ba33c0",
+          "commitMessage": "chore(N06): add task spec for predefined DeviceInfo module"
+        },
+        {
+          "at": "2026-05-20T20:23:48.415Z",
+          "commitHash": "8c38ba6",
+          "commitMessage": "feat(N06): add predefined DeviceInfo module with snapshot integration"
+        },
+        {
+          "at": "2026-05-20T20:32:17.710Z",
+          "commitHash": "8d40775",
+          "commitMessage": "fix(N06): wire deviceInfoModule into dev preview"
+        },
+        {
+          "at": "2026-05-20T21:06:37.549Z",
+          "commitHash": "17b8823",
+          "commitMessage": "feat(N06): add predefined DeviceInfo module with centralised viewport events"
+        },
+        {
+          "at": "2026-05-20T21:16:32.729Z",
+          "commitHash": "17b8823",
+          "commitMessage": "feat(N06): add predefined DeviceInfo module with centralised viewport events"
+        }
+      ],
+      "branch": "feat/N06-predefined-deviceinfo-module",
+      "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/7",
+      "mergedAt": "2026-05-20T21:20:10.661Z"
     }
   ]
 }
