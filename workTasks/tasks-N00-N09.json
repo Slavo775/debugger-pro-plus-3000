@@ -1356,6 +1356,43 @@
       "branch": "rework/N05-rewrite-readme-api-docs-diagrams",
       "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/6",
       "mergedAt": "2026-05-20T19:56:45.202Z"
+    },
+    {
+      "id": "N06",
+      "title": "Add predefined DeviceInfo module with snapshot integration",
+      "type": "feat",
+      "priority": "high",
+      "status": "ready",
+      "folder": "workTasks/N06-add-predefined-deviceinfo-module-with-snapshot-int",
+      "createdAt": "2026-05-20T20:10:28.694Z",
+      "statusHistory": [
+        {
+          "status": "ready",
+          "at": "2026-05-20T20:10:28.695Z",
+          "by": "taskmaster"
+        }
+      ],
+      "implementation": {
+        "startedAt": null,
+        "completedAt": null,
+        "filesChanged": [],
+        "tokensUsed": null
+      },
+      "reviews": [],
+      "changesAfterImplementation": [],
+      "incidents": [],
+      "committedAt": null,
+      "totalDurationMinutes": null,
+      "tags": [
+        "modules",
+        "predefined",
+        "device",
+        "snapshot"
+      ],
+      "pushes": [],
+      "branch": null,
+      "mrUrl": null,
+      "mergedAt": null
     }
   ]
 }
