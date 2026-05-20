@@ -26,4 +26,5 @@ export type {
   DebuggerModuleDefinition,
   ModuleEventHandler,
   RegisteredModule,
+  ViewportChangePayload,
 } from './modules/types'

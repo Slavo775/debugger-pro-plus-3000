@@ -18,6 +18,13 @@ export interface RegisteredModule {
   render: () => React.ReactNode
 }
 
+export interface ViewportChangePayload {
+  width: number
+  height: number
+  orientation: string
+  devicePixelRatio: number
+}
+
 export interface DebuggerApi {
   emit(event: string, payload?: unknown): void
   subscribe(event: string, handler: ModuleEventHandler): () => void

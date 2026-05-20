@@ -1,4 +1,4 @@
-import { useEffect, type CSSProperties } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import { useDebuggerApi } from '../useDebuggerApi'
 
 interface DeviceData {
@@ -43,23 +43,18 @@ function collectDeviceData(): DeviceData {
 }
 
 export function DeviceInfoPanel() {
-  const { updateData } = useDebuggerApi()
+  const { updateData, subscribe } = useDebuggerApi()
+  const [data, setData] = useState(collectDeviceData)
 
   useEffect(() => {
-    const collect = () => {
-      const data = collectDeviceData()
-      updateData(data as unknown as Record<string, unknown>)
-    }
-    collect()
-    window.addEventListener('resize', collect)
-    window.addEventListener('orientationchange', collect)
-    return () => {
-      window.removeEventListener('resize', collect)
-      window.removeEventListener('orientationchange', collect)
-    }
-  }, [updateData])
+    updateData(data as unknown as Record<string, unknown>)
+  }, [data, updateData])
 
-  const data = collectDeviceData()
+  useEffect(() => {
+    return subscribe('viewport-change', () => {
+      setData(collectDeviceData())
+    })
+  }, [subscribe])
 
   return (
     <div style={gridStyle}>

@@ -1362,7 +1362,7 @@
       "title": "Add predefined DeviceInfo module with snapshot integration",
       "type": "feat",
       "priority": "high",
-      "status": "fix-needed",
+      "status": "fixed",
       "folder": "workTasks/N06-add-predefined-deviceinfo-module-with-snapshot-int",
       "createdAt": "2026-05-20T20:10:28.694Z",
       "statusHistory": [
@@ -1425,6 +1425,16 @@
           "status": "fix-needed",
           "at": "2026-05-20T20:46:30.240Z",
           "by": "task-human-review"
+        },
+        {
+          "status": "fixing",
+          "at": "2026-05-20T20:52:23.256Z",
+          "by": "task-review-fix"
+        },
+        {
+          "status": "fixed",
+          "at": "2026-05-20T20:53:21.660Z",
+          "by": "task-review-fix"
         }
       ],
       "implementation": {
@@ -1464,7 +1474,19 @@
           "comment": "Registry should own window resize/orientationchange listeners and broadcast 'viewport-change' via _send to all modules. DeviceInfoPanel should subscribe via useDebuggerApi().subscribe() instead of touching window directly. Add ViewportChangePayload type and export it publicly.",
           "type": "human",
           "by": "task-human-review",
-          "fix": null
+          "fix": {
+            "startedAt": "2026-05-20T20:52:23.256Z",
+            "endedAt": "2026-05-20T20:53:21.659Z",
+            "status": "fixed",
+            "filesChanged": [
+              "src/modules/types.ts",
+              "src/modules/DebuggerModuleRegistryProvider.tsx",
+              "src/modules/predefined/DeviceInfoPanel.tsx",
+              "src/index.ts"
+            ],
+            "comment": "Registry now owns resize/orientationchange listeners and broadcasts 'viewport-change' to all modules via _send. DeviceInfoPanel uses useState + subscribe('viewport-change') instead of direct window listeners. ViewportChangePayload exported publicly.",
+            "by": "task-review-fix"
+          }
         }
       ],
       "changesAfterImplementation": [],

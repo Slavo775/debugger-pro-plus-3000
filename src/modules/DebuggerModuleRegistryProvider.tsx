@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState, useCallback, type ReactNode } from 'react'
+import { useMemo, useRef, useState, useCallback, useEffect, type ReactNode } from 'react'
 import { DebuggerModuleRegistryContext } from './DebuggerModuleRegistryContext'
 import type {
   DebuggerModuleDefinition,
@@ -120,6 +120,29 @@ export function DebuggerModuleRegistryProvider({
   const _emit = useCallback((moduleId: string, event: string, payload: unknown) => {
     onModuleEventRef.current?.(moduleId, event, payload)
   }, [])
+
+  const modulesRef = useRef(modules)
+  modulesRef.current = modules
+
+  useEffect(() => {
+    const onViewportChange = () => {
+      const payload = {
+        width: window.innerWidth,
+        height: window.innerHeight,
+        orientation: screen.orientation?.type ?? 'unknown',
+        devicePixelRatio: window.devicePixelRatio,
+      }
+      for (const m of modulesRef.current) {
+        _send(m.id, 'viewport-change', payload)
+      }
+    }
+    window.addEventListener('resize', onViewportChange)
+    window.addEventListener('orientationchange', onViewportChange)
+    return () => {
+      window.removeEventListener('resize', onViewportChange)
+      window.removeEventListener('orientationchange', onViewportChange)
+    }
+  }, [_send])
 
   const ctx: DebuggerApiContextValue = useMemo(
     () => ({ _modules: modules, _toggleExpanded, _emit, _subscribe, _send, _updateData, _getDebugSnapshot }),
