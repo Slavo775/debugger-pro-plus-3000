@@ -680,7 +680,7 @@
       "title": "Introduce module system with config-driven selection and first built-in (device-info)",
       "type": "feat",
       "priority": "high",
-      "status": "fixed",
+      "status": "approved",
       "folder": "workTasks/N03-introduce-module-system-with-config-driven-selecti",
       "createdAt": "2026-05-20T09:03:10.772Z",
       "statusHistory": [
@@ -733,6 +733,21 @@
           "status": "fixed",
           "at": "2026-05-20T11:17:14.697Z",
           "by": "task-review-fix"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T11:17:53.575Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-20T13:54:08.972Z",
+          "by": "task-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-20T14:12:21.503Z",
+          "by": "task-review"
         }
       ],
       "implementation": {
@@ -778,6 +793,15 @@
             "comment": "Applied AI review fixes. (1) Switched DebuggerModule.render from function-property to method syntax — bivariant method parameters let DebuggerModule<void> sit in a Record<string, DebuggerModule> registry without any/casts. (2) BUILT_IN_MODULES now 'as const satisfies Record<string, DebuggerModule>' wrapped in Object.freeze — BuiltInModuleId resolves to the literal 'device-info' (verified in emitted registry.d.ts as Readonly<{ readonly 'device-info': DebuggerModule<void> }>); host code can no longer mutate the registry. (3) Resolver signature drops the <unknown>/<any> generics and accepts plain DebuggerModule; consumer-side casts in Debugger.tsx (modules?: DebuggerModule[]) cleaned up too. (4) Added a one-line precedence comment near findDescriptor noting that built-ins shadow same-id custom modules. Gates clean; loader, resolver dedupe, title + settings override all still pass smoke tests.",
             "by": "task-review-fix"
           }
+        },
+        {
+          "startedAt": "2026-05-20T13:54:08.973Z",
+          "endedAt": "2026-05-20T14:12:21.503Z",
+          "verdict": "approved",
+          "comment": "Round 2 review — all four fixes verified. (1) render() method syntax in DebuggerModule (types.ts:20). (2) BUILT_IN_MODULES uses Object.freeze + as const satisfies; emitted registry.d.ts confirms Readonly<{ readonly 'device-info': DebuggerModule<void> }> and BuiltInModuleId resolves to 'device-info'. (3) Resolver typing simplified to plain DebuggerModule; only the narrow defaultSettings spread cast remains, well-justified. (4) Precedence comment present and accurate. Round-2 smoke test (registry frozen + immutable, built-in shadows same-id custom, custom-only modules resolve, default modules, settings merge) all pass. Lint + build clean. No new issues introduced. Approved.",
+          "type": "ai",
+          "by": "task-review",
+          "fix": null
         }
       ],
       "changesAfterImplementation": [],
@@ -806,10 +830,15 @@
           "at": "2026-05-20T11:04:18.142Z",
           "commitHash": "85265b74ba75b407d73c6a0ea10f24d2f012e47c",
           "commitMessage": "chore(N03): record AI review (fix-needed)"
+        },
+        {
+          "at": "2026-05-20T11:17:53.574Z",
+          "commitHash": "e5c583a453e49e2176d8b4d7a8fd10f91c52657c",
+          "commitMessage": "refactor(N03): tighten module registry typing per review"
         }
       ],
       "branch": "feat/N03-introduce-module-system-with-config-driven-selecti",
-      "mrUrl": null,
+      "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/4",
       "mergedAt": null
     }
   ]
