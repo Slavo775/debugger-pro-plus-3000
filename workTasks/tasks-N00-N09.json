@@ -1568,6 +1568,44 @@
       "branch": "feat/N06-predefined-deviceinfo-module",
       "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/7",
       "mergedAt": "2026-05-20T21:21:44.027Z"
+    },
+    {
+      "id": "N07",
+      "title": "Add Logs module with configurable log channels, route tracking, and debugger API hook",
+      "type": "feat",
+      "priority": "high",
+      "status": "ready",
+      "folder": "workTasks/N07-add-logs-module-with-configurable-log-channels-rou",
+      "createdAt": "2026-05-20T21:55:37.285Z",
+      "statusHistory": [
+        {
+          "status": "ready",
+          "at": "2026-05-20T21:55:37.285Z",
+          "by": "taskmaster"
+        }
+      ],
+      "implementation": {
+        "startedAt": null,
+        "completedAt": null,
+        "filesChanged": [],
+        "tokensUsed": null
+      },
+      "reviews": [],
+      "changesAfterImplementation": [],
+      "incidents": [],
+      "committedAt": null,
+      "totalDurationMinutes": null,
+      "tags": [
+        "modules",
+        "predefined",
+        "logs",
+        "routing",
+        "api"
+      ],
+      "pushes": [],
+      "branch": null,
+      "mrUrl": null,
+      "mergedAt": null
     }
   ]
 }
