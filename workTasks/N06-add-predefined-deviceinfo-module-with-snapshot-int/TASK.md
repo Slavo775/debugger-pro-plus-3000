@@ -1,5 +1,7 @@
 # N06 — Add predefined DeviceInfo module with snapshot integration
 
+**PR:** https://github.com/Slavo775/debugger-pro-plus-3000/pull/7
+
 ## Goal
 
 Ship the first pre-defined module: **Device Information**. It collects everything the browser exposes about the current device — screen, viewport, pixel ratio, orientation, color depth, touch, connection, and user agent — renders it as a compact responsive key/value grid inside the debugger panel, and registers all data into the copy/export snapshot via `updateData`.

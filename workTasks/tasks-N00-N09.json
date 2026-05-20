@@ -1362,7 +1362,7 @@
       "title": "Add predefined DeviceInfo module with snapshot integration",
       "type": "feat",
       "priority": "high",
-      "status": "approved",
+      "status": "pushed",
       "folder": "workTasks/N06-add-predefined-deviceinfo-module-with-snapshot-int",
       "createdAt": "2026-05-20T20:10:28.694Z",
       "statusHistory": [
@@ -1445,6 +1445,16 @@
           "status": "approved",
           "at": "2026-05-20T20:56:34.316Z",
           "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T21:06:37.549Z",
+          "by": "task-git"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T21:16:32.730Z",
+          "by": "task-git"
         }
       ],
       "implementation": {
@@ -1533,6 +1543,16 @@
           "at": "2026-05-20T20:32:17.710Z",
           "commitHash": "8d40775",
           "commitMessage": "fix(N06): wire deviceInfoModule into dev preview"
+        },
+        {
+          "at": "2026-05-20T21:06:37.549Z",
+          "commitHash": "17b8823",
+          "commitMessage": "feat(N06): add predefined DeviceInfo module with centralised viewport events"
+        },
+        {
+          "at": "2026-05-20T21:16:32.729Z",
+          "commitHash": "17b8823",
+          "commitMessage": "feat(N06): add predefined DeviceInfo module with centralised viewport events"
         }
       ],
       "branch": "feat/N06-predefined-deviceinfo-module",
