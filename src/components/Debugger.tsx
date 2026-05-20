@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react'
+import { useCallback, useContext, useEffect, useRef, useState, type CSSProperties } from 'react'
 import { DebuggerConfigProvider } from '../config/DebuggerConfigProvider'
 import { useDebuggerConfig } from '../config/useDebuggerConfig'
 import type { ButtonCorner, DebuggerConfig } from '../config/types'
@@ -62,6 +62,7 @@ type InnerProps = Omit<DebuggerProps, 'config' | 'modules' | 'onModuleEvent'>
 
 function DebuggerPanelRoot({ plugins = [], defaultOpen = false }: InnerProps) {
   const { style, button, panel } = useDebuggerConfig()
+  const registryCtx = useContext(DebuggerModuleRegistryContext)
   const [corner, setCorner] = useFabPosition(button.position, button.draggable)
   const [open, setOpen] = useState(defaultOpen)
   const [isFullscreen, setIsFullscreen] = useState(false)
@@ -95,6 +96,7 @@ function DebuggerPanelRoot({ plugins = [], defaultOpen = false }: InnerProps) {
       <header style={headerStyle}>
         <h2 style={titleStyle}>{panel.title}</h2>
         <div style={headerActionsStyle}>
+          {registryCtx && <CopyExportButton getSnapshot={registryCtx._getDebugSnapshot} />}
           <button
             type="button"
             onClick={() => setIsFullscreen((v) => !v)}
@@ -259,6 +261,105 @@ function AccordionItem({ module, primaryColor, onToggle }: AccordionItemProps) {
   )
 }
 
+function downloadBlob(content: string, filename: string, mime: string) {
+  const blob = new Blob([content], { type: mime })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = filename
+  a.click()
+  URL.revokeObjectURL(url)
+}
+
+interface CopyExportButtonProps {
+  getSnapshot: () => Record<string, Record<string, unknown>>
+}
+
+function CopyExportButton({ getSnapshot }: CopyExportButtonProps) {
+  const [copied, setCopied] = useState(false)
+  const [dropdownOpen, setDropdownOpen] = useState(false)
+  const groupRef = useRef<HTMLDivElement>(null)
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => {
+    if (!dropdownOpen) return
+    const onMouseDown = (e: MouseEvent) => {
+      if (groupRef.current && !groupRef.current.contains(e.target as Node)) {
+        setDropdownOpen(false)
+      }
+    }
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.stopPropagation()
+        setDropdownOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', onMouseDown)
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('mousedown', onMouseDown)
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [dropdownOpen])
+
+  useEffect(() => () => { if (timeoutRef.current) clearTimeout(timeoutRef.current) }, [])
+
+  const handleCopy = useCallback(() => {
+    const json = JSON.stringify(getSnapshot(), null, 2)
+    navigator.clipboard.writeText(json).then(() => {
+      setCopied(true)
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+      timeoutRef.current = setTimeout(() => setCopied(false), 1500)
+    })
+  }, [getSnapshot])
+
+  const handleDownload = useCallback((format: 'json' | 'txt') => {
+    const content = JSON.stringify(getSnapshot(), null, 2)
+    const filename = format === 'json' ? 'debug-snapshot.json' : 'debug-snapshot.txt'
+    const mime = format === 'json' ? 'application/json' : 'text/plain'
+    downloadBlob(content, filename, mime)
+    setDropdownOpen(false)
+  }, [getSnapshot])
+
+  return (
+    <div ref={groupRef} style={splitGroupStyle}>
+      <button
+        type="button"
+        onClick={handleCopy}
+        aria-label="Copy debug snapshot to clipboard"
+        style={splitPrimaryStyle}
+      >
+        <span aria-hidden="true">{copied ? '✓' : '⎘'}</span>
+        <span style={{ fontSize: 10, marginLeft: 3 }}>{copied ? 'Copied' : 'Copy'}</span>
+      </button>
+      <button
+        type="button"
+        onClick={() => setDropdownOpen((v) => !v)}
+        aria-label="Export options"
+        aria-expanded={dropdownOpen}
+        aria-haspopup="menu"
+        style={splitChevronStyle}
+      >
+        <span aria-hidden="true" style={{ display: 'inline-block', transition: 'transform 150ms ease', transform: dropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}>▾</span>
+      </button>
+      {dropdownOpen && (
+        <ul role="menu" style={dropdownStyle}>
+          <li role="none">
+            <button type="button" role="menuitem" style={dropdownItemStyle} onClick={() => handleDownload('json')}>
+              ⬇ Download .json
+            </button>
+          </li>
+          <li role="none">
+            <button type="button" role="menuitem" style={dropdownItemStyle} onClick={() => handleDownload('txt')}>
+              ⬇ Download .txt
+            </button>
+          </li>
+        </ul>
+      )}
+    </div>
+  )
+}
+
 function panelStyle(
   side: PanelSide,
   configuredWidth: number,
@@ -393,4 +494,75 @@ const accordionTitleStyle: React.CSSProperties = {
 
 const accordionBodyStyle: React.CSSProperties = {
   padding: 12,
+}
+
+const splitGroupStyle: CSSProperties = {
+  position: 'relative',
+  display: 'inline-flex',
+  alignItems: 'center',
+  border: '1px solid #4a4a6a',
+  borderRadius: 6,
+  overflow: 'visible',
+}
+
+const splitPrimaryStyle: CSSProperties = {
+  display: 'inline-flex',
+  alignItems: 'center',
+  minHeight: 28,
+  padding: '0 8px',
+  background: 'transparent',
+  border: 'none',
+  borderRight: '1px solid #4a4a6a',
+  borderRadius: '5px 0 0 5px',
+  color: '#d8d8d8',
+  cursor: 'pointer',
+  fontFamily: 'monospace',
+  fontSize: 12,
+  lineHeight: 1,
+}
+
+const splitChevronStyle: CSSProperties = {
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  minWidth: 22,
+  minHeight: 28,
+  padding: '0 4px',
+  background: 'transparent',
+  border: 'none',
+  borderRadius: '0 5px 5px 0',
+  color: '#d8d8d8',
+  cursor: 'pointer',
+  fontFamily: 'monospace',
+  fontSize: 12,
+  lineHeight: 1,
+}
+
+const dropdownStyle: CSSProperties = {
+  position: 'absolute',
+  top: 'calc(100% + 4px)',
+  right: 0,
+  zIndex: 10001,
+  background: '#1e1e3a',
+  border: '1px solid #4a4a6a',
+  borderRadius: 6,
+  padding: '4px 0',
+  margin: 0,
+  listStyle: 'none',
+  minWidth: 150,
+  boxShadow: '0 4px 16px rgba(0,0,0,0.5)',
+}
+
+const dropdownItemStyle: CSSProperties = {
+  display: 'block',
+  width: '100%',
+  padding: '7px 12px',
+  background: 'transparent',
+  border: 'none',
+  color: '#d8d8d8',
+  cursor: 'pointer',
+  fontFamily: 'monospace',
+  fontSize: 12,
+  textAlign: 'left',
+  whiteSpace: 'nowrap',
 }

@@ -30,5 +30,10 @@ export function useDebuggerApi(): DebuggerApi {
 
   const moduleData = registry._modules.find((m) => m.id === moduleId)?.data ?? EMPTY_DATA
 
-  return { emit, subscribe, moduleData }
+  const updateData = useCallback(
+    (patch: Record<string, unknown>) => registry._updateData(moduleId, patch),
+    [registry, moduleId],
+  )
+
+  return { emit, subscribe, moduleData, updateData }
 }

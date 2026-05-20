@@ -680,7 +680,7 @@
       "title": "Add module registry with accordion stack, auto-registration wrapper, and Debugger API",
       "type": "feat",
       "priority": "high",
-      "status": "merged",
+      "status": "pushed",
       "folder": "workTasks/N03-add-module-registry-with-accordion-stack-auto-regi",
       "createdAt": "2026-05-20T15:20:44.315Z",
       "statusHistory": [
@@ -787,6 +787,11 @@
         {
           "status": "merged",
           "at": "2026-05-20T16:52:40.093Z",
+          "by": "task-git"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T16:55:22.489Z",
           "by": "task-git"
         }
       ],
@@ -901,11 +906,206 @@
           "at": "2026-05-20T16:51:42.199Z",
           "commitHash": "4529a50ee2dc136b4b8156e2cc50472876777070",
           "commitMessage": "chore(N03): record human review (approved)"
+        },
+        {
+          "at": "2026-05-20T16:55:22.489Z",
+          "commitHash": "43d8b4b5be22e5ca84f8629947ba0b37db40a503",
+          "commitMessage": "chore(N03): mark merged and done"
         }
       ],
       "branch": "main",
       "mrUrl": null,
       "mergedAt": "2026-05-20T16:52:40.093Z"
+    },
+    {
+      "id": "N04",
+      "title": "Add module debug-data registration, runtime updates, and header copy/export button",
+      "type": "feat",
+      "priority": "high",
+      "status": "pushed",
+      "folder": "workTasks/N04-add-module-debug-data-registration-runtime-updates",
+      "createdAt": "2026-05-20T17:06:26.766Z",
+      "statusHistory": [
+        {
+          "status": "ready",
+          "at": "2026-05-20T17:06:26.767Z",
+          "by": "taskmaster"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T17:08:04.708Z",
+          "by": "task-git"
+        },
+        {
+          "status": "in-progress",
+          "at": "2026-05-20T17:11:15.326Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "implemented",
+          "at": "2026-05-20T17:13:40.086Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T17:14:19.643Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-20T17:16:45.560Z",
+          "by": "task-review"
+        },
+        {
+          "status": "fix-needed",
+          "at": "2026-05-20T17:18:24.034Z",
+          "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T17:19:25.265Z",
+          "by": "task-git"
+        },
+        {
+          "status": "fixing",
+          "at": "2026-05-20T17:21:44.384Z",
+          "by": "task-review-fix"
+        },
+        {
+          "status": "fixed",
+          "at": "2026-05-20T17:22:05.594Z",
+          "by": "task-review-fix"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T17:22:33.967Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-20T17:34:34.979Z",
+          "by": "task-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-20T17:34:56.202Z",
+          "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T17:35:22.270Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-20T18:42:18.675Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-20T18:42:28.917Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T18:42:55.446Z",
+          "by": "task-git"
+        }
+      ],
+      "implementation": {
+        "startedAt": "2026-05-20T17:11:15.326Z",
+        "completedAt": "2026-05-20T17:13:40.086Z",
+        "filesChanged": [
+          "src/modules/types.ts",
+          "src/modules/DebuggerModuleRegistryProvider.tsx",
+          "src/modules/useDebuggerApi.ts",
+          "src/components/Debugger.tsx"
+        ],
+        "tokensUsed": null
+      },
+      "reviews": [
+        {
+          "startedAt": "2026-05-20T17:16:45.560Z",
+          "endedAt": "2026-05-20T17:18:24.034Z",
+          "verdict": "fix-needed",
+          "comment": "One real bug: Escape key conflict. CopyExportButton and DebuggerPanelRoot both add document keydown listeners for Escape with no stopPropagation. When dropdown is open and Escape is pressed, the dropdown closes AND the panel closes simultaneously. Fix: call e.stopPropagation() in CopyExportButton's Escape handler so the panel close listener never fires. All checklist items are otherwise implemented correctly; build and lint are clean.",
+          "type": "ai",
+          "by": "task-review",
+          "fix": {
+            "startedAt": "2026-05-20T17:21:44.384Z",
+            "endedAt": "2026-05-20T17:22:05.593Z",
+            "status": "fixed",
+            "filesChanged": [
+              "src/components/Debugger.tsx"
+            ],
+            "comment": "Added e.stopPropagation() to CopyExportButton Escape handler so dropdown close does not bubble to panel close listener",
+            "by": "task-review-fix"
+          }
+        },
+        {
+          "startedAt": "2026-05-20T17:34:34.979Z",
+          "endedAt": "2026-05-20T17:34:56.201Z",
+          "verdict": "approved",
+          "comment": "Round 2: Escape stopPropagation fix confirmed correct. All checklist items implemented — API (updateData, _updateData, _getDebugSnapshot, runtimeDataRef), UI (CopyExportButton split-button, clipboard copy with 1.5s feedback, JSON/TXT blob download, dropdown with all three dismissal paths). Build and lint clean. Approved.",
+          "type": "ai",
+          "by": "task-review",
+          "fix": null
+        },
+        {
+          "startedAt": "2026-05-20T18:42:18.675Z",
+          "endedAt": "2026-05-20T18:42:28.917Z",
+          "verdict": "approved",
+          "comment": "Human approved: approved!",
+          "type": "human",
+          "by": "task-human-review",
+          "fix": null
+        }
+      ],
+      "changesAfterImplementation": [],
+      "incidents": [],
+      "committedAt": null,
+      "totalDurationMinutes": null,
+      "tags": [
+        "api",
+        "ui",
+        "debugger",
+        "export"
+      ],
+      "pushes": [
+        {
+          "at": "2026-05-20T17:08:04.708Z",
+          "commitHash": "45e3cac",
+          "commitMessage": "docs(N04): add task spec for module debug-data registration and copy/export button"
+        },
+        {
+          "at": "2026-05-20T17:14:19.642Z",
+          "commitHash": "2b648fc",
+          "commitMessage": "feat(N04): add module debug-data registration, runtime updates, and header copy/export button"
+        },
+        {
+          "at": "2026-05-20T17:19:25.265Z",
+          "commitHash": "9fe0175",
+          "commitMessage": "chore(N04): record AI review round 1 (fix-needed: Escape key conflict)"
+        },
+        {
+          "at": "2026-05-20T17:22:33.967Z",
+          "commitHash": "4f454ba",
+          "commitMessage": "fix(N04): stopPropagation on Escape in dropdown to prevent panel closing"
+        },
+        {
+          "at": "2026-05-20T17:35:22.269Z",
+          "commitHash": "1995d8a",
+          "commitMessage": "chore(N04): record AI review round 2 (approved)"
+        },
+        {
+          "at": "2026-05-20T18:42:55.446Z",
+          "commitHash": "665f45b",
+          "commitMessage": "chore(N04): record human review (approved)"
+        }
+      ],
+      "branch": "feat/N04-module-debug-data-registration-copy-export",
+      "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/5",
+      "mergedAt": null
     }
   ]
 }
