@@ -2,6 +2,8 @@ import { useContext, useCallback } from 'react'
 import { DebuggerModuleRegistryContext, DebuggerModuleIdContext } from './DebuggerModuleRegistryContext'
 import type { DebuggerApi, ModuleEventHandler } from './types'
 
+const EMPTY_DATA: Record<string, unknown> = {}
+
 export function useDebuggerApi(): DebuggerApi {
   const registry = useContext(DebuggerModuleRegistryContext)
   const moduleId = useContext(DebuggerModuleIdContext)
@@ -26,7 +28,7 @@ export function useDebuggerApi(): DebuggerApi {
     [registry, moduleId],
   )
 
-  const moduleData = registry._modules.find((m) => m.id === moduleId)?.data ?? {}
+  const moduleData = registry._modules.find((m) => m.id === moduleId)?.data ?? EMPTY_DATA
 
   return { emit, subscribe, moduleData }
 }

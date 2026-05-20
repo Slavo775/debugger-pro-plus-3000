@@ -680,7 +680,7 @@
       "title": "Add module registry with accordion stack, auto-registration wrapper, and Debugger API",
       "type": "feat",
       "priority": "high",
-      "status": "fix-needed",
+      "status": "fixed",
       "folder": "workTasks/N03-add-module-registry-with-accordion-stack-auto-regi",
       "createdAt": "2026-05-20T15:20:44.315Z",
       "statusHistory": [
@@ -733,6 +733,21 @@
           "status": "fix-needed",
           "at": "2026-05-20T16:15:02.999Z",
           "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T16:17:23.719Z",
+          "by": "task-git"
+        },
+        {
+          "status": "fixing",
+          "at": "2026-05-20T16:22:20.760Z",
+          "by": "task-review-fix"
+        },
+        {
+          "status": "fixed",
+          "at": "2026-05-20T16:27:54.278Z",
+          "by": "task-review-fix"
         }
       ],
       "implementation": {
@@ -763,7 +778,18 @@
           "comment": "fix-needed. Two functional bugs: (1) Expand animation is broken — Debugger.tsx:185-188 calls setBodyOverflow+setMaxHeight(measured) in the same React batch; both state updates commit in one render so maxHeight jumps from 0 to the measured value without any CSS transition. The double-rAF pattern applied to the collapse path is missing on expand. Fix: seed maxHeight=0 first, then in a double-rAF set it to el.scrollHeight. (2) Legacy plugins (via plugins prop) cannot collapse — Debugger.tsx:131-137 constructs syntheticModules with expanded: true hardcoded; _toggleExpanded updates registry expandedState but syntheticModules is rebuilt from plugins on every render and never reads from that state. Fix: track expanded state for synthetic modules in ModuleStack local state, keyed by plugin id, initialized to true. Non-blocking: (3) moduleData in useDebuggerApi creates a new {} object on every render for unresolved modules — consider useMemo with stable fallback reference to avoid downstream re-render churn. (4) DebuggerModuleRegistryProvider exported from src/modules/index.ts unnecessarily (not needed in public barrel, used only internally). Gates clean; all checklist items met except the two functional regressions.",
           "type": "ai",
           "by": "task-review",
-          "fix": null
+          "fix": {
+            "startedAt": "2026-05-20T16:22:20.760Z",
+            "endedAt": "2026-05-20T16:27:54.278Z",
+            "status": "fixed",
+            "filesChanged": [
+              "src/components/Debugger.tsx",
+              "src/modules/useDebuggerApi.ts",
+              "src/modules/index.ts"
+            ],
+            "comment": "Fixed all four review items. (1) Expand animation: set maxHeight(0) before double-rAF to maxHeight(measured) so CSS transition has a start state. (2) Plugin toggle: added pluginExpanded local state in ModuleStack seeded per plugin id; synthetic and registered modules now use separate onToggle callbacks. (3) Stable EMPTY_DATA constant in useDebuggerApi to avoid new object on every render. (4) Removed DebuggerModuleRegistryProvider from src/modules/index.ts barrel.",
+            "by": "task-review-fix"
+          }
         }
       ],
       "changesAfterImplementation": [],
@@ -797,6 +823,11 @@
           "at": "2026-05-20T16:07:37.908Z",
           "commitHash": "a48bb094c9dfbd095c33e2c6729e57e379de6f7c",
           "commitMessage": "Merge feat(N03): module registry with accordion stack, render-prop modules, and Debugger API (#4)"
+        },
+        {
+          "at": "2026-05-20T16:17:23.718Z",
+          "commitHash": "8285df883ed8f06c914f789db374c6925402d944",
+          "commitMessage": "chore(N03): record AI review (fix-needed: expand animation, plugin toggle)"
         }
       ],
       "branch": "main",

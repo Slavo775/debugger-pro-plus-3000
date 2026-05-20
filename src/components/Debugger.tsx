@@ -128,18 +128,21 @@ interface ModuleStackProps {
 function ModuleStack({ plugins, primaryColor }: ModuleStackProps) {
   const registryCtx = useContext(DebuggerModuleRegistryContext)
 
+  const [pluginExpanded, setPluginExpanded] = useState<Record<string, boolean>>(() =>
+    Object.fromEntries(plugins.map((p) => [p.id, true])),
+  )
+
   const syntheticModules: RegisteredModule[] = plugins.map((p) => ({
     id: p.id,
     title: p.label,
-    expanded: true,
+    expanded: pluginExpanded[p.id] ?? true,
     data: {},
     render: p.render,
   }))
 
   const registeredModules: RegisteredModule[] = registryCtx?._modules ?? []
-  const allModules = [...syntheticModules, ...registeredModules]
 
-  if (allModules.length === 0) {
+  if (syntheticModules.length === 0 && registeredModules.length === 0) {
     return (
       <div style={emptyStyle}>
         <span>No modules loaded.</span>
@@ -149,7 +152,17 @@ function ModuleStack({ plugins, primaryColor }: ModuleStackProps) {
 
   return (
     <ul style={moduleListStyle} role="list">
-      {allModules.map((mod) => (
+      {syntheticModules.map((mod) => (
+        <AccordionItem
+          key={mod.id}
+          module={mod}
+          primaryColor={primaryColor}
+          onToggle={() =>
+            setPluginExpanded((prev) => ({ ...prev, [mod.id]: !(prev[mod.id] ?? true) }))
+          }
+        />
+      ))}
+      {registeredModules.map((mod) => (
         <AccordionItem
           key={mod.id}
           module={mod}
@@ -185,7 +198,10 @@ function AccordionItem({ module, primaryColor, onToggle }: AccordionItemProps) {
     if (module.expanded) {
       const measured = el.scrollHeight
       setBodyOverflow('hidden')
-      setMaxHeight(measured)
+      setMaxHeight(0)
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setMaxHeight(measured))
+      })
     } else {
       setBodyOverflow('hidden')
       const measured = el.scrollHeight
