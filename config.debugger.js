@@ -12,4 +12,9 @@ export default {
       width: 360,
     },
   },
+  modules: [
+    { id: 'network', title: 'Network', defaultExpanded: true, data: { baseUrl: '/api' } },
+    { id: 'state', title: 'App State', defaultExpanded: false },
+    { id: 'config', title: 'Config', defaultExpanded: false },
+  ],
 }

@@ -19,10 +19,18 @@ export interface DebuggerPanelConfig {
   style?: DebuggerPanelStyleConfig
 }
 
+export interface DebuggerModuleConfig {
+  id: string
+  title?: string
+  defaultExpanded?: boolean
+  data?: Record<string, unknown>
+}
+
 export interface DebuggerConfig {
   style?: DebuggerStyleConfig
   button?: DebuggerButtonConfig
   panel?: DebuggerPanelConfig
+  modules?: DebuggerModuleConfig[]
 }
 
 export type ResolvedDebuggerConfig = Required<{
@@ -32,4 +40,5 @@ export type ResolvedDebuggerConfig = Required<{
     title: string
     style: Required<DebuggerPanelStyleConfig>
   }>
+  modules: DebuggerModuleConfig[]
 }>
