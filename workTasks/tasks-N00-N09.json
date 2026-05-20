@@ -680,7 +680,7 @@
       "title": "Introduce module system with config-driven selection and first built-in (device-info)",
       "type": "feat",
       "priority": "high",
-      "status": "fix-needed",
+      "status": "fixed",
       "folder": "workTasks/N03-introduce-module-system-with-config-driven-selecti",
       "createdAt": "2026-05-20T09:03:10.772Z",
       "statusHistory": [
@@ -718,6 +718,21 @@
           "status": "fix-needed",
           "at": "2026-05-20T11:03:14.209Z",
           "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T11:04:18.143Z",
+          "by": "task-git"
+        },
+        {
+          "status": "fixing",
+          "at": "2026-05-20T11:07:46.806Z",
+          "by": "task-review-fix"
+        },
+        {
+          "status": "fixed",
+          "at": "2026-05-20T11:17:14.697Z",
+          "by": "task-review-fix"
         }
       ],
       "implementation": {
@@ -750,7 +765,19 @@
           "comment": "AI review found one typing issue worth fixing before merge: BuiltInModuleId is currently string instead of the 'device-info' literal union because the registry uses ': Record<string, ...>' instead of 'satisfies Record<string, ...>' as the spec called out. Switching to satisfies with DebuggerModule<any> (to sidestep TSettings contravariance) restores the literal union and lets the inline cast on the registry entry go away. Plus three small polish items to fold into the same fix: freeze BUILT_IN_MODULES, document built-in-vs-custom lookup precedence in resolve.ts, and note that useMemo dep on the modules prop is fine for today but worth watching. Everything else (loader validation, resolver behavior, device-info live updates, SSR-safety, breaking rename) is clean and matches the spec. See REVIEW.md.",
           "type": "ai",
           "by": "task-review",
-          "fix": null
+          "fix": {
+            "startedAt": "2026-05-20T11:07:46.806Z",
+            "endedAt": "2026-05-20T11:17:14.697Z",
+            "status": "fixed",
+            "filesChanged": [
+              "src/modules/types.ts",
+              "src/modules/registry.ts",
+              "src/modules/resolve.ts",
+              "src/components/Debugger.tsx"
+            ],
+            "comment": "Applied AI review fixes. (1) Switched DebuggerModule.render from function-property to method syntax — bivariant method parameters let DebuggerModule<void> sit in a Record<string, DebuggerModule> registry without any/casts. (2) BUILT_IN_MODULES now 'as const satisfies Record<string, DebuggerModule>' wrapped in Object.freeze — BuiltInModuleId resolves to the literal 'device-info' (verified in emitted registry.d.ts as Readonly<{ readonly 'device-info': DebuggerModule<void> }>); host code can no longer mutate the registry. (3) Resolver signature drops the <unknown>/<any> generics and accepts plain DebuggerModule; consumer-side casts in Debugger.tsx (modules?: DebuggerModule[]) cleaned up too. (4) Added a one-line precedence comment near findDescriptor noting that built-ins shadow same-id custom modules. Gates clean; loader, resolver dedupe, title + settings override all still pass smoke tests.",
+            "by": "task-review-fix"
+          }
         }
       ],
       "changesAfterImplementation": [],
@@ -774,6 +801,11 @@
           "at": "2026-05-20T10:48:15.542Z",
           "commitHash": "8bf2045aa4818ab3a291f57cf6dfde56bd7f5a9d",
           "commitMessage": "feat(N03): module system with config-driven selection + device-info"
+        },
+        {
+          "at": "2026-05-20T11:04:18.142Z",
+          "commitHash": "85265b74ba75b407d73c6a0ea10f24d2f012e47c",
+          "commitMessage": "chore(N03): record AI review (fix-needed)"
         }
       ],
       "branch": "feat/N03-introduce-module-system-with-config-driven-selecti",

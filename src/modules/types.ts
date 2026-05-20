@@ -12,8 +12,12 @@ export interface DebuggerModule<TSettings = unknown> {
   defaultTitle: string
   /** Optional defaults for module-specific settings. */
   defaultSettings?: TSettings
-  /** Renders the module's content. Receives the resolved settings + title. */
-  render: (ctx: ModuleContext<TSettings>) => ReactNode
+  /**
+   * Renders the module's content. Receives the resolved settings + title.
+   * Method syntax (not arrow property) so heterogeneous modules can live
+   * together in a single registry without per-entry casts.
+   */
+  render(ctx: ModuleContext<TSettings>): ReactNode
 }
 
 export interface DebuggerModuleEntryObject {

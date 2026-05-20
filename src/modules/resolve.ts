@@ -17,19 +17,21 @@ function normalizeEntry(entry: DebuggerModuleEntry): DebuggerModuleEntryObject {
   return typeof entry === 'string' ? { id: entry } : entry
 }
 
+// Built-ins win when a custom module declares the same id — keeps host
+// code from accidentally shadowing the package's reserved ids.
 function findDescriptor(
   id: string,
-  builtIns: Record<string, DebuggerModule<unknown>>,
-  customModules: ReadonlyArray<DebuggerModule<unknown>>,
-): DebuggerModule<unknown> | undefined {
+  builtIns: Readonly<Record<string, DebuggerModule>>,
+  customModules: ReadonlyArray<DebuggerModule>,
+): DebuggerModule | undefined {
   if (id in builtIns) return builtIns[id]
   return customModules.find((m) => m.id === id)
 }
 
 export function resolveModules(
   configModules: ReadonlyArray<DebuggerModuleEntry>,
-  customModules: ReadonlyArray<DebuggerModule<unknown>>,
-  builtIns: Record<string, DebuggerModule<unknown>>,
+  customModules: ReadonlyArray<DebuggerModule>,
+  builtIns: Readonly<Record<string, DebuggerModule>>,
 ): ResolvedModule[] {
   const resolved: ResolvedModule[] = []
   const consumedIds = new Set<string>()
@@ -45,10 +47,8 @@ export function resolveModules(
     consumedIds.add(entry.id)
 
     const title = entry.title ?? descriptor.defaultTitle
-    const settings = {
-      ...(descriptor.defaultSettings as Record<string, unknown> | undefined),
-      ...entry.settings,
-    }
+    const defaults = (descriptor.defaultSettings ?? {}) as Record<string, unknown>
+    const settings = { ...defaults, ...entry.settings }
 
     resolved.push({
       id: descriptor.id,
@@ -69,7 +69,7 @@ export function resolveModules(
       instanceKey: custom.id,
       render: () =>
         custom.render({
-          settings: (custom.defaultSettings ?? {}) as unknown,
+          settings: custom.defaultSettings ?? {},
           title,
         }),
     })

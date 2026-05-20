@@ -9,7 +9,7 @@ import { BUILT_IN_MODULES } from '../modules/registry'
 import { resolveModules } from '../modules/resolve'
 
 export interface DebuggerProps {
-  modules?: DebuggerModule<unknown>[]
+  modules?: DebuggerModule[]
   defaultOpen?: boolean
   config?: DebuggerConfig
 }
