@@ -289,7 +289,10 @@ function CopyExportButton({ getSnapshot }: CopyExportButtonProps) {
       }
     }
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setDropdownOpen(false)
+      if (e.key === 'Escape') {
+        e.stopPropagation()
+        setDropdownOpen(false)
+      }
     }
     document.addEventListener('mousedown', onMouseDown)
     document.addEventListener('keydown', onKeyDown)
