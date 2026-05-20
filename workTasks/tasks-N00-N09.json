@@ -680,7 +680,7 @@
       "title": "Add module registry with accordion stack, auto-registration wrapper, and Debugger API",
       "type": "feat",
       "priority": "high",
-      "status": "merged",
+      "status": "pushed",
       "folder": "workTasks/N03-add-module-registry-with-accordion-stack-auto-regi",
       "createdAt": "2026-05-20T15:20:44.315Z",
       "statusHistory": [
@@ -787,6 +787,11 @@
         {
           "status": "merged",
           "at": "2026-05-20T16:52:40.093Z",
+          "by": "task-git"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T16:55:22.489Z",
           "by": "task-git"
         }
       ],
@@ -901,11 +906,53 @@
           "at": "2026-05-20T16:51:42.199Z",
           "commitHash": "4529a50ee2dc136b4b8156e2cc50472876777070",
           "commitMessage": "chore(N03): record human review (approved)"
+        },
+        {
+          "at": "2026-05-20T16:55:22.489Z",
+          "commitHash": "43d8b4b5be22e5ca84f8629947ba0b37db40a503",
+          "commitMessage": "chore(N03): mark merged and done"
         }
       ],
       "branch": "main",
       "mrUrl": null,
       "mergedAt": "2026-05-20T16:52:40.093Z"
+    },
+    {
+      "id": "N04",
+      "title": "Add module debug-data registration, runtime updates, and header copy/export button",
+      "type": "feat",
+      "priority": "high",
+      "status": "ready",
+      "folder": "workTasks/N04-add-module-debug-data-registration-runtime-updates",
+      "createdAt": "2026-05-20T17:06:26.766Z",
+      "statusHistory": [
+        {
+          "status": "ready",
+          "at": "2026-05-20T17:06:26.767Z",
+          "by": "taskmaster"
+        }
+      ],
+      "implementation": {
+        "startedAt": null,
+        "completedAt": null,
+        "filesChanged": [],
+        "tokensUsed": null
+      },
+      "reviews": [],
+      "changesAfterImplementation": [],
+      "incidents": [],
+      "committedAt": null,
+      "totalDurationMinutes": null,
+      "tags": [
+        "api",
+        "ui",
+        "debugger",
+        "export"
+      ],
+      "pushes": [],
+      "branch": null,
+      "mrUrl": null,
+      "mergedAt": null
     }
   ]
 }
