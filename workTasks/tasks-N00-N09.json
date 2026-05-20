@@ -1362,7 +1362,7 @@
       "title": "Add predefined DeviceInfo module with snapshot integration",
       "type": "feat",
       "priority": "high",
-      "status": "fixed",
+      "status": "approved",
       "folder": "workTasks/N06-add-predefined-deviceinfo-module-with-snapshot-int",
       "createdAt": "2026-05-20T20:10:28.694Z",
       "statusHistory": [
@@ -1435,6 +1435,16 @@
           "status": "fixed",
           "at": "2026-05-20T20:53:21.660Z",
           "by": "task-review-fix"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-20T20:55:38.073Z",
+          "by": "task-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-20T20:56:34.316Z",
+          "by": "task-review"
         }
       ],
       "implementation": {
@@ -1487,6 +1497,15 @@
             "comment": "Registry now owns resize/orientationchange listeners and broadcasts 'viewport-change' to all modules via _send. DeviceInfoPanel uses useState + subscribe('viewport-change') instead of direct window listeners. ViewportChangePayload exported publicly.",
             "by": "task-review-fix"
           }
+        },
+        {
+          "startedAt": "2026-05-20T20:55:38.074Z",
+          "endedAt": "2026-05-20T20:56:34.315Z",
+          "verdict": "approved",
+          "comment": "All three blockers resolved. Registry owns the single resize/orientationchange listener pair and broadcasts via modulesRef to avoid stale closure. DeviceInfoPanel is clean — no window access, two focused effects (data→updateData, subscribe→setData). ViewportChangePayload typed and exported publicly. Quality gates pass.",
+          "type": "ai",
+          "by": "task-review",
+          "fix": null
         }
       ],
       "changesAfterImplementation": [],
