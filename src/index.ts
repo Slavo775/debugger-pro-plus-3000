@@ -18,6 +18,8 @@ export type {
   ResolvedDebuggerConfig,
 } from './config/types'
 
+export { deviceInfoModule } from './modules/predefined'
+
 export { useDebuggerApi } from './modules/useDebuggerApi'
 export type {
   DebuggerApi,
