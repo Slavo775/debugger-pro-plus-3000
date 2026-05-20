@@ -922,7 +922,7 @@
       "title": "Add module debug-data registration, runtime updates, and header copy/export button",
       "type": "feat",
       "priority": "high",
-      "status": "implemented",
+      "status": "fix-needed",
       "folder": "workTasks/N04-add-module-debug-data-registration-runtime-updates",
       "createdAt": "2026-05-20T17:06:26.766Z",
       "statusHistory": [
@@ -945,6 +945,21 @@
           "status": "implemented",
           "at": "2026-05-20T17:13:40.086Z",
           "by": "task-implement"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T17:14:19.643Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-20T17:16:45.560Z",
+          "by": "task-review"
+        },
+        {
+          "status": "fix-needed",
+          "at": "2026-05-20T17:18:24.034Z",
+          "by": "task-review"
         }
       ],
       "implementation": {
@@ -958,7 +973,17 @@
         ],
         "tokensUsed": null
       },
-      "reviews": [],
+      "reviews": [
+        {
+          "startedAt": "2026-05-20T17:16:45.560Z",
+          "endedAt": "2026-05-20T17:18:24.034Z",
+          "verdict": "fix-needed",
+          "comment": "One real bug: Escape key conflict. CopyExportButton and DebuggerPanelRoot both add document keydown listeners for Escape with no stopPropagation. When dropdown is open and Escape is pressed, the dropdown closes AND the panel closes simultaneously. Fix: call e.stopPropagation() in CopyExportButton's Escape handler so the panel close listener never fires. All checklist items are otherwise implemented correctly; build and lint are clean.",
+          "type": "ai",
+          "by": "task-review",
+          "fix": null
+        }
+      ],
       "changesAfterImplementation": [],
       "incidents": [],
       "committedAt": null,
@@ -974,6 +999,11 @@
           "at": "2026-05-20T17:08:04.708Z",
           "commitHash": "45e3cac",
           "commitMessage": "docs(N04): add task spec for module debug-data registration and copy/export button"
+        },
+        {
+          "at": "2026-05-20T17:14:19.642Z",
+          "commitHash": "2b648fc",
+          "commitMessage": "feat(N04): add module debug-data registration, runtime updates, and header copy/export button"
         }
       ],
       "branch": "feat/N04-module-debug-data-registration-copy-export",
