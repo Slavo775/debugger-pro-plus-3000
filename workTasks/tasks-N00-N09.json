@@ -1122,7 +1122,7 @@
       "title": "Rewrite README with full API docs and architecture diagrams",
       "type": "rework",
       "priority": "medium",
-      "status": "fix-needed",
+      "status": "fixed",
       "folder": "workTasks/N05-rewrite-readme-with-full-api-docs-and-architecture",
       "createdAt": "2026-05-20T19:03:34.538Z",
       "statusHistory": [
@@ -1155,6 +1155,21 @@
           "status": "fix-needed",
           "at": "2026-05-20T19:16:41.913Z",
           "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T19:17:36.752Z",
+          "by": "task-git"
+        },
+        {
+          "status": "fixing",
+          "at": "2026-05-20T19:33:08.715Z",
+          "by": "task-review-fix"
+        },
+        {
+          "status": "fixed",
+          "at": "2026-05-20T19:33:27.042Z",
+          "by": "task-review-fix"
         }
       ],
       "implementation": {
@@ -1173,7 +1188,16 @@
           "comment": "One doc inaccuracy: moduleData description says 'static + runtime merged' but it only reflects static registration data (def.data + config.modules[].data). Runtime patches from updateData() are stored in runtimeDataRef and only appear in the Copy/Export snapshot via _getDebugSnapshot(). Fix the table description to clarify this distinction so users don't expect updateData patches to be readable back via moduleData.",
           "type": "ai",
           "by": "task-review",
-          "fix": null
+          "fix": {
+            "startedAt": "2026-05-20T19:33:08.715Z",
+            "endedAt": "2026-05-20T19:33:27.041Z",
+            "status": "fixed",
+            "filesChanged": [
+              "README.md"
+            ],
+            "comment": "Corrected moduleData description: static-only, runtime patches from updateData() only appear in Copy/Export snapshot",
+            "by": "task-review-fix"
+          }
         }
       ],
       "changesAfterImplementation": [],
@@ -1190,6 +1214,11 @@
           "at": "2026-05-20T19:07:02.239Z",
           "commitHash": "064f9fa",
           "commitMessage": "docs(N05): rewrite README with full API docs, config guide, and Mermaid architecture diagrams"
+        },
+        {
+          "at": "2026-05-20T19:17:36.752Z",
+          "commitHash": "90c145b",
+          "commitMessage": "chore(N05): record AI review round 1 (fix-needed: moduleData description inaccuracy)"
         }
       ],
       "branch": "rework/N05-rewrite-readme-api-docs-diagrams",

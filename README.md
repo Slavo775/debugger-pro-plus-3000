@@ -112,7 +112,7 @@ const { updateData, moduleData, emit, subscribe } = useDebuggerApi()
 | Return | Type | Description |
 |---|---|---|
 | `updateData(patch)` | `(Record<string, unknown>) => void` | Shallow-merge runtime data into this module's debug snapshot slice. No re-render — updates are flushed on the next Copy/Export. |
-| `moduleData` | `Record<string, unknown>` | Current snapshot data for this module (static + runtime merged, read-only). |
+| `moduleData` | `Record<string, unknown>` | Static registration data for this module (initial values from `DebuggerModuleDefinition.data` merged with `config.modules[].data`). Does **not** include runtime patches from `updateData()` — those appear only in the Copy/Export snapshot. |
 | `emit(event, payload?)` | `(string, unknown?) => void` | Emit an event up to the `onModuleEvent` handler on `<Debugger>`. |
 | `subscribe(event, handler)` | returns `() => void` | Subscribe to events sent to this module from outside. Returns an unsubscribe function. |
 
