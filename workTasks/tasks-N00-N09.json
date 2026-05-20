@@ -1362,7 +1362,7 @@
       "title": "Add predefined DeviceInfo module with snapshot integration",
       "type": "feat",
       "priority": "high",
-      "status": "implemented",
+      "status": "fix-needed",
       "folder": "workTasks/N06-add-predefined-deviceinfo-module-with-snapshot-int",
       "createdAt": "2026-05-20T20:10:28.694Z",
       "statusHistory": [
@@ -1385,6 +1385,21 @@
           "status": "implemented",
           "at": "2026-05-20T20:23:11.605Z",
           "by": "task-implement"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-20T20:23:48.415Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-20T20:30:55.940Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "fix-needed",
+          "at": "2026-05-20T20:31:13.395Z",
+          "by": "task-human-review"
         }
       ],
       "implementation": {
@@ -1398,7 +1413,17 @@
         ],
         "tokensUsed": null
       },
-      "reviews": [],
+      "reviews": [
+        {
+          "startedAt": "2026-05-20T20:30:55.940Z",
+          "endedAt": "2026-05-20T20:31:13.395Z",
+          "verdict": "fix-needed",
+          "comment": "deviceInfoModule not wired into dev preview (main.tsx) — add it to the modules array so it renders in the panel",
+          "type": "human",
+          "by": "task-human-review",
+          "fix": null
+        }
+      ],
       "changesAfterImplementation": [],
       "incidents": [],
       "committedAt": null,
@@ -1414,6 +1439,11 @@
           "at": "2026-05-20T20:11:54.715Z",
           "commitHash": "0ba33c0",
           "commitMessage": "chore(N06): add task spec for predefined DeviceInfo module"
+        },
+        {
+          "at": "2026-05-20T20:23:48.415Z",
+          "commitHash": "8c38ba6",
+          "commitMessage": "feat(N06): add predefined DeviceInfo module with snapshot integration"
         }
       ],
       "branch": "feat/N06-predefined-deviceinfo-module",
