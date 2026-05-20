@@ -1122,7 +1122,7 @@
       "title": "Rewrite README with full API docs and architecture diagrams",
       "type": "rework",
       "priority": "medium",
-      "status": "pushed",
+      "status": "merged",
       "folder": "workTasks/N05-rewrite-readme-with-full-api-docs-and-architecture",
       "createdAt": "2026-05-20T19:03:34.538Z",
       "statusHistory": [
@@ -1235,6 +1235,11 @@
           "status": "pushed",
           "at": "2026-05-20T19:56:24.283Z",
           "by": "task-git"
+        },
+        {
+          "status": "merged",
+          "at": "2026-05-20T19:56:45.202Z",
+          "by": "task-git"
         }
       ],
       "implementation": {
@@ -1305,7 +1310,7 @@
       "changesAfterImplementation": [],
       "incidents": [],
       "committedAt": null,
-      "totalDurationMinutes": null,
+      "totalDurationMinutes": 53,
       "tags": [
         "docs",
         "readme",
@@ -1349,8 +1354,8 @@
         }
       ],
       "branch": "rework/N05-rewrite-readme-api-docs-diagrams",
-      "mrUrl": null,
-      "mergedAt": null
+      "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/6",
+      "mergedAt": "2026-05-20T19:56:45.202Z"
     }
   ]
 }
