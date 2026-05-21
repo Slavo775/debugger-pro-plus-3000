@@ -1764,7 +1764,7 @@
       "title": "Persist logs to localStorage with config flag and UI override",
       "type": "feat",
       "priority": "medium",
-      "status": "pushed",
+      "status": "fix-needed",
       "folder": "workTasks/N09-persist-logs-to-localstorage-with-config-flag",
       "tags": [
         "logs",
@@ -1798,6 +1798,16 @@
           "status": "pushed",
           "at": "2026-05-21T09:12:00.000Z",
           "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-21T09:20:00.000Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "fix-needed",
+          "at": "2026-05-21T09:21:00.000Z",
+          "by": "task-human-review"
         }
       ],
       "branch": "feat/N09-persist-logs-to-localstorage-with-config-flag",
@@ -1810,7 +1820,9 @@
         "src/modules/predefined/logs/logsStore.ts",
         "src/components/Debugger.tsx",
         "src/modules/predefined/logs/LogsPanel.tsx"
-      ]
+      ],
+      "reviewVerdict": "fix-needed",
+      "reviewComment": "Unified LS schema {persistLog, logOutput}; no runtime deletion; snapshot hydration on mount"
     }
   ]
 }
