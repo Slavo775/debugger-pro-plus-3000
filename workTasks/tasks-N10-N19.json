@@ -402,6 +402,78 @@
       "branch": "feat/N10-add-api-healthcheck-module-with-multi-endpoint-status",
       "mrUrl": null,
       "mergedAt": "2026-05-21T11:40:55.710Z"
+    },
+    {
+      "id": "N11",
+      "title": "Unify config — move logs and network into modules[].data",
+      "type": "rework",
+      "priority": "high",
+      "status": "ready",
+      "folder": "workTasks/N11-unify-config-move-logs-and-network-into-modules-da",
+      "createdAt": "2026-05-21T14:21:07.001Z",
+      "statusHistory": [
+        {
+          "status": "ready",
+          "at": "2026-05-21T14:21:07.001Z",
+          "by": "taskmaster"
+        }
+      ],
+      "implementation": {
+        "startedAt": null,
+        "completedAt": null,
+        "filesChanged": [],
+        "tokensUsed": null
+      },
+      "reviews": [],
+      "changesAfterImplementation": [],
+      "incidents": [],
+      "committedAt": null,
+      "totalDurationMinutes": null,
+      "tags": [
+        "config",
+        "architecture",
+        "breaking-change"
+      ],
+      "pushes": [],
+      "branch": null,
+      "mrUrl": null,
+      "mergedAt": null
+    },
+    {
+      "id": "N12",
+      "title": "Upgrade insight-flow to 0.4.0 and embed architecture rules in agents",
+      "type": "feat",
+      "priority": "high",
+      "status": "ready",
+      "folder": "workTasks/N12-upgrade-insight-flow-to-0-4-0-and-embed-architectu",
+      "createdAt": "2026-05-21T18:27:52.906Z",
+      "statusHistory": [
+        {
+          "status": "ready",
+          "at": "2026-05-21T18:27:52.907Z",
+          "by": "taskmaster"
+        }
+      ],
+      "implementation": {
+        "startedAt": null,
+        "completedAt": null,
+        "filesChanged": [],
+        "tokensUsed": null
+      },
+      "reviews": [],
+      "changesAfterImplementation": [],
+      "incidents": [],
+      "committedAt": null,
+      "totalDurationMinutes": null,
+      "tags": [
+        "tooling",
+        "insight-flow",
+        "agents"
+      ],
+      "pushes": [],
+      "branch": null,
+      "mrUrl": null,
+      "mergedAt": null
     }
   ]
 }
