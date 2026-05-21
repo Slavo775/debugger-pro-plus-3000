@@ -15,29 +15,44 @@ Approved by human reviewer without changes requested.
 
 ### Blocker: module init must not run unless the module is present
 
-`initNetworkStore` is called unconditionally from `Debugger.tsx` via a top-level `useEffect`,
-regardless of whether `networkModule` was added to the `modules` prop. This means fetch requests
-fire and the store is mutated even when the consumer never added the Network panel.
+`initNetworkStore` was called unconditionally from `Debugger.tsx` regardless of whether
+`networkModule` was added to the modules prop. Fixed: moved into `NetworkPanel`.
 
-The same architectural principle applies to ALL predefined modules: **a module's init/side-effect
-logic must only execute when that module is actually mounted**. Nothing from a module should
-trigger if the module is absent.
+## Human Review round 3 — fix-needed
 
-### Required fix
+### Blocker A: initLogsStore still in Debugger.tsx
 
-Remove `initNetworkStore` (and its import) from `Debugger.tsx`. Move the call into `NetworkPanel`
-itself via a `useEffect` that reads `network.apis` from `useDebuggerConfig()`:
+`Debugger.tsx` imports and calls `initLogsStore(logs, persistLogs)` unconditionally — same
+violation as `initNetworkStore` was. If `logsModule` is not in the `modules` array,
+`initLogsStore` still runs and the logs store is initialised for nothing.
+
+**Fix**: Remove `initLogsStore` import and `useEffect` from `Debugger.tsx`. Move the call
+into `LogsPanel.tsx` via `useDebuggerConfig()`:
 
 ```ts
-// NetworkPanel.tsx
-const { network } = useDebuggerConfig()
-useEffect(() => { initNetworkStore(network.apis) }, [network])
+// LogsPanel.tsx
+const { logs, persistLogs } = useDebuggerConfig()
+useEffect(() => { initLogsStore(logs, persistLogs) }, [logs, persistLogs])
 ```
 
-`NetworkPanel` only mounts when `networkModule` is in the `modules` array, so the store init —
-and all fetch traffic — is automatically gated by module presence.
+### Blocker B: DebuggerModuleRegistryProvider imports pushEntry from logs store
 
-The `initLogsStore` call in `Debugger.tsx` has the same problem but is out of scope for this
-task. This task must fix the network side.
+`DebuggerModuleRegistryProvider.tsx` imports `pushEntry` from `./predefined/logs/logsStore`
+and calls it directly inside the route-change handler. The registry is Debugger infrastructure
+and must not import from any module.
 
-### No other blockers
+**Fix**: Remove `pushEntry` from the registry. The registry already fires a `route-change`
+event to all modules. `LogsPanel` already subscribes to `route-change` — extend that handler
+to push the entry to the store itself:
+
+```ts
+// LogsPanel.tsx — in the route-change subscribe effect
+subscribe('route-change', (payload) => {
+  const { path, timestamp } = payload as RouteChangePayload
+  pushEntry({ id: '__route__', prefix: 'Navigation', text: path, timestamp })
+  forceUpdate()
+})
+```
+
+After this fix `DebuggerModuleRegistryProvider` has zero module imports and the route log
+entry only appears when `logsModule` is mounted.
