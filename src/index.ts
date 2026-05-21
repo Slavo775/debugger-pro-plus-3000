@@ -17,10 +17,12 @@ export type {
   DebuggerStyleConfig,
   LogConfig,
   ResolvedDebuggerConfig,
+  ApiEndpointConfig,
+  NetworkConfig,
 } from './config/types'
 
-export { deviceInfoModule, logsModule, useDebuggerLog } from './modules/predefined'
-export type { LogEntry } from './modules/predefined'
+export { deviceInfoModule, logsModule, networkModule, useDebuggerLog, subscribeNetwork, getNetworkApis } from './modules/predefined'
+export type { LogEntry, ApiStatus, ApiStatusState } from './modules/predefined'
 
 export { useDebuggerApi } from './modules/useDebuggerApi'
 export type {
