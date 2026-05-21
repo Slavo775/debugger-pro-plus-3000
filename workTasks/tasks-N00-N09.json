@@ -1764,7 +1764,7 @@
       "title": "Persist logs to localStorage with config flag and UI override",
       "type": "feat",
       "priority": "medium",
-      "status": "fix-needed",
+      "status": "fixed",
       "folder": "workTasks/N09-persist-logs-to-localstorage-with-config-flag",
       "tags": [
         "logs",
@@ -1813,6 +1813,16 @@
           "status": "reviewing",
           "at": "2026-05-21T09:25:00.000Z",
           "by": "task-review"
+        },
+        {
+          "status": "fixing",
+          "at": "2026-05-21T09:30:00.000Z",
+          "by": "task-review-fix"
+        },
+        {
+          "status": "fixed",
+          "at": "2026-05-21T09:32:00.000Z",
+          "by": "task-review-fix"
         }
       ],
       "branch": "feat/N09-persist-logs-to-localstorage-with-config-flag",

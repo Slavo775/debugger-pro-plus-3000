@@ -30,6 +30,7 @@ export function LogsPanel() {
       forceUpdate()
     }
     s._subs.add(notify)
+    notify()
     return () => { s._subs.delete(notify) }
   }, [updateData])
 
