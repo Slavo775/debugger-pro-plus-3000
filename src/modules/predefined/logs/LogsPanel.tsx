@@ -1,4 +1,4 @@
-import { useEffect, useReducer, type CSSProperties } from 'react'
+import { useEffect, useReducer, useState, type CSSProperties } from 'react'
 import { useDebuggerApi } from '../../useDebuggerApi'
 import { useDebuggerConfig } from '../../../config/useDebuggerConfig'
 import { getStore, setEnabled, clearEntries, type LogEntry } from './logsStore'
@@ -13,38 +13,63 @@ function formatTime(ts: number): string {
 }
 
 export function LogsPanel() {
-  const { subscribe } = useDebuggerApi()
-  const { logs: logConfigs } = useDebuggerConfig()
+  const { subscribe, updateData } = useDebuggerApi()
+  const cfg = useDebuggerConfig()
   const [, forceUpdate] = useReducer((x: number) => x + 1, 0)
 
+  const store = getStore()
+
+  const [activeFilters, setActiveFilters] = useState<Set<string>>(
+    () => new Set([...store.registered.keys(), '__route__']),
+  )
+
   useEffect(() => {
-    const store = getStore()
-    store._subs.add(forceUpdate)
-    return () => { store._subs.delete(forceUpdate) }
-  }, [])
+    const s = getStore()
+    const notify = () => {
+      updateData({ logOutput: [...s.entries] })
+      forceUpdate()
+    }
+    s._subs.add(notify)
+    return () => { s._subs.delete(notify) }
+  }, [updateData])
 
   useEffect(() => {
     return subscribe('route-change', forceUpdate)
   }, [subscribe])
 
-  const store = getStore()
+  // Re-sync activeFilters when log channels change (e.g. new channels registered)
+  useEffect(() => {
+    setActiveFilters(new Set([...getStore().registered.keys(), '__route__']))
+  }, [cfg.logs])
+
   const entries = [...store.entries].reverse()
 
-  const visibleEntries = entries.filter(
-    (e) => e.id === '__route__' || store.enabled.has(e.id),
-  )
+  const visibleEntries = entries.filter((e) => {
+    if (e.id === '__route__') return activeFilters.has('__route__')
+    if (!store.enabled.has(e.id)) return false
+    return activeFilters.has(e.id)
+  })
+
+  function toggleFilter(id: string) {
+    setActiveFilters((prev) => {
+      const next = new Set(prev)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
+      return next
+    })
+  }
 
   return (
     <div style={containerStyle}>
       <div style={sectionStyle}>
         <span style={sectionLabelStyle}>Channels</span>
-        {logConfigs.length === 0 ? (
+        {cfg.logs.length === 0 ? (
           <p style={emptyChannelsStyle}>
             No log channels configured. Add <code style={codeStyle}>logs</code> to your debugger config.
           </p>
         ) : (
           <div style={checkboxGroupStyle}>
-            {logConfigs.map(({ id, prefix }) => (
+            {cfg.logs.map(({ id, prefix }) => (
               <label key={id} style={checkboxLabelStyle}>
                 <input
                   type="checkbox"
@@ -63,6 +88,26 @@ export function LogsPanel() {
         <span style={sectionLabelStyle}>Log output</span>
         <button type="button" style={clearButtonStyle} onClick={clearEntries}>
           Clear
+        </button>
+      </div>
+
+      <div style={chipRowStyle}>
+        {[...store.registered.entries()].map(([id, prefix]) => (
+          <button
+            key={id}
+            type="button"
+            onClick={() => toggleFilter(id)}
+            style={chipStyle(activeFilters.has(id), cfg.style.primaryColor)}
+          >
+            {prefix}
+          </button>
+        ))}
+        <button
+          type="button"
+          onClick={() => toggleFilter('__route__')}
+          style={chipStyle(activeFilters.has('__route__'), cfg.style.primaryColor)}
+        >
+          Navigation
         </button>
       </div>
 
@@ -230,4 +275,24 @@ const routeTextStyle: CSSProperties = {
   fontSize: 11,
   lineHeight: '16px',
   wordBreak: 'break-word',
+}
+
+const chipRowStyle: CSSProperties = {
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: '4px 6px',
+  padding: '4px 0 6px',
+}
+
+function chipStyle(active: boolean, primaryColor: string): CSSProperties {
+  return {
+    background: active ? primaryColor : 'transparent',
+    border: active ? 'none' : '1px solid #444',
+    borderRadius: 999,
+    color: active ? '#fff' : '#888',
+    cursor: 'pointer',
+    fontFamily: 'monospace',
+    fontSize: 11,
+    padding: '2px 10px',
+  }
 }

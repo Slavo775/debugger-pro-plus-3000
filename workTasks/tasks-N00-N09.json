@@ -1659,7 +1659,7 @@
       "title": "Add log snapshot export and visual filter chips to Logs module",
       "type": "feat",
       "priority": "high",
-      "status": "ready",
+      "status": "implemented",
       "folder": "workTasks/N08-add-log-snapshot-export-and-visual-filter-chips-to",
       "createdAt": "2026-05-21T06:54:47.150Z",
       "statusHistory": [
@@ -1667,12 +1667,29 @@
           "status": "ready",
           "at": "2026-05-21T06:54:47.151Z",
           "by": "taskmaster"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-21T06:56:49.871Z",
+          "by": "task-git"
+        },
+        {
+          "status": "in-progress",
+          "at": "2026-05-21T07:27:00.000Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "implemented",
+          "at": "2026-05-21T07:35:00.000Z",
+          "by": "task-implement"
         }
       ],
       "implementation": {
-        "startedAt": null,
-        "completedAt": null,
-        "filesChanged": [],
+        "startedAt": "2026-05-21T07:27:00.000Z",
+        "completedAt": "2026-05-21T07:35:00.000Z",
+        "filesChanged": [
+          "src/modules/predefined/logs/LogsPanel.tsx"
+        ],
         "tokensUsed": null
       },
       "reviews": [],
@@ -1686,8 +1703,14 @@
         "filter",
         "ui"
       ],
-      "pushes": [],
-      "branch": null,
+      "pushes": [
+        {
+          "at": "2026-05-21T06:56:49.871Z",
+          "commitHash": "5cf8b6d",
+          "commitMessage": "chore(N08): add task spec for log snapshot export and visual filter chips"
+        }
+      ],
+      "branch": "feat/N08-log-snapshot-filter-chips",
       "mrUrl": null,
       "mergedAt": null
     }
