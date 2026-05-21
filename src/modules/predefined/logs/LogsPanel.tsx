@@ -1,7 +1,8 @@
 import { useEffect, useReducer, useState, type CSSProperties } from 'react'
 import { useDebuggerApi } from '../../useDebuggerApi'
 import { useDebuggerConfig } from '../../../config/useDebuggerConfig'
-import { getStore, setEnabled, clearEntries, setPersistLogs, type LogEntry } from './logsStore'
+import type { RouteChangePayload } from '../../types'
+import { initLogsStore, getStore, setEnabled, clearEntries, setPersistLogs, pushEntry, type LogEntry } from './logsStore'
 
 function formatTime(ts: number): string {
   const d = new Date(ts)
@@ -23,6 +24,8 @@ export function LogsPanel() {
     () => new Set([...store.registered.keys(), '__route__']),
   )
 
+  useEffect(() => { initLogsStore(cfg.logs, cfg.persistLogs) }, [cfg.logs, cfg.persistLogs])
+
   useEffect(() => {
     const s = getStore()
     const notify = () => {
@@ -35,7 +38,10 @@ export function LogsPanel() {
   }, [updateData])
 
   useEffect(() => {
-    return subscribe('route-change', forceUpdate)
+    return subscribe('route-change', (payload) => {
+      const { path, timestamp } = payload as RouteChangePayload
+      pushEntry({ id: '__route__', prefix: 'Navigation', text: path, timestamp })
+    })
   }, [subscribe])
 
   // Re-sync activeFilters when log channels change (e.g. new channels registered)

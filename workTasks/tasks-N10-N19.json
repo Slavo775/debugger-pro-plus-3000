@@ -9,7 +9,7 @@
       "title": "add-api-healthcheck-module-with-multi-endpoint-status",
       "type": "feat",
       "priority": "medium",
-      "status": "fix-needed",
+      "status": "fixed",
       "folder": "workTasks/N10-add-api-healthcheck-module-with-multi-endpoint-sta",
       "createdAt": "2026-05-21T09:49:46.281Z",
       "statusHistory": [
@@ -147,6 +147,21 @@
           "status": "fix-needed",
           "at": "2026-05-21T11:04:30.675Z",
           "by": "task-human-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-21T11:04:58.498Z",
+          "by": "task-git"
+        },
+        {
+          "status": "fixing",
+          "at": "2026-05-21T11:27:01.119Z",
+          "by": "task-review-fix"
+        },
+        {
+          "status": "fixed",
+          "at": "2026-05-21T11:28:50.035Z",
+          "by": "task-review-fix"
         }
       ],
       "implementation": {
@@ -210,7 +225,18 @@
           "comment": "Two blockers: (A) initLogsStore called unconditionally in Debugger.tsx — move into LogsPanel. (B) DebuggerModuleRegistryProvider imports pushEntry from logs/logsStore — remove it, move route entry push into LogsPanel route-change subscriber instead.",
           "type": "human",
           "by": "task-human-review",
-          "fix": null
+          "fix": {
+            "startedAt": "2026-05-21T11:27:01.120Z",
+            "endedAt": "2026-05-21T11:28:50.035Z",
+            "status": "fixed",
+            "filesChanged": [
+              "src/components/Debugger.tsx",
+              "src/modules/DebuggerModuleRegistryProvider.tsx",
+              "src/modules/predefined/logs/LogsPanel.tsx"
+            ],
+            "comment": "Removed initLogsStore from Debugger.tsx. Removed pushEntry import from DebuggerModuleRegistryProvider. LogsPanel now self-inits via useDebuggerConfig and pushes route entries via its own route-change subscriber. Registry has zero module imports.",
+            "by": "task-review-fix"
+          }
         }
       ],
       "changesAfterImplementation": [
@@ -293,6 +319,11 @@
           "at": "2026-05-21T10:55:58.942Z",
           "commitHash": "f0470b6",
           "commitMessage": "fix(N10): move initNetworkStore into NetworkPanel — gate init on module presence"
+        },
+        {
+          "at": "2026-05-21T11:04:58.498Z",
+          "commitHash": "294750b",
+          "commitMessage": "chore(N10): record human review round 3 (fix-needed) + CLAUDE.md"
         }
       ],
       "branch": "feat/N10-add-api-healthcheck-module-with-multi-endpoint-status",
