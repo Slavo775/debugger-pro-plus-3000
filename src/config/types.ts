@@ -23,6 +23,7 @@ export interface DebuggerModuleConfig {
   id: string
   title?: string
   defaultExpanded?: boolean
+  order?: number
   data?: Record<string, unknown>
 }
 

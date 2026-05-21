@@ -19,7 +19,9 @@ npm run format:check # Prettier check
 
 ## Architecture
 
-### Layers
+See [`ARCHITECTURE.md`](./ARCHITECTURE.md) for the full architecture reference including the system layers diagram, communication channel spec, module contract, ordering rules, predefined module patterns, and the invariants that every PR must enforce.
+
+### Layers summary
 
 ```
 FAB button  →  Debugger panel  →  Module registry  →  Modules
@@ -90,12 +92,6 @@ notify React via a `_subs: Set<() => void>` subscriber set. Panels subscribe on 
 `useReducer` for `forceUpdate` (same pattern as `LogsPanel`).
 
 **Current predefined modules:** `logsModule`, `deviceInfoModule`, `networkModule`.
-
-### Known exception
-
-`DebuggerModuleRegistryProvider` imports `pushEntry` from `logs/logsStore` to record route
-changes in the log. This is the one place where the registry touches a module store directly.
-It exists because route tracking is cross-cutting. Do not add further module imports here.
 
 ### Public API (`src/index.ts`)
 

@@ -1,5 +1,5 @@
 export { Debugger } from './components/Debugger'
-export type { DebuggerProps, DebuggerPlugin } from './components/Debugger'
+export type { DebuggerProps } from './components/Debugger'
 
 export { loadDebuggerConfig } from './config/loadDebuggerConfig'
 export type { LoadDebuggerConfigOptions } from './config/loadDebuggerConfig'

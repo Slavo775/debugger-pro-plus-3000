@@ -29,12 +29,14 @@ export function DebuggerModuleRegistryProvider({
   }, [moduleConfigs])
 
   const resolvedModules = useMemo<Omit<RegisteredModule, 'expanded'>[]>(() => {
-    return moduleDefinitions.map((def) => {
+    const mapped = moduleDefinitions.map((def, i) => {
       const cfg = configMap.get(def.id)
       const title = cfg?.title ?? def.title ?? def.id
       const data: Record<string, unknown> = { ...def.data, ...cfg?.data }
-      return { id: def.id, title, data, render: def.render }
+      return { id: def.id, title, data, render: def.render, order: cfg?.order ?? i }
     })
+    mapped.sort((a, b) => a.order - b.order)
+    return mapped.map((m) => ({ id: m.id, title: m.title, data: m.data, render: m.render }))
   }, [moduleDefinitions, configMap])
 
   const defaultExpandedMap = useMemo(() => {

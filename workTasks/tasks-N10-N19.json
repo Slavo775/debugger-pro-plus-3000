@@ -9,7 +9,7 @@
       "title": "add-api-healthcheck-module-with-multi-endpoint-status",
       "type": "feat",
       "priority": "medium",
-      "status": "approved",
+      "status": "merged",
       "folder": "workTasks/N10-add-api-healthcheck-module-with-multi-endpoint-sta",
       "createdAt": "2026-05-21T09:49:46.281Z",
       "statusHistory": [
@@ -192,6 +192,16 @@
           "status": "approved",
           "at": "2026-05-21T11:40:22.980Z",
           "by": "task-human-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-21T11:40:55.637Z",
+          "by": "task-git"
+        },
+        {
+          "status": "merged",
+          "at": "2026-05-21T11:40:55.711Z",
+          "by": "task-git"
         }
       ],
       "implementation": {
@@ -320,7 +330,7 @@
       ],
       "incidents": [],
       "committedAt": null,
-      "totalDurationMinutes": null,
+      "totalDurationMinutes": 111,
       "tags": [
         "network",
         "healthcheck",
@@ -382,11 +392,16 @@
           "at": "2026-05-21T11:39:21.169Z",
           "commitHash": "2d4b0d1",
           "commitMessage": "chore(N10): record AI review round 2 (approved)"
+        },
+        {
+          "at": "2026-05-21T11:40:55.636Z",
+          "commitHash": "55e3aab",
+          "commitMessage": "chore(N10): record human review round 4 (approved)"
         }
       ],
       "branch": "feat/N10-add-api-healthcheck-module-with-multi-endpoint-status",
       "mrUrl": null,
-      "mergedAt": null
+      "mergedAt": "2026-05-21T11:40:55.710Z"
     }
   ]
 }

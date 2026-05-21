@@ -11,14 +11,7 @@ import {
 } from '../modules/DebuggerModuleRegistryContext'
 import type { DebuggerModuleDefinition, RegisteredModule } from '../modules/types'
 
-export interface DebuggerPlugin {
-  id: string
-  label: string
-  render: () => React.ReactNode
-}
-
 export interface DebuggerProps {
-  plugins?: DebuggerPlugin[]
   defaultOpen?: boolean
   config?: DebuggerConfig
   modules?: DebuggerModuleDefinition[]
@@ -60,7 +53,7 @@ function sideFromCorner(corner: ButtonCorner): PanelSide {
 
 type InnerProps = Omit<DebuggerProps, 'config' | 'modules' | 'onModuleEvent'>
 
-function DebuggerPanelRoot({ plugins = [], defaultOpen = false }: InnerProps) {
+function DebuggerPanelRoot({ defaultOpen = false }: InnerProps) {
   const { style, button, panel } = useDebuggerConfig()
   const registryCtx = useContext(DebuggerModuleRegistryContext)
   const [corner, setCorner] = useFabPosition(button.position, button.draggable)
@@ -117,34 +110,20 @@ function DebuggerPanelRoot({ plugins = [], defaultOpen = false }: InnerProps) {
         </div>
       </header>
 
-      <ModuleStack plugins={plugins} primaryColor={style.primaryColor} />
+      <ModuleStack primaryColor={style.primaryColor} />
     </section>
   )
 }
 
 interface ModuleStackProps {
-  plugins: DebuggerPlugin[]
   primaryColor: string
 }
 
-function ModuleStack({ plugins, primaryColor }: ModuleStackProps) {
+function ModuleStack({ primaryColor }: ModuleStackProps) {
   const registryCtx = useContext(DebuggerModuleRegistryContext)
+  const modules: RegisteredModule[] = registryCtx?._modules ?? []
 
-  const [pluginExpanded, setPluginExpanded] = useState<Record<string, boolean>>(() =>
-    Object.fromEntries(plugins.map((p) => [p.id, true])),
-  )
-
-  const syntheticModules: RegisteredModule[] = plugins.map((p) => ({
-    id: p.id,
-    title: p.label,
-    expanded: pluginExpanded[p.id] ?? true,
-    data: {},
-    render: p.render,
-  }))
-
-  const registeredModules: RegisteredModule[] = registryCtx?._modules ?? []
-
-  if (syntheticModules.length === 0 && registeredModules.length === 0) {
+  if (modules.length === 0) {
     return (
       <div style={emptyStyle}>
         <span>No modules loaded.</span>
@@ -154,17 +133,7 @@ function ModuleStack({ plugins, primaryColor }: ModuleStackProps) {
 
   return (
     <ul style={moduleListStyle} role="list">
-      {syntheticModules.map((mod) => (
-        <AccordionItem
-          key={mod.id}
-          module={mod}
-          primaryColor={primaryColor}
-          onToggle={() =>
-            setPluginExpanded((prev) => ({ ...prev, [mod.id]: !(prev[mod.id] ?? true) }))
-          }
-        />
-      ))}
-      {registeredModules.map((mod) => (
+      {modules.map((mod) => (
         <AccordionItem
           key={mod.id}
           module={mod}
