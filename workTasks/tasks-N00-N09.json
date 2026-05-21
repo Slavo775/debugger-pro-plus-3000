@@ -1659,7 +1659,7 @@
       "title": "Add log snapshot export and visual filter chips to Logs module",
       "type": "feat",
       "priority": "high",
-      "status": "implemented",
+      "status": "approved",
       "folder": "workTasks/N08-add-log-snapshot-export-and-visual-filter-chips-to",
       "createdAt": "2026-05-21T06:54:47.150Z",
       "statusHistory": [
@@ -1682,6 +1682,16 @@
           "status": "implemented",
           "at": "2026-05-21T07:35:00.000Z",
           "by": "task-implement"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-21T07:40:00.000Z",
+          "by": "task-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-21T07:42:00.000Z",
+          "by": "task-review"
         }
       ],
       "implementation": {
@@ -1692,7 +1702,15 @@
         ],
         "tokensUsed": null
       },
-      "reviews": [],
+      "reviews": [
+        {
+          "type": "ai",
+          "by": "task-review",
+          "at": "2026-05-21T07:42:00.000Z",
+          "verdict": "approved",
+          "comment": "All checklist items satisfied. updateData called with full store buffer in _subs notify closure. activeFilters state initialised and re-synced correctly. Chip row renders per-channel + Navigation chip with correct active/inactive styling using primaryColor. visibleEntries gates on both store.enabled and activeFilters; no store mutations from chip toggles. Build and lint clean. Minor: chips source from store.registered while checkboxes source from cfg.logs — consistent in practice, not a bug."
+        }
+      ],
       "changesAfterImplementation": [],
       "incidents": [],
       "committedAt": null,
