@@ -157,3 +157,13 @@ The 7 checks in the contract were run inline by this review. Invoking `/arch-che
 - The user's verbal intent — "setup the custom agent to strictly follow our architecture so implement and review agent also taskmaster should have also this custom agent also write into this custom agents as much information what is needed as possible" — is satisfied: `taskmaster`, `task-implement`, `task-review`, `task-review-fix`, `task-request-changes` each carry the full architecture rule set in their role file, and a new `/arch-check` custom agent enforces them mechanically.
 - Approval is unconditional. The 5 non-blocking findings are awareness items for future work, not gates on N12.
 - Recommend creating a GitHub PR (`gh pr create`) so the changes can be merged through the standard pipeline. The branch is already pushed to `origin`.
+
+---
+
+## Human Review
+
+**Reviewer:** Slavomir Sedlak (project owner)
+**Date:** 2026-05-21
+**Verdict:** APPROVED
+
+No blockers, no change requests. The 5 non-blocking findings from the AI review are acknowledged and accepted as-is for N12; any future work on the gitignore/`@`-include gap or the `workTasks/*.json` format sweep belongs in separate follow-up tasks.
