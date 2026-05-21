@@ -1,6 +1,6 @@
 # debugger-pro-plus-3000
 
-A modular, framework-agnostic debugger panel for React applications — distributed as an npm package.
+A modular debugger panel for React applications. Drop it into any app, add the modules you need, remove the ones you don't — the host never changes.
 
 ## Install
 
@@ -10,67 +10,138 @@ npm install debugger-pro-plus-3000
 pnpm add debugger-pro-plus-3000
 ```
 
-React and ReactDOM ≥18 are peer dependencies.
+React and ReactDOM ≥ 18 are peer dependencies.
 
 ---
 
 ## Quick start
 
-### Path A — Plugins (simple render slots, no API)
-
-Drop in any render function as a panel section:
-
 ```tsx
-import { Debugger } from 'debugger-pro-plus-3000'
+import { Debugger, logsModule, networkModule, deviceInfoModule } from 'debugger-pro-plus-3000'
 
 function App() {
   return (
     <>
       <YourApp />
-      <Debugger
-        plugins={[
-          {
-            id: 'state',
-            label: 'App State',
-            render: () => <pre>{JSON.stringify(appState, null, 2)}</pre>,
-          },
-        ]}
-      />
+      <Debugger modules={[logsModule, networkModule, deviceInfoModule]} />
     </>
   )
 }
 ```
 
-### Path B — Modules with API (data registration + runtime updates + events)
+The panel opens via a draggable FAB button (bottom-right by default). Each module renders as a collapsible accordion section.
 
-Use `useDebuggerApi()` inside a module's `render` function to push live data into the debug snapshot:
+---
+
+## Predefined modules
+
+Import and pass any combination to the `modules` prop. Removing a module from the array completely disables it — no config changes needed.
+
+### `logsModule`
+
+Collects log entries from anywhere in your app via `useDebuggerLog`. Tracks navigation automatically (route changes appear as `Navigation` entries). Supports filtering per log source and optional localStorage persistence.
+
+```tsx
+import { Debugger, logsModule } from 'debugger-pro-plus-3000'
+
+<Debugger
+  modules={[logsModule]}
+  config={{
+    logs: [
+      { id: 'auth',    prefix: 'Auth'    },
+      { id: 'payment', prefix: 'Payment' },
+    ],
+    persistLogs: true,
+  }}
+/>
+```
+
+Push entries from anywhere using `useDebuggerLog`:
+
+```tsx
+import { useDebuggerLog } from 'debugger-pro-plus-3000'
+
+function CheckoutPage() {
+  const log = useDebuggerLog('payment')
+
+  const handlePay = async () => {
+    log('Starting payment flow')
+    const result = await processPayment()
+    log(`Result: ${result.status}`)
+  }
+}
+```
+
+### `networkModule`
+
+Sends a request to each configured endpoint on mount and displays the result: status badge (`loading` / `success` / `error`), HTTP status code, response body, and timestamp. Each card has a refetch button.
+
+```tsx
+import { Debugger, networkModule } from 'debugger-pro-plus-3000'
+
+<Debugger
+  modules={[networkModule]}
+  config={{
+    network: {
+      apis: [
+        { url: 'https://api.example.com/health',      label: 'Health check' },
+        { url: 'https://api.example.com/auth/status', label: 'Auth service', method: 'POST' },
+      ],
+    },
+  }}
+/>
+```
+
+**Endpoint config:**
+
+| Field | Type | Default | Description |
+|---|---|---|---|
+| `url` | `string` | required | Endpoint URL |
+| `method` | `string` | `'GET'` | HTTP method |
+| `body` | `unknown` | — | Request body (JSON-serialised) |
+| `label` | `string` | — | Display name in the panel |
+
+### `deviceInfoModule`
+
+Displays browser, OS, screen dimensions, pixel ratio, and connection info. No config required.
+
+```tsx
+<Debugger modules={[deviceInfoModule]} />
+```
+
+---
+
+## Custom modules
+
+A module is a plain object with a `render` function:
 
 ```tsx
 import { Debugger, useDebuggerApi } from 'debugger-pro-plus-3000'
 
-function ConsentStatus() {
-  const { updateData } = useDebuggerApi()
+function ConsentPanel() {
+  const { updateData, emit, subscribe } = useDebuggerApi()
 
   useEffect(() => {
-    consentSdk.onDecision((result) => {
+    return consentSdk.onDecision((result) => {
       updateData({ granted: result.granted, vendor: result.vendor })
+      emit('consent-decision', result)
     })
-  }, [updateData])
+  }, [updateData, emit])
 
   return <span>Listening for consent decisions…</span>
+}
+
+const consentModule = {
+  id: 'consent',
+  title: 'Consent Manager',
+  render: () => <ConsentPanel />,
+  data: { granted: null },   // initial snapshot values
 }
 
 function App() {
   return (
     <Debugger
-      modules={[
-        {
-          id: 'consent',
-          title: 'Consent Manager',
-          render: () => <ConsentStatus />,
-          data: { granted: null, vendor: null }, // initial snapshot values
-        },
-      ]}
+      modules={[consentModule]}
       onModuleEvent={(moduleId, event, payload) => {
         console.log(`[${moduleId}] ${event}`, payload)
       }}
@@ -79,13 +150,14 @@ function App() {
 }
 ```
 
-When a user clicks **⎘ Copy** in the panel header, the full snapshot is copied to clipboard:
+`useDebuggerApi()` must be called inside the module's `render` function — it throws if called outside a module context.
 
-```json
-{
-  "consent": { "granted": true, "vendor": "Sourcepoint" }
-}
-```
+| Method | Description |
+|---|---|
+| `updateData(patch)` | Shallow-merge runtime data into this module's snapshot slice |
+| `moduleData` | Static data from `DebuggerModuleDefinition.data` merged with config |
+| `emit(event, payload?)` | Fire an event to the `onModuleEvent` handler |
+| `subscribe(event, handler)` | Receive events sent to this module; returns unsubscribe fn |
 
 ---
 
@@ -93,58 +165,64 @@ When a user clicks **⎘ Copy** in the panel header, the full snapshot is copied
 
 | Prop | Type | Default | Description |
 |---|---|---|---|
-| `modules` | `DebuggerModuleDefinition[]` | `[]` | Accordion panels with full API access via `useDebuggerApi()` |
-| `plugins` | `DebuggerPlugin[]` | `[]` | Simple render-slot panels (no API) |
-| `config` | `DebuggerConfig` | see defaults | Inline config, merged with file-based `config.debugger.js` |
-| `defaultOpen` | `boolean` | `false` | Panel open on mount |
-| `onModuleEvent` | `(moduleId: string, event: string, payload: unknown) => void` | — | Receive events emitted by modules via `emit()` |
-
----
-
-## `useDebuggerApi()`
-
-Call inside a module's `render` function. Throws if called outside a module context.
-
-```ts
-const { updateData, moduleData, emit, subscribe } = useDebuggerApi()
-```
-
-| Return | Type | Description |
-|---|---|---|
-| `updateData(patch)` | `(Record<string, unknown>) => void` | Shallow-merge runtime data into this module's debug snapshot slice. No re-render — updates are flushed on the next Copy/Export. |
-| `moduleData` | `Record<string, unknown>` | Static registration data for this module (initial values from `DebuggerModuleDefinition.data` merged with `config.modules[].data`). Does **not** include runtime patches from `updateData()` — those appear only in the Copy/Export snapshot. |
-| `emit(event, payload?)` | `(string, unknown?) => void` | Emit an event up to the `onModuleEvent` handler on `<Debugger>`. |
-| `subscribe(event, handler)` | returns `() => void` | Subscribe to events sent to this module from outside. Returns an unsubscribe function. |
+| `modules` | `DebuggerModuleDefinition[]` | `[]` | Panels to render, in order |
+| `config` | `DebuggerConfig` | see defaults | Merged with `config.debugger.js` (inline wins) |
+| `defaultOpen` | `boolean` | `false` | Open the panel on mount |
+| `onModuleEvent` | `(moduleId, event, payload) => void` | — | Receive events emitted by modules |
 
 ---
 
 ## Configuration
 
-Configuration can come from a file or inline prop — both are merged (inline wins on conflict).
+Config can come from a file, the inline prop, or both — they are merged (inline wins on conflict).
 
-### File: `config.debugger.js` (auto-loaded at runtime)
+### File: `config.debugger.js`
+
+Place in your public assets directory so it's served at runtime:
 
 ```js
-// public/config.debugger.js  (or wherever your assets are served)
+// public/config.debugger.js
 export default {
   style: {
     primaryColor: '#7c3aed',
   },
   button: {
-    position: 'bottomRight', // 'bottomRight' | 'bottomLeft' | 'topRight' | 'topLeft'
+    position: 'rightBottom',   // 'rightTop' | 'rightBottom' | 'leftTop' | 'leftBottom'
     draggable: true,
+    size: 50,
   },
   panel: {
     title: 'My Debugger',
     style: { width: 400 },
   },
   modules: [
-    { id: 'consent', defaultExpanded: true, data: { env: 'production' } },
+    { id: 'consent', defaultExpanded: false },
+    { id: 'network', order: 0 },   // render first regardless of array position
   ],
+  logs: [
+    { id: 'auth',    prefix: 'Auth'    },
+    { id: 'payment', prefix: 'Payment' },
+  ],
+  persistLogs: false,
+  network: {
+    apis: [
+      { url: 'https://api.example.com/health', label: 'Health' },
+    ],
+  },
 }
 ```
 
-### Inline: `config` prop
+Load it manually if you need to await it before rendering:
+
+```ts
+import { loadDebuggerConfig, DebuggerConfigProvider } from 'debugger-pro-plus-3000'
+
+const config = await loadDebuggerConfig({ src: '/config.debugger.js' })
+
+// then pass it to DebuggerConfigProvider or the config prop
+```
+
+### Inline prop
 
 ```tsx
 <Debugger
@@ -152,55 +230,84 @@ export default {
     style: { primaryColor: '#e11d48' },
     panel: { title: 'Debug', style: { width: 360 } },
   }}
-  modules={[...]}
+  modules={[logsModule]}
 />
 ```
 
-Load the file manually with `loadDebuggerConfig()` if you need to await it before rendering:
+### Full config reference
 
 ```ts
-import { loadDebuggerConfig } from 'debugger-pro-plus-3000'
-
-const config = await loadDebuggerConfig({ src: '/config.debugger.js' })
-```
-
----
-
-## Copy / Export
-
-The panel header contains a split **Copy / Export** button:
-
-| Action | What happens |
-|---|---|
-| **⎘ Copy** | Copies the full debug snapshot JSON to the clipboard. Shows ✓ for 1.5 s. |
-| **▾ → Download .json** | Downloads `debug-snapshot.json` (pretty-printed JSON). |
-| **▾ → Download .txt** | Downloads `debug-snapshot.txt` (same content, plain text). |
-
-**Snapshot shape:**
-
-```json
-{
-  "moduleId": {
-    "anyKey": "staticValueFromDefinition",
-    "anotherKey": "runtimePatchFromUpdateData"
+interface DebuggerConfig {
+  style?: {
+    primaryColor?: string          // accent colour for accordion headers
+  }
+  button?: {
+    position?: 'rightTop' | 'rightBottom' | 'leftTop' | 'leftBottom'
+    draggable?: boolean
+    size?: number                  // FAB diameter in px
+  }
+  panel?: {
+    title?: string
+    style?: { width?: number }     // panel width in px
+  }
+  modules?: Array<{
+    id: string
+    title?: string                 // override module title
+    defaultExpanded?: boolean
+    order?: number                 // lower = higher position in the panel
+    data?: Record<string, unknown> // extra static data merged into snapshot
+  }>
+  logs?: Array<{
+    id: string                     // matches useDebuggerLog(id)
+    prefix: string                 // label shown in the Logs panel
+  }>
+  persistLogs?: boolean            // save last 50 log entries to localStorage
+  network?: {
+    apis: Array<{
+      url: string
+      method?: string
+      body?: unknown
+      label?: string
+    }>
   }
 }
 ```
 
-Each module's slice is the shallow merge of its static `data` (from `DebuggerModuleDefinition.data` and `config.modules[].data`) with all runtime patches applied via `updateData()`.
+---
+
+## Module ordering
+
+Modules render in the order of the `modules` array by default. Override per-module with `order` in config (lower number = higher position):
+
+```js
+// config.debugger.js
+modules: [
+  { id: 'network', order: 0 },  // always first
+  { id: 'logs',    order: 1 },
+]
+```
 
 ---
 
-## Development
+## Copy / Export snapshot
 
-```bash
-pnpm install
-pnpm dev       # start Vite dev server with live demo
-pnpm build     # build library → dist/
-pnpm lint      # ESLint (0 warnings policy)
+The panel header contains a split **Copy / Export** button:
+
+| Action | Result |
+|---|---|
+| **⎘ Copy** | Copies the full JSON snapshot to clipboard, shows ✓ for 1.5 s |
+| **▾ → Download .json** | Downloads `debug-snapshot.json` |
+| **▾ → Download .txt** | Downloads `debug-snapshot.txt` |
+
+Snapshot shape — one key per module, merged from static `data` + runtime `updateData()` patches:
+
+```json
+{
+  "consent": { "granted": true, "vendor": "Sourcepoint" },
+  "network": {},
+  "device": { "userAgent": "…", "screen": "1440×900" }
+}
 ```
-
-For internal design, data flow diagrams, and architectural decisions see [docs/architecture.md](docs/architecture.md).
 
 ---
 
