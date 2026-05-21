@@ -444,7 +444,7 @@
       "title": "Upgrade insight-flow to 0.4.0 and embed architecture rules in agents",
       "type": "feat",
       "priority": "high",
-      "status": "implemented",
+      "status": "approved",
       "folder": "workTasks/N12-upgrade-insight-flow-to-0-4-0-and-embed-architectu",
       "createdAt": "2026-05-21T18:27:52.906Z",
       "statusHistory": [
@@ -467,6 +467,21 @@
           "status": "implemented",
           "at": "2026-05-21T19:38:55.286Z",
           "by": "task-implement"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-21T19:40:09.586Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-21T19:53:52.562Z",
+          "by": "task-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-21T19:58:50.112Z",
+          "by": "task-review"
         }
       ],
       "implementation": {
@@ -485,7 +500,17 @@
         ],
         "tokensUsed": null
       },
-      "reviews": [],
+      "reviews": [
+        {
+          "startedAt": "2026-05-21T19:53:52.563Z",
+          "endedAt": "2026-05-21T19:58:50.112Z",
+          "verdict": "approved",
+          "comment": "APPROVED. Tooling-only N12 changes: insight-flow 0.4.0 bump, agents.extend block with 14/18/17/11/7 architecture rules across taskmaster/task-implement/task-review/task-review-fix/task-request-changes, custom /arch-check agent (2039-char output contract), 0.4.0 shard schema migration (backfill reviews.startedAt/endedAt/fix=null + task.implementation default). All 10 invariants hold (no src/ changes). Lint/build clean; library bundle byte-identical. format:check has 3 pre-existing legacy shard violations, unchanged from main. 5 non-blocking findings (.claude/ gitignore gap, format violations pre-existing, JSON.stringify unicode unescaping, AGENT_ENFORCEMENT.md as upstream template, /arch-check not yet smoke-tested as slash command). See REVIEW.md.",
+          "type": "ai",
+          "by": "task-review",
+          "fix": null
+        }
+      ],
       "changesAfterImplementation": [],
       "incidents": [],
       "committedAt": null,
@@ -500,6 +525,11 @@
           "at": "2026-05-21T18:31:55.780Z",
           "commitHash": "7069f230bedbcb93a0b35713645d94096bd9a49b",
           "commitMessage": "chore(N12): create task — upgrade insight-flow to 0.4.0 and embed architecture rules in agents"
+        },
+        {
+          "at": "2026-05-21T19:40:09.586Z",
+          "commitHash": "b10ac4d9045282b606a00e7d80b2d1d9eb8fae4e",
+          "commitMessage": "feat(N12): upgrade insight-flow to 0.4.0, add agents.extend + /arch-check, migrate review schema"
         }
       ],
       "branch": "feat/N12-upgrade-insight-flow-0-4-0-agents",
