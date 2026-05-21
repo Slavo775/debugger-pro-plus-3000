@@ -9,7 +9,7 @@
       "title": "add-api-healthcheck-module-with-multi-endpoint-status",
       "type": "feat",
       "priority": "medium",
-      "status": "implemented",
+      "status": "changes-implemented",
       "folder": "workTasks/N10-add-api-healthcheck-module-with-multi-endpoint-sta",
       "createdAt": "2026-05-21T09:49:46.281Z",
       "statusHistory": [
@@ -32,6 +32,26 @@
           "status": "implemented",
           "at": "2026-05-21T10:03:30.667Z",
           "by": "task-implement"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-21T10:03:57.689Z",
+          "by": "task-git"
+        },
+        {
+          "status": "changes-requested",
+          "at": "2026-05-21T10:08:34.826Z",
+          "by": "task-request-changes"
+        },
+        {
+          "status": "changes-implementing",
+          "at": "2026-05-21T10:08:47.876Z",
+          "by": "implement-changes"
+        },
+        {
+          "status": "changes-implemented",
+          "at": "2026-05-21T10:12:18.209Z",
+          "by": "implement-changes"
         }
       ],
       "implementation": {
@@ -51,7 +71,21 @@
         "tokensUsed": null
       },
       "reviews": [],
-      "changesAfterImplementation": [],
+      "changesAfterImplementation": [
+        {
+          "requestedAt": "2026-05-21T10:08:34.825Z",
+          "description": "Add networkModule to the dev app/demo setup so it appears in the debugger panel. Configure real test API endpoints (public APIs) in the dev config so the healthcheck requests fire and the panel can be verified visually.",
+          "requestedBy": "task-request-changes",
+          "status": "implemented",
+          "implementedAt": "2026-05-21T10:12:18.209Z",
+          "filesChanged": [
+            "src/main.tsx",
+            "config.debugger.js"
+          ],
+          "comment": null,
+          "implementedBy": "implement-changes"
+        }
+      ],
       "incidents": [],
       "committedAt": null,
       "totalDurationMinutes": null,
@@ -66,6 +100,11 @@
           "at": "2026-05-21T09:52:05.385Z",
           "commitHash": "d3bcdcd",
           "commitMessage": "feat(N10): add task spec for API healthcheck module with multi-endpoint status"
+        },
+        {
+          "at": "2026-05-21T10:03:57.689Z",
+          "commitHash": "040c36d",
+          "commitMessage": "feat(N10): add API healthcheck module with multi-endpoint status"
         }
       ],
       "branch": "feat/N10-add-api-healthcheck-module-with-multi-endpoint-status",

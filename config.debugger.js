@@ -13,7 +13,7 @@ export default {
     },
   },
   modules: [
-    { id: 'network', title: 'Network', defaultExpanded: true, data: { baseUrl: '/api' } },
+    { id: 'network', title: 'Network', defaultExpanded: true },
     { id: 'state', title: 'App State', defaultExpanded: false },
     { id: 'config', title: 'Config', defaultExpanded: false },
   ],
@@ -22,4 +22,20 @@ export default {
     { id: 'auth', prefix: 'Auth' },
     { id: 'router', prefix: 'Router' },
   ],
+  network: {
+    apis: [
+      {
+        url: 'https://jsonplaceholder.typicode.com/todos/1',
+        label: 'JSONPlaceholder — todo',
+      },
+      {
+        url: 'https://jsonplaceholder.typicode.com/posts/1',
+        label: 'JSONPlaceholder — post',
+      },
+      {
+        url: 'https://httpstat.us/503',
+        label: 'httpstat.us — 503 error',
+      },
+    ],
+  },
 }
