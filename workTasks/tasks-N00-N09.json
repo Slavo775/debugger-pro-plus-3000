@@ -1659,7 +1659,7 @@
       "title": "Add log snapshot export and visual filter chips to Logs module",
       "type": "feat",
       "priority": "high",
-      "status": "approved",
+      "status": "merged",
       "folder": "workTasks/N08-add-log-snapshot-export-and-visual-filter-chips-to",
       "createdAt": "2026-05-21T06:54:47.150Z",
       "statusHistory": [
@@ -1702,6 +1702,11 @@
           "status": "approved",
           "at": "2026-05-21T07:45:00.000Z",
           "by": "task-human-review"
+        },
+        {
+          "status": "merged",
+          "at": "2026-05-21T07:50:00.000Z",
+          "by": "task-git"
         }
       ],
       "implementation": {
@@ -1752,7 +1757,7 @@
       ],
       "branch": "feat/N08-log-snapshot-filter-chips",
       "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/8",
-      "mergedAt": null
+      "mergedAt": "2026-05-21T07:50:00.000Z"
     }
   ]
 }
