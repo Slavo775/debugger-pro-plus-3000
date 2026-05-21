@@ -10,5 +10,94 @@
     "enabled": true,
     "logFile": ".taskflow-activity.jsonl",
     "maxEvents": 200
+  },
+  "agents": {
+    "extend": {
+      "taskmaster": [
+        "PROJECT CONTEXT — debugger-pro-plus-3000 is a modular React debugger library. The core mental model is **host/guest**: `Debugger.tsx` (the host) provides infrastructure; predefined modules (`logsModule`, `networkModule`, `deviceInfoModule`) are guests that mount as accordion items. The host never knows the guest.",
+        "INVARIANT 1 (Host/Guest) — `src/components/Debugger.tsx` and `src/modules/DebuggerModuleRegistryProvider.tsx` have zero imports from `src/modules/predefined/*`. Adding or removing a module requires zero changes to Debugger source. Every spec MUST be writable without violating this.",
+        "INVARIANT 2 (Single Channel) — A module communicates with the Debugger only through `useDebuggerApi()` (in `src/modules/useDebuggerApi.ts`). It exposes exactly four members: `emit(event, payload)`, `subscribe(event, handler)`, `moduleData`, `updateData(patch)`. Calling it outside a module's `render()` throws — it reads `DebuggerModuleIdContext`. No specs that propose new channels.",
+        "INVARIANT 3 (Module Init) — All module side-effects (store init, listeners, network calls) live inside the module's panel component, gated by a `useEffect`. They MUST NOT live in `Debugger.tsx`. If a module is absent from the consumer `modules={[…]}` prop, its panel never mounts and its init never runs — that property is the whole point.",
+        "INVARIANT 4 (Config Four-File Rule) — Every new config field requires edits in EXACTLY four files: `src/config/types.ts`, `src/config/defaults.ts`, `src/config/merge.ts`, and the public re-export in `src/index.ts`. State this explicitly in the spec scope whenever config is touched.",
+        "INVARIANT 5 (Unified Module Config) — Module-specific data lives inside `modules[].data` on the consumer config, NOT at the top level of `DebuggerConfig`. Modules read their own data via `useDebuggerApi().moduleData`, not via `useDebuggerConfig()`. `useDebuggerConfig()` is reserved for cross-cutting / global settings.",
+        "INVARIANT 6 (Public Re-export) — Every type, hook, module definition, or store utility that consumers will touch MUST be re-exported from `src/index.ts`. Missing exports surface at runtime as `SyntaxError: does not provide an export named` — TypeScript does NOT catch this.",
+        "INVARIANT 7 (Predefined Module Patterns) — Use one of two file layouts. FLAT (no store): `src/modules/predefined/Xxx/XxxModule.ts` + `XxxPanel.tsx` (see `deviceInfoModule`). SUB-FOLDER (with store): `src/modules/predefined/xxx/{xxxModule.ts, xxxStore.ts, XxxPanel.tsx, index.ts}` (see `logsModule`, `networkModule`). Stores are `window.__debuggerXxx` lazy-init singletons with a `_subs: Set<() => void>` subscriber set; panels subscribe via `useReducer` as `forceUpdate`.",
+        "INVARIANT 8 (No Cross-Module Imports) — Predefined modules MUST NOT import from each other. If two modules need to share state, route it through the registry or fan out via events — never via a sibling import.",
+        "INVARIANT 9 (System Events) — Only `route-change` and `viewport-change` are broadcast by the registry. Adding new system-wide events is a registry-level change and must be called out explicitly in the spec.",
+        "INVARIANT 10 (Ordering) — `config.modules[].order` controls render order (lower = higher position). Modules without `order` keep their natural prop-array position. Do not invent a parallel ordering mechanism.",
+        "SPEC FORMAT — Every TASK.md MUST include: Problem, Goal, Scope (subdivided per file/module), Out of scope, and (if applicable) Breaking change. Always name which of the 4 config files will change, which module folder pattern (flat vs sub-folder), and whether `src/index.ts` re-exports will be added or removed.",
+        "BREAKING-CHANGE FLAG — Any change to `DebuggerConfig` shape, to `modules[].data` keys read by a predefined module, or to a public export in `src/index.ts` is a breaking change. Label it as such in the spec.",
+        "REFERENCE DOCS — Authoritative architecture lives in `ARCHITECTURE.md` (host/guest, communication channel, module contract, invariants). Project commands and conventions live in `CLAUDE.md`. Cite them in the spec when a rule is non-obvious."
+      ],
+      "task-implement": [
+        "PACKAGE MANAGER — Use `pnpm` exclusively. Never run `npm install` or `yarn add`. The lockfile of record is `pnpm-lock.yaml`.",
+        "QUALITY GATES — Before declaring done, run `npm run lint` (zero warnings allowed, enforced by `--max-warnings 0`), `npm run format:check`, and `npm run build` (which runs `tsc -p tsconfig.build.json && vite build`). All three must pass.",
+        "INVARIANT 1 (Host/Guest) — `src/components/Debugger.tsx` and `src/modules/DebuggerModuleRegistryProvider.tsx` must have zero imports from `src/modules/predefined/*`. Run this self-check before implement-end:\n  grep -rE \"from ['\\\"](\\.\\./)*modules/predefined\" src/components/Debugger.tsx src/modules/DebuggerModuleRegistryProvider.tsx\nIt MUST return zero matches.",
+        "INVARIANT 2 (Single Channel) — A module talks to the Debugger only through `useDebuggerApi()`. Its four members are `emit`, `subscribe`, `moduleData`, `updateData`. Do not invent direct store imports between modules or new global event buses.",
+        "INVARIANT 3 (Module Init) — Module side-effects (store init, listeners, network) live inside the module's panel component in a `useEffect`, never in `Debugger.tsx`. If you're about to add `useEffect` in `Debugger.tsx` for a module feature, stop — it belongs in the panel.",
+        "INVARIANT 4 (Config Four-File Rule) — Adding a config field requires edits in `src/config/types.ts`, `src/config/defaults.ts`, `src/config/merge.ts`, and `src/index.ts`. Skipping any of the four causes either a type error or a runtime `SyntaxError: does not provide an export named`.",
+        "INVARIANT 5 (Unified Module Config) — Predefined modules read their own data from `useDebuggerApi().moduleData`, NOT from `useDebuggerConfig()`. Top-level `DebuggerConfig` is for cross-cutting concerns only.",
+        "INVARIANT 6 (Public Re-export) — Every new public-facing symbol must be re-exported from `src/index.ts`. Add the export in the same commit that adds the symbol — otherwise consumers will hit `SyntaxError` at runtime.",
+        "INVARIANT 7 (Module File Patterns) — FLAT for stateless modules: `XxxModule.ts` + `XxxPanel.tsx`. SUB-FOLDER for stateful modules: `xxx/{xxxModule.ts, xxxStore.ts, XxxPanel.tsx, index.ts}`. The store is a `window.__debuggerXxx` lazy-init singleton with `_subs: Set<() => void>`; the panel subscribes on mount via `useReducer` (mirror `src/modules/predefined/logs/LogsPanel.tsx`).",
+        "INVARIANT 8 (No Cross-Module Imports) — Files under `src/modules/predefined/<a>/` must not import from `src/modules/predefined/<b>/`. Share state via the registry or events.",
+        "INVARIANT 9 (System Events) — Only `route-change` and `viewport-change` are broadcast. Adding a system event is a registry-level change in `DebuggerModuleRegistryProvider.tsx` — call this out before doing it.",
+        "INVARIANT 10 (Ordering) — Use `config.modules[].order` for render order; lower goes higher. No parallel ordering mechanism.",
+        "DEV vs BUILD ENTRIES — Dev preview entry is `src/main.tsx` (used by `npm run dev`). Library build entry is `src/index.ts` (used by `npm run build`, output `dist/`). These two must not import each other's dev-only code.",
+        "STAGING DISCIPLINE — Stage explicit files. Never `git add -A` or `git add .` — that pulls in `.taskflow-activity.jsonl`, `dist/`, scratch files, and unrelated docs/svg edits.",
+        "CONVENTIONAL COMMITS — Use `feat`, `fix`, `refactor`, `docs`, `chore`, `test`. Include the task ID in the scope: `feat(N12): …`.",
+        "INSIGHT-FLOW BINARY — The binary is local, not global. Always invoke it as `./node_modules/.bin/insight-flow <cmd>` per `CLAUDE.md`.",
+        "BEFORE implement-end — Run the host-import grep above, run `npm run lint && npm run build`, confirm all CHECKLIST.md items are ticked. Only then call `./node_modules/.bin/insight-flow implement-end --id Nxx --files \"…\"`.",
+        "DEFER TO ARCHITECTURE.md — When a question of intent arises (where does this belong? which pattern?), open `ARCHITECTURE.md`. It is the authoritative source."
+      ],
+      "task-review": [
+        "MISSION — Reject (verdict `fix-needed`) every PR that violates any of the 10 invariants below. Approval requires all 10 to hold AND lint/format/build to pass.",
+        "INVARIANT 1 (Host/Guest) — Verify `src/components/Debugger.tsx` and `src/modules/DebuggerModuleRegistryProvider.tsx` have zero imports from `src/modules/predefined/*`. Run:\n  grep -rE \"from ['\\\"](\\.\\./)*modules/predefined\" src/components/Debugger.tsx src/modules/DebuggerModuleRegistryProvider.tsx\nAny hit = BLOCKER.",
+        "INVARIANT 2 (Single Channel) — Modules communicate with the Debugger only through `useDebuggerApi()` (`emit`, `subscribe`, `moduleData`, `updateData`). Reject any direct store-to-store import across modules, any new global event bus, or any other communication path.",
+        "INVARIANT 3 (Module Init) — Module side-effects must live in the module's panel `useEffect`, not in `Debugger.tsx`. If a `useEffect` in `Debugger.tsx` initializes module state, BLOCKER.",
+        "INVARIANT 4 (Config Four-File Rule) — A new config field must appear in all four of `src/config/types.ts`, `src/config/defaults.ts`, `src/config/merge.ts`, and `src/index.ts`. Missing any one = BLOCKER (runtime error or type mismatch).",
+        "INVARIANT 5 (Unified Module Config) — Predefined modules MUST read their own data from `useDebuggerApi().moduleData`, not from `useDebuggerConfig()`. Reject a panel that reaches into `useDebuggerConfig()` for module-local state.",
+        "INVARIANT 6 (Public Re-export) — Every new public-facing symbol must be re-exported from `src/index.ts`. Diff `src/index.ts` against new exports under `src/components/`, `src/modules/`, `src/config/`, `src/modules/predefined/`. Orphans = BLOCKER.",
+        "INVARIANT 7 (Module File Patterns) — New modules use FLAT (`XxxModule.ts` + `XxxPanel.tsx`) for stateless or SUB-FOLDER (`xxx/{xxxModule.ts, xxxStore.ts, XxxPanel.tsx, index.ts}`) for stateful. Stores are `window.__debuggerXxx` singletons with `_subs: Set<() => void>`; panels subscribe via `useReducer`. Other layouts = BLOCKER.",
+        "INVARIANT 8 (No Cross-Module Imports) — Reject any import path of the form `src/modules/predefined/<a>/…` → `src/modules/predefined/<b>/…`. Cross-module state goes through the registry or events.",
+        "INVARIANT 9 (System Events) — New system-wide events require a deliberate change in `DebuggerModuleRegistryProvider.tsx`. Modules silently adding new broadcast events = BLOCKER.",
+        "INVARIANT 10 (Ordering) — Use `config.modules[].order` for render order. Any parallel ordering mechanism = BLOCKER.",
+        "QUALITY GATES — `npm run lint` must pass with zero warnings (`--max-warnings 0`). `npm run format:check` must pass. `npm run build` must succeed. Any failure = BLOCKER.",
+        "PACKAGE MANAGER — Reject any PR that introduces `package-lock.json`, `yarn.lock`, or modifies dependencies without updating `pnpm-lock.yaml`.",
+        "ENTRY HYGIENE — `src/main.tsx` (dev) and `src/index.ts` (library) must not cross-import. Reject leakage of dev-only code into the library bundle.",
+        "STAGING HYGIENE — Reject PRs that stage `.taskflow-activity.jsonl`, `dist/`, `.vite/`, or unrelated `docs/*.svg` / `docs/*.png` edits unrelated to the task.",
+        "REVIEW OUTPUT — If verdict is `fix-needed`, write `REVIEW.md` inside the task folder. Each blocker entry MUST cite the invariant number, the file path, and (when available) the line number.",
+        "REFERENCE DOCS — `ARCHITECTURE.md` (invariants) and `CLAUDE.md` (commands/conventions) are authoritative. When in doubt, quote them in the review comment."
+      ],
+      "task-review-fix": [
+        "SCOPE DISCIPLINE — Fix only what is listed in `REVIEW.md`. Do NOT add new features. Do NOT touch unrelated files. Do NOT refactor opportunistically. Do NOT loosen invariants to make a test pass.",
+        "INVARIANT 1 (Host/Guest) — Preserve zero imports from `src/modules/predefined/*` in `Debugger.tsx` and `DebuggerModuleRegistryProvider.tsx` while fixing.",
+        "INVARIANT 2 (Single Channel) — Do not introduce a new communication path while fixing a different blocker.",
+        "INVARIANT 3 (Module Init) — If the blocker is module init in `Debugger.tsx`, move the `useEffect` into the module's panel component; never patch it in place.",
+        "INVARIANT 4 (Config Four-File Rule) — When fixing a missing config field, touch all four of `types.ts`, `defaults.ts`, `merge.ts`, `src/index.ts`.",
+        "INVARIANT 5 (Unified Module Config) — When fixing a config-shape blocker, move module-specific data into `modules[].data` and read it via `useDebuggerApi().moduleData`.",
+        "INVARIANT 6 (Public Re-export) — When a blocker is a missing export, add it to `src/index.ts` rather than telling consumers to deep-import.",
+        "QUALITY GATES — After fixes: `npm run lint && npm run format:check && npm run build`. All three must pass before `fix-end`.",
+        "ESCALATE, DO NOT EXPAND — If a blocker truly requires scope expansion, write the case back into `REVIEW.md` and stop. Open a follow-up task via `/taskmaster` instead of silently growing the diff.",
+        "COMMIT MESSAGE — `fix(Nxx): <one-line summary of what was fixed>`. List the addressed blockers in the body.",
+        "STAGING — Stage explicit files only. Never `git add -A`."
+      ],
+      "task-request-changes": [
+        "FILTER REQUESTS THROUGH THE INVARIANTS — Before accepting a change request, check it against the 10 architecture invariants (Host/Guest, Single Channel, Module Init, Config Four-File, Unified Module Config, Public Re-export, Module File Patterns, No Cross-Module Imports, System Events, Ordering). If the request would violate invariant 1 or 2, reject it and propose an alternative path that preserves the host/guest contract.",
+        "PREDEFINED MODULE PATTERNS — Any request that adds module behavior must specify which file layout (flat vs sub-folder with store) and which pattern (`window.__debuggerXxx` singleton with `_subs`) it follows.",
+        "CONFIG SHAPE — Requests that add module-specific settings MUST place them under `modules[].data`. Top-level `DebuggerConfig` is reserved for cross-cutting concerns.",
+        "PUBLIC SURFACE — Requests that add new consumer-facing types/hooks/modules MUST add the corresponding re-export to `src/index.ts` as part of the same change.",
+        "BREAKING CHANGES — If the request shifts a `modules[].data` key, removes/renames a `src/index.ts` re-export, or alters `DebuggerConfig` shape, label it BREAKING and require consumer-migration notes in the updated spec.",
+        "QUALITY GATES — Accepted change requests inherit the lint/format/build gates. Add them to the updated CHECKLIST.md.",
+        "REFERENCE DOCS — Update `ARCHITECTURE.md` and/or `CLAUDE.md` if the change introduces a new pattern or invariant."
+      ]
+    },
+    "custom": [
+      {
+        "name": "arch-check",
+        "role": "Architecture Compliance Auditor",
+        "description": "Static + structural compliance audit for debugger-pro-plus-3000's host/guest invariant — run before requesting review.",
+        "outputContract": "1. Print active task (`./node_modules/.bin/insight-flow current`).\n\n2. HOST IMPORT CHECK — confirm `Debugger.tsx` and the registry do not import from any predefined module:\n     grep -rnE \"from ['\\\"](\\.\\./)*modules/predefined\" src/components/Debugger.tsx src/modules/DebuggerModuleRegistryProvider.tsx\n   Expect ZERO hits. Any hit is a BLOCKER for invariant 1 (Host/Guest).\n\n3. CROSS-MODULE IMPORT CHECK — predefined modules must not import from one another:\n     grep -rnE \"from ['\\\"](\\.\\./)*predefined/(logs|network|deviceInfo)\" src/modules/predefined --include='*.ts' --include='*.tsx'\n   List each hit. Cross-folder hits are BLOCKERS for invariant 8 (No Cross-Module Imports). Same-folder relative imports inside one module folder are fine.\n\n4. MODULE INIT LOCATION CHECK — `Debugger.tsx` must not contain initialization side-effects for any module:\n     grep -nE \"(init[A-Z][a-zA-Z]*Store|window\\.__debugger)\" src/components/Debugger.tsx\n   Expect ZERO hits. Any hit is a BLOCKER for invariant 3 (Module Init).\n\n5. PUBLIC RE-EXPORT AUDIT — for every symbol exported from `src/components/`, `src/modules/`, `src/config/`, and `src/modules/predefined/` that consumers will touch, confirm there is a matching re-export in `src/index.ts`. List orphans by file:symbol. Orphans are BLOCKERS for invariant 6.\n\n6. CONFIG FOUR-FILE PARITY — for each field in `DebuggerConfig` (`src/config/types.ts`), confirm a corresponding entry in `src/config/defaults.ts`, a merge line in `src/config/merge.ts`, and an export reachable through `src/index.ts`. Missing any = BLOCKER for invariant 4.\n\n7. QUALITY GATES — run and report exit codes:\n     npm run lint        # must be 0, with --max-warnings 0\n     npm run format:check\n     npm run build\n   Any non-zero exit is a BLOCKER.\n\n8. VERDICT — print exactly one of:\n     PASS — all 7 checks clean\n     BLOCKED — followed by a numbered list of blockers, each citing the invariant number, the file path, and (where available) line number.\n\nDo NOT modify files during the audit. This agent is read-only."
+      }
+    ]
   }
 }

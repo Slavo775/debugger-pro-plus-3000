@@ -402,6 +402,168 @@
       "branch": "feat/N10-add-api-healthcheck-module-with-multi-endpoint-status",
       "mrUrl": null,
       "mergedAt": "2026-05-21T11:40:55.710Z"
+    },
+    {
+      "id": "N11",
+      "title": "Unify config — move logs and network into modules[].data",
+      "type": "rework",
+      "priority": "high",
+      "status": "ready",
+      "folder": "workTasks/N11-unify-config-move-logs-and-network-into-modules-da",
+      "createdAt": "2026-05-21T14:21:07.001Z",
+      "statusHistory": [
+        {
+          "status": "ready",
+          "at": "2026-05-21T14:21:07.001Z",
+          "by": "taskmaster"
+        }
+      ],
+      "implementation": {
+        "startedAt": null,
+        "completedAt": null,
+        "filesChanged": [],
+        "tokensUsed": null
+      },
+      "reviews": [],
+      "changesAfterImplementation": [],
+      "incidents": [],
+      "committedAt": null,
+      "totalDurationMinutes": null,
+      "tags": [
+        "config",
+        "architecture",
+        "breaking-change"
+      ],
+      "pushes": [],
+      "branch": null,
+      "mrUrl": null,
+      "mergedAt": null
+    },
+    {
+      "id": "N12",
+      "title": "Upgrade insight-flow to 0.4.0 and embed architecture rules in agents",
+      "type": "feat",
+      "priority": "high",
+      "status": "approved",
+      "folder": "workTasks/N12-upgrade-insight-flow-to-0-4-0-and-embed-architectu",
+      "createdAt": "2026-05-21T18:27:52.906Z",
+      "statusHistory": [
+        {
+          "status": "ready",
+          "at": "2026-05-21T18:27:52.907Z",
+          "by": "taskmaster"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-21T18:31:55.781Z",
+          "by": "task-git"
+        },
+        {
+          "status": "in-progress",
+          "at": "2026-05-21T18:32:58.176Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "implemented",
+          "at": "2026-05-21T19:38:55.286Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-21T19:40:09.586Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-21T19:53:52.562Z",
+          "by": "task-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-21T19:58:50.112Z",
+          "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-21T19:59:26.392Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-21T20:05:10.404Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-21T20:05:24.001Z",
+          "by": "task-human-review"
+        }
+      ],
+      "implementation": {
+        "startedAt": "2026-05-21T18:32:58.176Z",
+        "completedAt": "2026-05-21T19:38:55.286Z",
+        "filesChanged": [
+          "package.json",
+          "pnpm-lock.yaml",
+          "taskflow.config.json",
+          "CLAUDE.md",
+          "AGENT_ENFORCEMENT.md",
+          "workTasks/tasks-N00-N09.json",
+          "workTasks/tasks-N10-N19.json",
+          "workTasks/N12-upgrade-insight-flow-to-0-4-0-and-embed-architectu/TASK.md",
+          "workTasks/N12-upgrade-insight-flow-to-0-4-0-and-embed-architectu/CHECKLIST.md"
+        ],
+        "tokensUsed": null
+      },
+      "reviews": [
+        {
+          "startedAt": "2026-05-21T19:53:52.563Z",
+          "endedAt": "2026-05-21T19:58:50.112Z",
+          "verdict": "approved",
+          "comment": "APPROVED. Tooling-only N12 changes: insight-flow 0.4.0 bump, agents.extend block with 14/18/17/11/7 architecture rules across taskmaster/task-implement/task-review/task-review-fix/task-request-changes, custom /arch-check agent (2039-char output contract), 0.4.0 shard schema migration (backfill reviews.startedAt/endedAt/fix=null + task.implementation default). All 10 invariants hold (no src/ changes). Lint/build clean; library bundle byte-identical. format:check has 3 pre-existing legacy shard violations, unchanged from main. 5 non-blocking findings (.claude/ gitignore gap, format violations pre-existing, JSON.stringify unicode unescaping, AGENT_ENFORCEMENT.md as upstream template, /arch-check not yet smoke-tested as slash command). See REVIEW.md.",
+          "type": "ai",
+          "by": "task-review",
+          "fix": null
+        },
+        {
+          "startedAt": "2026-05-21T20:05:10.404Z",
+          "endedAt": "2026-05-21T20:05:24.001Z",
+          "verdict": "approved",
+          "comment": "approved",
+          "type": "human",
+          "by": "task-human-review",
+          "fix": null
+        }
+      ],
+      "changesAfterImplementation": [],
+      "incidents": [],
+      "committedAt": null,
+      "totalDurationMinutes": null,
+      "tags": [
+        "tooling",
+        "insight-flow",
+        "agents"
+      ],
+      "pushes": [
+        {
+          "at": "2026-05-21T18:31:55.780Z",
+          "commitHash": "7069f230bedbcb93a0b35713645d94096bd9a49b",
+          "commitMessage": "chore(N12): create task — upgrade insight-flow to 0.4.0 and embed architecture rules in agents"
+        },
+        {
+          "at": "2026-05-21T19:40:09.586Z",
+          "commitHash": "b10ac4d9045282b606a00e7d80b2d1d9eb8fae4e",
+          "commitMessage": "feat(N12): upgrade insight-flow to 0.4.0, add agents.extend + /arch-check, migrate review schema"
+        },
+        {
+          "at": "2026-05-21T19:59:26.392Z",
+          "commitHash": "ebbf9a9cd4e569a3997a8fa0e2859ae297213156",
+          "commitMessage": "chore(N12): record AI review — approved with 5 non-blocking findings"
+        }
+      ],
+      "branch": "feat/N12-upgrade-insight-flow-0-4-0-agents",
+      "mrUrl": null,
+      "mergedAt": null
     }
   ]
 }

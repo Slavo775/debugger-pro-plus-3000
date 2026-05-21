@@ -339,7 +339,7 @@
           "startedAt": "2026-05-19T20:28:08.408Z",
           "endedAt": "2026-05-19T20:30:30.585Z",
           "verdict": "approved",
-          "comment": "Approved. All CHECKLIST items met, both follow-up change requests (button.size with default 50px; snap-to-corner animation) integrated cleanly. Gates pass: lint clean, build succeeds, 14 loader smoke-test cases pass (5 button + 7 size + 2 baseline). Snap animation uses correct two-phase (pre/animating) state machine to bootstrap CSS transitions from an arbitrary start position. Non-blocking findings for a follow-up: (1) nearestCorner uses cursor position instead of FAB center as the spec specified (off by <= size/2 px); (2) no onPointerCancel handler \u2014 drag could get stuck if a system gesture cancels the pointer; (3) setCorner in useFabPosition isn't memoized (minor re-renders); (4) leftover dead re-export of DEFAULT_DEBUGGER_CONFIG from loadDebuggerConfig.ts (pre-existing from N00); (5) configured prop changes don't reactively update useFabPosition state. None of these affect functional correctness. Manual browser verification recommended before merge.",
+          "comment": "Approved. All CHECKLIST items met, both follow-up change requests (button.size with default 50px; snap-to-corner animation) integrated cleanly. Gates pass: lint clean, build succeeds, 14 loader smoke-test cases pass (5 button + 7 size + 2 baseline). Snap animation uses correct two-phase (pre/animating) state machine to bootstrap CSS transitions from an arbitrary start position. Non-blocking findings for a follow-up: (1) nearestCorner uses cursor position instead of FAB center as the spec specified (off by <= size/2 px); (2) no onPointerCancel handler — drag could get stuck if a system gesture cancels the pointer; (3) setCorner in useFabPosition isn't memoized (minor re-renders); (4) leftover dead re-export of DEFAULT_DEBUGGER_CONFIG from loadDebuggerConfig.ts (pre-existing from N00); (5) configured prop changes don't reactively update useFabPosition state. None of these affect functional correctness. Manual browser verification recommended before merge.",
           "type": "ai",
           "by": "task-review",
           "fix": null
@@ -348,7 +348,7 @@
           "startedAt": "2026-05-19T20:48:47.662Z",
           "endedAt": "2026-05-19T20:50:26.448Z",
           "verdict": "approved",
-          "comment": "Round 2 review \u2014 fixes verified. All five non-blocking items applied correctly with no regressions: (1) nearestCorner uses FAB center (releaseX/Y + size/2); (2) onPointerCancel handler mirrors pointerup minus snap; (3) useFabPosition derives corner from configured + userChosen with stable useCallback identity \u2014 handles all relevant scenarios (draggable toggles, configured changes, user override precedence); (4) dead DEFAULT_DEBUGGER_CONFIG re-export removed, constant still importable from package entry via defaults barrel; (5) checklist boxes all flipped. Gates clean. One minor exotic gap remaining (not flagged for follow-up): draggable=false\u2192true at runtime won't re-read storage. Approved.",
+          "comment": "Round 2 review — fixes verified. All five non-blocking items applied correctly with no regressions: (1) nearestCorner uses FAB center (releaseX/Y + size/2); (2) onPointerCancel handler mirrors pointerup minus snap; (3) useFabPosition derives corner from configured + userChosen with stable useCallback identity — handles all relevant scenarios (draggable toggles, configured changes, user override precedence); (4) dead DEFAULT_DEBUGGER_CONFIG re-export removed, constant still importable from package entry via defaults barrel; (5) checklist boxes all flipped. Gates clean. One minor exotic gap remaining (not flagged for follow-up): draggable=false→true at runtime won't re-read storage. Approved.",
           "type": "ai",
           "by": "task-review",
           "fix": null
@@ -394,7 +394,7 @@
         },
         {
           "requestedAt": "2026-05-19T20:42:22.461Z",
-          "description": "Address five non-blocking findings from the AI review: (1) nearestCorner \u2014 use FAB center, not cursor position, when picking the snap corner; (2) onPointerCancel \u2014 release pointer capture and clear drag state on cancellation so the FAB never gets stuck mid-drag; (3) useFabPosition \u2014 memoize setCorner with useCallback and derive corner reactively from configured + a userChosen state, so configured prop changes update the displayed corner; (4) remove dead DEFAULT_DEBUGGER_CONFIG re-export from loadDebuggerConfig.ts (pre-existing from N00); (5) flip the N01 CHECKLIST items to checked.",
+          "description": "Address five non-blocking findings from the AI review: (1) nearestCorner — use FAB center, not cursor position, when picking the snap corner; (2) onPointerCancel — release pointer capture and clear drag state on cancellation so the FAB never gets stuck mid-drag; (3) useFabPosition — memoize setCorner with useCallback and derive corner reactively from configured + a userChosen state, so configured prop changes update the displayed corner; (4) remove dead DEFAULT_DEBUGGER_CONFIG re-export from loadDebuggerConfig.ts (pre-existing from N00); (5) flip the N01 CHECKLIST items to checked.",
           "requestedBy": "task-request-changes",
           "status": "implemented",
           "implementedAt": "2026-05-19T20:45:34.256Z",
@@ -604,7 +604,7 @@
           "startedAt": "2026-05-19T21:43:55.640Z",
           "endedAt": "2026-05-19T21:45:53.768Z",
           "verdict": "fix-needed",
-          "comment": "AI review concurs with human verdict on header icon size, and adds five more sizing/UI items to bundle into the same fix: (1) iconButtonStyle.fontSize 14 -> 18 with hit area grown to 28-32, (2) panelStyle over-constrains box with top+bottom+height, drop bottom:0, (3) tab buttons need inline-flex centering so label sits in middle of minHeight:24 box, (4) titleStyle needs minWidth:0/flex:1 so long titles ellipsize instead of pushing header actions off, (5) DRY: useEffect inlines close logic instead of calling closePanel \u2014 memoize with useCallback, (6) aria-label falls back to 'Debugger panel' when panel.title is empty. All checklist items met functionally; these are UI polish + sizing issues. Gates clean. See REVIEW.md for details.",
+          "comment": "AI review concurs with human verdict on header icon size, and adds five more sizing/UI items to bundle into the same fix: (1) iconButtonStyle.fontSize 14 -> 18 with hit area grown to 28-32, (2) panelStyle over-constrains box with top+bottom+height, drop bottom:0, (3) tab buttons need inline-flex centering so label sits in middle of minHeight:24 box, (4) titleStyle needs minWidth:0/flex:1 so long titles ellipsize instead of pushing header actions off, (5) DRY: useEffect inlines close logic instead of calling closePanel — memoize with useCallback, (6) aria-label falls back to 'Debugger panel' when panel.title is empty. All checklist items met functionally; these are UI polish + sizing issues. Gates clean. See REVIEW.md for details.",
           "type": "ai",
           "by": "task-review",
           "fix": {
@@ -825,7 +825,7 @@
           "startedAt": "2026-05-20T16:12:59.758Z",
           "endedAt": "2026-05-20T16:15:02.998Z",
           "verdict": "fix-needed",
-          "comment": "fix-needed. Two functional bugs: (1) Expand animation is broken \u2014 Debugger.tsx:185-188 calls setBodyOverflow+setMaxHeight(measured) in the same React batch; both state updates commit in one render so maxHeight jumps from 0 to the measured value without any CSS transition. The double-rAF pattern applied to the collapse path is missing on expand. Fix: seed maxHeight=0 first, then in a double-rAF set it to el.scrollHeight. (2) Legacy plugins (via plugins prop) cannot collapse \u2014 Debugger.tsx:131-137 constructs syntheticModules with expanded: true hardcoded; _toggleExpanded updates registry expandedState but syntheticModules is rebuilt from plugins on every render and never reads from that state. Fix: track expanded state for synthetic modules in ModuleStack local state, keyed by plugin id, initialized to true. Non-blocking: (3) moduleData in useDebuggerApi creates a new {} object on every render for unresolved modules \u2014 consider useMemo with stable fallback reference to avoid downstream re-render churn. (4) DebuggerModuleRegistryProvider exported from src/modules/index.ts unnecessarily (not needed in public barrel, used only internally). Gates clean; all checklist items met except the two functional regressions.",
+          "comment": "fix-needed. Two functional bugs: (1) Expand animation is broken — Debugger.tsx:185-188 calls setBodyOverflow+setMaxHeight(measured) in the same React batch; both state updates commit in one render so maxHeight jumps from 0 to the measured value without any CSS transition. The double-rAF pattern applied to the collapse path is missing on expand. Fix: seed maxHeight=0 first, then in a double-rAF set it to el.scrollHeight. (2) Legacy plugins (via plugins prop) cannot collapse — Debugger.tsx:131-137 constructs syntheticModules with expanded: true hardcoded; _toggleExpanded updates registry expandedState but syntheticModules is rebuilt from plugins on every render and never reads from that state. Fix: track expanded state for synthetic modules in ModuleStack local state, keyed by plugin id, initialized to true. Non-blocking: (3) moduleData in useDebuggerApi creates a new {} object on every render for unresolved modules — consider useMemo with stable fallback reference to avoid downstream re-render churn. (4) DebuggerModuleRegistryProvider exported from src/modules/index.ts unnecessarily (not needed in public barrel, used only internally). Gates clean; all checklist items met except the two functional regressions.",
           "type": "ai",
           "by": "task-review",
           "fix": {
@@ -845,7 +845,7 @@
           "startedAt": "2026-05-20T16:47:20.686Z",
           "endedAt": "2026-05-20T16:48:25.302Z",
           "verdict": "approved",
-          "comment": "Round 2 review \u2014 all four fixes verified. (1) Expand animation: double-rAF pattern correctly applied; when collapsed state already has maxHeight:0, setup calls are no-ops so rAF transitions cleanly 0\u2192measured. (2) Plugin toggle: pluginExpanded local state reads correctly, onToggle paths properly split between synthetic and registered. New plugins added post-mount default to true via ?? true. (3) EMPTY_DATA stable constant confirmed at module level. (4) DebuggerModuleRegistryProvider removed from barrel. No regressions introduced. Lint clean, build clean. Manual browser verification of accordion expand/collapse and emit round-trip recommended before merge.",
+          "comment": "Round 2 review — all four fixes verified. (1) Expand animation: double-rAF pattern correctly applied; when collapsed state already has maxHeight:0, setup calls are no-ops so rAF transitions cleanly 0→measured. (2) Plugin toggle: pluginExpanded local state reads correctly, onToggle paths properly split between synthetic and registered. New plugins added post-mount default to true via ?? true. (3) EMPTY_DATA stable constant confirmed at module level. (4) DebuggerModuleRegistryProvider removed from barrel. No regressions introduced. Lint clean, build clean. Manual browser verification of accordion expand/collapse and emit round-trip recommended before merge.",
           "type": "ai",
           "by": "task-review",
           "fix": null
@@ -880,7 +880,7 @@
         {
           "at": "2026-05-20T15:55:06.257Z",
           "commitHash": "8e5105f",
-          "commitMessage": "docs(N03): revise spec \u2014 render-prop modules array, framework-agnostic evolution path"
+          "commitMessage": "docs(N03): revise spec — render-prop modules array, framework-agnostic evolution path"
         },
         {
           "at": "2026-05-20T16:04:39.135Z",
@@ -900,7 +900,7 @@
         {
           "at": "2026-05-20T16:28:13.778Z",
           "commitHash": "792353b",
-          "commitMessage": "fix(N03): apply review fixes \u2014 expand animation, plugin toggle, stable moduleData ref"
+          "commitMessage": "fix(N03): apply review fixes — expand animation, plugin toggle, stable moduleData ref"
         },
         {
           "at": "2026-05-20T16:49:13.125Z",
@@ -1056,7 +1056,7 @@
           "startedAt": "2026-05-20T17:34:34.979Z",
           "endedAt": "2026-05-20T17:34:56.201Z",
           "verdict": "approved",
-          "comment": "Round 2: Escape stopPropagation fix confirmed correct. All checklist items implemented \u2014 API (updateData, _updateData, _getDebugSnapshot, runtimeDataRef), UI (CopyExportButton split-button, clipboard copy with 1.5s feedback, JSON/TXT blob download, dropdown with all three dismissal paths). Build and lint clean. Approved.",
+          "comment": "Round 2: Escape stopPropagation fix confirmed correct. All checklist items implemented — API (updateData, _updateData, _getDebugSnapshot, runtimeDataRef), UI (CopyExportButton split-button, clipboard copy with 1.5s feedback, JSON/TXT blob download, dropdown with all three dismissal paths). Build and lint clean. Approved.",
           "type": "ai",
           "by": "task-review",
           "fix": null
@@ -1273,7 +1273,7 @@
           "startedAt": "2026-05-20T19:43:27.518Z",
           "endedAt": "2026-05-20T19:43:45.124Z",
           "verdict": "fix-needed",
-          "comment": "README too detailed \u2014 remove Architecture section from README, move Mermaid diagrams to docs/architecture.md. README should be a black-box consumer guide only.",
+          "comment": "README too detailed — remove Architecture section from README, move Mermaid diagrams to docs/architecture.md. README should be a black-box consumer guide only.",
           "type": "human",
           "by": "task-human-review",
           "fix": {
@@ -1330,7 +1330,7 @@
         {
           "at": "2026-05-20T19:34:15.774Z",
           "commitHash": "79debdf",
-          "commitMessage": "docs(N05): fix moduleData description \u2014 static-only, not static+runtime"
+          "commitMessage": "docs(N05): fix moduleData description — static-only, not static+runtime"
         },
         {
           "at": "2026-05-20T19:44:17.763Z",
@@ -1483,7 +1483,7 @@
           "startedAt": "2026-05-20T20:30:55.940Z",
           "endedAt": "2026-05-20T20:31:13.395Z",
           "verdict": "fix-needed",
-          "comment": "deviceInfoModule not wired into dev preview (main.tsx) \u2014 add it to the modules array so it renders in the panel",
+          "comment": "deviceInfoModule not wired into dev preview (main.tsx) — add it to the modules array so it renders in the panel",
           "type": "human",
           "by": "task-human-review",
           "fix": null
@@ -1492,7 +1492,7 @@
           "startedAt": "2026-05-20T20:33:23.608Z",
           "endedAt": "2026-05-20T20:34:40.532Z",
           "verdict": "approved",
-          "comment": "All checklist items satisfied. collectDeviceData() called twice per render (once in effect, once for display) \u2014 minor inefficiency, not a bug. navigator.platform is deprecated but acceptable for a debug module. File split (.tsx/.ts) to satisfy react-refresh ESLint rule is the right call. createElement in the .ts module file is correct. All guards in place (orientation, connection). Snapshot integration, responsiveness, public API, and quality gates all pass.",
+          "comment": "All checklist items satisfied. collectDeviceData() called twice per render (once in effect, once for display) — minor inefficiency, not a bug. navigator.platform is deprecated but acceptable for a debug module. File split (.tsx/.ts) to satisfy react-refresh ESLint rule is the right call. createElement in the .ts module file is correct. All guards in place (orientation, connection). Snapshot integration, responsiveness, public API, and quality gates all pass.",
           "type": "ai",
           "by": "task-review",
           "fix": null
@@ -1522,7 +1522,7 @@
           "startedAt": "2026-05-20T20:55:38.074Z",
           "endedAt": "2026-05-20T20:56:34.315Z",
           "verdict": "approved",
-          "comment": "All three blockers resolved. Registry owns the single resize/orientationchange listener pair and broadcasts via modulesRef to avoid stale closure. DeviceInfoPanel is clean \u2014 no window access, two focused effects (data\u2192updateData, subscribe\u2192setData). ViewportChangePayload typed and exported publicly. Quality gates pass.",
+          "comment": "All three blockers resolved. Registry owns the single resize/orientationchange listener pair and broadcasts via modulesRef to avoid stale closure. DeviceInfoPanel is clean — no window access, two focused effects (data→updateData, subscribe→setData). ViewportChangePayload typed and exported publicly. Quality gates pass.",
           "type": "ai",
           "by": "task-review",
           "fix": null
@@ -1723,14 +1723,20 @@
           "by": "task-review",
           "at": "2026-05-21T07:42:00.000Z",
           "verdict": "approved",
-          "comment": "All checklist items satisfied. updateData called with full store buffer in _subs notify closure. activeFilters state initialised and re-synced correctly. Chip row renders per-channel + Navigation chip with correct active/inactive styling using primaryColor. visibleEntries gates on both store.enabled and activeFilters; no store mutations from chip toggles. Build and lint clean. Minor: chips source from store.registered while checkboxes source from cfg.logs \u2014 consistent in practice, not a bug."
+          "comment": "All checklist items satisfied. updateData called with full store buffer in _subs notify closure. activeFilters state initialised and re-synced correctly. Chip row renders per-channel + Navigation chip with correct active/inactive styling using primaryColor. visibleEntries gates on both store.enabled and activeFilters; no store mutations from chip toggles. Build and lint clean. Minor: chips source from store.registered while checkboxes source from cfg.logs — consistent in practice, not a bug.",
+          "startedAt": "2026-05-21T07:42:00.000Z",
+          "endedAt": "2026-05-21T07:42:00.000Z",
+          "fix": null
         },
         {
           "type": "human",
           "by": "task-human-review",
           "at": "2026-05-21T07:45:00.000Z",
           "verdict": "approved",
-          "comment": "approved!"
+          "comment": "approved!",
+          "startedAt": "2026-05-21T07:45:00.000Z",
+          "endedAt": "2026-05-21T07:45:00.000Z",
+          "fix": null
         }
       ],
       "changesAfterImplementation": [],
@@ -1862,7 +1868,21 @@
       "aiReviewVerdict": "approved",
       "aiReviewComment": "All blockers resolved. Unified LS schema, no runtime deletion, effective flag logic, snapshot hydration on mount. Build + lint clean.",
       "pr": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/9",
-      "prNumber": 9
+      "prNumber": 9,
+      "implementation": {
+        "startedAt": null,
+        "completedAt": null,
+        "filesChanged": [],
+        "tokensUsed": null
+      },
+      "reviews": [],
+      "changesAfterImplementation": [],
+      "incidents": [],
+      "pushes": [],
+      "committedAt": null,
+      "totalDurationMinutes": null,
+      "mrUrl": null,
+      "mergedAt": null
     }
   ]
 }
