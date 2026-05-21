@@ -15,6 +15,7 @@ export interface ApiStatus {
 
 interface NetworkStore {
   apis: ApiStatus[]
+  _endpoints: ApiEndpointConfig[]
   _subs: Set<() => void>
 }
 
@@ -28,6 +29,7 @@ function getStore(): NetworkStore {
   if (!window.__debuggerNetwork) {
     window.__debuggerNetwork = {
       apis: [],
+      _endpoints: [],
       _subs: new Set(),
     }
   }
@@ -99,6 +101,7 @@ function _fetchAll(endpoints: ApiEndpointConfig[]): void {
 
 export function initNetworkStore(endpoints: ApiEndpointConfig[]): void {
   const store = getStore()
+  store._endpoints = endpoints
   store.apis = endpoints.map((ep) => ({
     url: ep.url,
     label: ep.label ?? ep.url,
@@ -121,4 +124,20 @@ export function subscribeNetwork(cb: () => void): () => void {
 
 export function getNetworkApis(): ApiStatus[] {
   return getStore().apis
+}
+
+export function refetchEndpoint(index: number): void {
+  const store = getStore()
+  const endpoint = store._endpoints[index]
+  if (!endpoint) return
+  store.apis[index] = {
+    ...store.apis[index],
+    status: 'loading',
+    httpStatus: null,
+    data: null,
+    error: null,
+    timestamp: null,
+  }
+  notify()
+  void _fetchOne(index, endpoint)
 }

@@ -1,5 +1,5 @@
 import { useEffect, useReducer, type CSSProperties } from 'react'
-import { subscribeNetwork, getNetworkApis, type ApiStatus, type ApiStatusState } from './networkStore'
+import { subscribeNetwork, getNetworkApis, refetchEndpoint, type ApiStatus, type ApiStatusState } from './networkStore'
 
 function formatTimestamp(ts: number): string {
   const d = new Date(ts)
@@ -40,13 +40,13 @@ export function NetworkPanel() {
   return (
     <div style={containerStyle}>
       {apis.map((api, i) => (
-        <ApiCard key={api.url + i} api={api} isLast={i === apis.length - 1} />
+        <ApiCard key={api.url + i} api={api} index={i} isLast={i === apis.length - 1} />
       ))}
     </div>
   )
 }
 
-function ApiCard({ api, isLast }: { api: ApiStatus; isLast: boolean }) {
+function ApiCard({ api, index, isLast }: { api: ApiStatus; index: number; isLast: boolean }) {
   const badgeColor = STATUS_COLORS[api.status]
   const bodyContent = api.data !== null ? formatBody(api.data) : api.error !== null ? api.error : null
 
@@ -56,6 +56,16 @@ function ApiCard({ api, isLast }: { api: ApiStatus; isLast: boolean }) {
         <span style={badgeStyle(badgeColor)}>{api.status}</span>
         <span style={labelStyle}>{api.label}</span>
         <span style={methodBadgeStyle}>{api.method}</span>
+        <button
+          type="button"
+          style={refetchButtonStyle(api.status === 'loading')}
+          disabled={api.status === 'loading'}
+          onClick={() => refetchEndpoint(index)}
+          aria-label="Refetch"
+          title="Refetch"
+        >
+          ↺
+        </button>
       </div>
 
       <div style={metaRowStyle}>
@@ -197,4 +207,19 @@ const preStyle: CSSProperties = {
   overflowY: 'auto',
   wordBreak: 'break-all',
   whiteSpace: 'pre-wrap',
+}
+
+function refetchButtonStyle(disabled: boolean): CSSProperties {
+  return {
+    flexShrink: 0,
+    background: 'transparent',
+    border: '1px solid #4a4a6a',
+    borderRadius: 4,
+    color: disabled ? '#444' : '#888',
+    cursor: disabled ? 'not-allowed' : 'pointer',
+    fontFamily: 'monospace',
+    fontSize: 12,
+    lineHeight: 1,
+    padding: '1px 5px',
+  }
 }

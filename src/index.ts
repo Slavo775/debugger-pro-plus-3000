@@ -21,7 +21,7 @@ export type {
   NetworkConfig,
 } from './config/types'
 
-export { deviceInfoModule, logsModule, networkModule, useDebuggerLog, subscribeNetwork, getNetworkApis } from './modules/predefined'
+export { deviceInfoModule, logsModule, networkModule, useDebuggerLog, subscribeNetwork, getNetworkApis, refetchEndpoint } from './modules/predefined'
 export type { LogEntry, ApiStatus, ApiStatusState } from './modules/predefined'
 
 export { useDebuggerApi } from './modules/useDebuggerApi'

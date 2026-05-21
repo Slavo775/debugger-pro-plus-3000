@@ -52,6 +52,26 @@
           "status": "changes-implemented",
           "at": "2026-05-21T10:12:18.209Z",
           "by": "implement-changes"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-21T10:12:49.299Z",
+          "by": "task-git"
+        },
+        {
+          "status": "changes-requested",
+          "at": "2026-05-21T10:18:03.583Z",
+          "by": "task-request-changes"
+        },
+        {
+          "status": "changes-implementing",
+          "at": "2026-05-21T10:18:06.741Z",
+          "by": "implement-changes"
+        },
+        {
+          "status": "changes-implemented",
+          "at": "2026-05-21T10:19:47.720Z",
+          "by": "implement-changes"
         }
       ],
       "implementation": {
@@ -84,6 +104,22 @@
           ],
           "comment": null,
           "implementedBy": "implement-changes"
+        },
+        {
+          "requestedAt": "2026-05-21T10:18:03.583Z",
+          "description": "Add a refetch button per endpoint card in NetworkPanel. Clicking it re-fires the fetch for that single endpoint and resets it to loading state.",
+          "requestedBy": "task-request-changes",
+          "status": "implemented",
+          "implementedAt": "2026-05-21T10:19:47.719Z",
+          "filesChanged": [
+            "src/modules/predefined/network/networkStore.ts",
+            "src/modules/predefined/network/NetworkPanel.tsx",
+            "src/modules/predefined/network/index.ts",
+            "src/modules/predefined/index.ts",
+            "src/index.ts"
+          ],
+          "comment": null,
+          "implementedBy": "implement-changes"
         }
       ],
       "incidents": [],
@@ -105,6 +141,11 @@
           "at": "2026-05-21T10:03:57.689Z",
           "commitHash": "040c36d",
           "commitMessage": "feat(N10): add API healthcheck module with multi-endpoint status"
+        },
+        {
+          "at": "2026-05-21T10:12:49.299Z",
+          "commitHash": "0caf8af",
+          "commitMessage": "feat(N10): wire networkModule into dev preview with test API endpoints"
         }
       ],
       "branch": "feat/N10-add-api-healthcheck-module-with-multi-endpoint-status",
