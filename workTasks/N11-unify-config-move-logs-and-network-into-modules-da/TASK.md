@@ -81,8 +81,18 @@ All module-specific config lives inside its entry in `modules[]`. The consumer c
 ### Dev preview (`config.debugger.js` + `src/main.tsx`)
 - Update to the new unified shape
 
-### README
-- Update all config examples to the new shape
+### README (`README.md`)
+- Update Quick start example if it shows config
+- Update every config code block under **Configuration** → replace top-level `logs`, `persistLogs`, `network` keys with the unified `modules[].data` shape
+- Update the **Full config reference** type block — remove `logs`, `persistLogs`, `network` fields
+- Update `logsModule` and `networkModule` sections to show the new `modules[].data` usage instead of separate keys
+- Update the `config.debugger.js` example
+
+### ARCHITECTURE.md
+- Update the **Config layer** description — remove mention of `logs`, `persistLogs`, `network` as top-level keys
+- Update the **Consumer-Facing APIs** table if it references those fields
+- Update any config shape examples to the unified form
+- Add a note that predefined modules read their own config from `moduleData` (via `useDebuggerApi()`), not from `useDebuggerConfig()`
 
 ## Out of scope
 - `deviceInfoModule` has no config — no change needed

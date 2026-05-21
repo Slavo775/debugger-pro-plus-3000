@@ -37,6 +37,14 @@
 - [ ] Dev server shows Network panel fetching configured endpoints
 - [ ] Removing a module entry from `modules[]` silences its data reads (no errors)
 
-## Docs
-- [ ] Update README config examples to new unified shape
-- [ ] Update `ARCHITECTURE.md` config section if referenced
+## README
+- [ ] Update Quick start example (if config shown)
+- [ ] Update `config.debugger.js` example block — remove `logs`, `persistLogs`, `network` top-level keys
+- [ ] Update logsModule section — show `data: { logs, persistLogs }` inside `modules[]`
+- [ ] Update networkModule section — show `data: { apis }` inside `modules[]`
+- [ ] Update Full config reference type block — remove removed fields
+
+## ARCHITECTURE.md
+- [ ] Remove `logs`, `persistLogs`, `network` from any config shape descriptions
+- [ ] Add note: predefined modules read their config from `moduleData` not `useDebuggerConfig()`
+- [ ] Update Consumer-Facing APIs table if it lists those fields
