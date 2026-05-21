@@ -1764,7 +1764,7 @@
       "title": "Persist logs to localStorage with config flag and UI override",
       "type": "feat",
       "priority": "medium",
-      "status": "approved",
+      "status": "merged",
       "folder": "workTasks/N09-persist-logs-to-localstorage-with-config-flag",
       "tags": [
         "logs",
@@ -1839,6 +1839,11 @@
           "at": "2026-05-21T09:40:00.000Z",
           "by": "task-git",
           "pr": 9
+        },
+        {
+          "status": "merged",
+          "at": "2026-05-21T09:45:00.000Z",
+          "by": "task-git"
         }
       ],
       "branch": "feat/N09-persist-logs-to-localstorage-with-config-flag",
