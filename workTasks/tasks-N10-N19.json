@@ -1,0 +1,45 @@
+{
+  "range": {
+    "from": 10,
+    "to": 19
+  },
+  "tasks": [
+    {
+      "id": "N10",
+      "title": "add-api-healthcheck-module-with-multi-endpoint-status",
+      "type": "feat",
+      "priority": "medium",
+      "status": "ready",
+      "folder": "workTasks/N10-add-api-healthcheck-module-with-multi-endpoint-sta",
+      "createdAt": "2026-05-21T09:49:46.281Z",
+      "statusHistory": [
+        {
+          "status": "ready",
+          "at": "2026-05-21T09:49:46.282Z",
+          "by": "taskmaster"
+        }
+      ],
+      "implementation": {
+        "startedAt": null,
+        "completedAt": null,
+        "filesChanged": [],
+        "tokensUsed": null
+      },
+      "reviews": [],
+      "changesAfterImplementation": [],
+      "incidents": [],
+      "committedAt": null,
+      "totalDurationMinutes": null,
+      "tags": [
+        "network",
+        "healthcheck",
+        "module",
+        "api"
+      ],
+      "pushes": [],
+      "branch": null,
+      "mrUrl": null,
+      "mergedAt": null
+    }
+  ]
+}
