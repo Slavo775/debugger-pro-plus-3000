@@ -1,5 +1,6 @@
 import { useEffect, useReducer, type CSSProperties } from 'react'
-import { subscribeNetwork, getNetworkApis, refetchEndpoint, type ApiStatus, type ApiStatusState } from './networkStore'
+import { useDebuggerConfig } from '../../../config/useDebuggerConfig'
+import { initNetworkStore, subscribeNetwork, getNetworkApis, refetchEndpoint, type ApiStatus, type ApiStatusState } from './networkStore'
 
 function formatTimestamp(ts: number): string {
   const d = new Date(ts)
@@ -23,7 +24,10 @@ const STATUS_COLORS: Record<ApiStatusState, string> = {
 }
 
 export function NetworkPanel() {
+  const { network } = useDebuggerConfig()
   const [, forceUpdate] = useReducer((x: number) => x + 1, 0)
+
+  useEffect(() => { initNetworkStore(network.apis) }, [network])
 
   useEffect(() => {
     const unsub = subscribeNetwork(forceUpdate)
