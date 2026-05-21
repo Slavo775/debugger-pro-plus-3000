@@ -41,8 +41,8 @@ interface SetupProps {
 }
 
 function DebuggerModuleSetup({ modules, onModuleEvent, panelProps }: SetupProps) {
-  const { modules: moduleConfigs, logs } = useDebuggerConfig()
-  useEffect(() => { initLogsStore(logs) }, [logs])
+  const { modules: moduleConfigs, logs, persistLogs } = useDebuggerConfig()
+  useEffect(() => { initLogsStore(logs, persistLogs) }, [logs, persistLogs])
   return (
     <DebuggerModuleRegistryProvider
       moduleDefinitions={modules}
