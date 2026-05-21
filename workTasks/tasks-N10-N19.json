@@ -444,7 +444,7 @@
       "title": "Upgrade insight-flow to 0.4.0 and embed architecture rules in agents",
       "type": "feat",
       "priority": "high",
-      "status": "approved",
+      "status": "done",
       "folder": "workTasks/N12-upgrade-insight-flow-to-0-4-0-and-embed-architectu",
       "createdAt": "2026-05-21T18:27:52.906Z",
       "statusHistory": [
@@ -497,6 +497,21 @@
           "status": "approved",
           "at": "2026-05-21T20:05:24.001Z",
           "by": "task-human-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-21T20:06:50.548Z",
+          "by": "task-git"
+        },
+        {
+          "status": "merged",
+          "at": "2026-05-21T20:11:43.333Z",
+          "by": "task-git"
+        },
+        {
+          "status": "done",
+          "at": "2026-05-21T20:11:43.441Z",
+          "by": "git-agent"
         }
       ],
       "implementation": {
@@ -537,8 +552,8 @@
       ],
       "changesAfterImplementation": [],
       "incidents": [],
-      "committedAt": null,
-      "totalDurationMinutes": null,
+      "committedAt": "2026-05-21T20:11:43.441Z",
+      "totalDurationMinutes": 104,
       "tags": [
         "tooling",
         "insight-flow",
@@ -559,11 +574,16 @@
           "at": "2026-05-21T19:59:26.392Z",
           "commitHash": "ebbf9a9cd4e569a3997a8fa0e2859ae297213156",
           "commitMessage": "chore(N12): record AI review — approved with 5 non-blocking findings"
+        },
+        {
+          "at": "2026-05-21T20:06:50.547Z",
+          "commitHash": "33b332392d2eb1bde67ac0e7deab23a38b7dc607",
+          "commitMessage": "chore(N12): human review — approved"
         }
       ],
       "branch": "feat/N12-upgrade-insight-flow-0-4-0-agents",
-      "mrUrl": null,
-      "mergedAt": null
+      "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/11",
+      "mergedAt": "2026-05-21T20:11:43.332Z"
     }
   ]
 }
