@@ -1,0 +1,392 @@
+{
+  "range": {
+    "from": 10,
+    "to": 19
+  },
+  "tasks": [
+    {
+      "id": "N10",
+      "title": "add-api-healthcheck-module-with-multi-endpoint-status",
+      "type": "feat",
+      "priority": "medium",
+      "status": "approved",
+      "folder": "workTasks/N10-add-api-healthcheck-module-with-multi-endpoint-sta",
+      "createdAt": "2026-05-21T09:49:46.281Z",
+      "statusHistory": [
+        {
+          "status": "ready",
+          "at": "2026-05-21T09:49:46.282Z",
+          "by": "taskmaster"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-21T09:52:05.386Z",
+          "by": "task-git"
+        },
+        {
+          "status": "in-progress",
+          "at": "2026-05-21T10:01:06.473Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "implemented",
+          "at": "2026-05-21T10:03:30.667Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-21T10:03:57.689Z",
+          "by": "task-git"
+        },
+        {
+          "status": "changes-requested",
+          "at": "2026-05-21T10:08:34.826Z",
+          "by": "task-request-changes"
+        },
+        {
+          "status": "changes-implementing",
+          "at": "2026-05-21T10:08:47.876Z",
+          "by": "implement-changes"
+        },
+        {
+          "status": "changes-implemented",
+          "at": "2026-05-21T10:12:18.209Z",
+          "by": "implement-changes"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-21T10:12:49.299Z",
+          "by": "task-git"
+        },
+        {
+          "status": "changes-requested",
+          "at": "2026-05-21T10:18:03.583Z",
+          "by": "task-request-changes"
+        },
+        {
+          "status": "changes-implementing",
+          "at": "2026-05-21T10:18:06.741Z",
+          "by": "implement-changes"
+        },
+        {
+          "status": "changes-implemented",
+          "at": "2026-05-21T10:19:47.720Z",
+          "by": "implement-changes"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-21T10:20:15.173Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-21T10:27:37.232Z",
+          "by": "task-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-21T10:29:03.124Z",
+          "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-21T10:29:29.884Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-21T10:41:11.645Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-21T10:41:22.647Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-21T10:41:51.238Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-21T10:51:35.073Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "fix-needed",
+          "at": "2026-05-21T10:51:55.884Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-21T10:52:24.456Z",
+          "by": "task-git"
+        },
+        {
+          "status": "fixing",
+          "at": "2026-05-21T10:54:41.875Z",
+          "by": "task-review-fix"
+        },
+        {
+          "status": "fixed",
+          "at": "2026-05-21T10:55:27.005Z",
+          "by": "task-review-fix"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-21T10:55:58.942Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-21T11:03:45.759Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "fix-needed",
+          "at": "2026-05-21T11:04:30.675Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-21T11:04:58.498Z",
+          "by": "task-git"
+        },
+        {
+          "status": "fixing",
+          "at": "2026-05-21T11:27:01.119Z",
+          "by": "task-review-fix"
+        },
+        {
+          "status": "fixed",
+          "at": "2026-05-21T11:28:50.035Z",
+          "by": "task-review-fix"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-21T11:29:17.700Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-21T11:38:12.752Z",
+          "by": "task-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-21T11:38:57.545Z",
+          "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-21T11:39:21.170Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-21T11:40:09.641Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-21T11:40:22.980Z",
+          "by": "task-human-review"
+        }
+      ],
+      "implementation": {
+        "startedAt": "2026-05-21T10:01:06.472Z",
+        "completedAt": "2026-05-21T10:03:30.667Z",
+        "filesChanged": [
+          "src/config/types.ts",
+          "src/config/defaults.ts",
+          "src/config/merge.ts",
+          "src/components/Debugger.tsx",
+          "src/modules/predefined/network/networkStore.ts",
+          "src/modules/predefined/network/NetworkPanel.tsx",
+          "src/modules/predefined/network/networkModule.ts",
+          "src/modules/predefined/network/index.ts",
+          "src/modules/predefined/index.ts"
+        ],
+        "tokensUsed": null
+      },
+      "reviews": [
+        {
+          "startedAt": "2026-05-21T10:27:37.232Z",
+          "endedAt": "2026-05-21T10:29:03.123Z",
+          "verdict": "approved",
+          "comment": "All checklist items pass. Store, panel, refetch, config types, merge, and public exports are all correct. One non-blocking edge case: stale in-flight fetch writes can land on a re-initialised store if initNetworkStore is called again before previous fetches complete — silent corruption but no crash. Dependency on the network object reference (not network.apis) in useEffect is consistent with the existing logs pattern. Build and lint clean.",
+          "type": "ai",
+          "by": "task-review",
+          "fix": null
+        },
+        {
+          "startedAt": "2026-05-21T10:41:11.646Z",
+          "endedAt": "2026-05-21T10:41:22.647Z",
+          "verdict": "approved",
+          "comment": "Approved by human reviewer without changes requested.",
+          "type": "human",
+          "by": "task-human-review",
+          "fix": null
+        },
+        {
+          "startedAt": "2026-05-21T10:51:35.073Z",
+          "endedAt": "2026-05-21T10:51:55.884Z",
+          "verdict": "fix-needed",
+          "comment": "Blocker: initNetworkStore fires unconditionally in Debugger.tsx regardless of whether networkModule is in the modules prop. Fix: remove the useEffect from Debugger.tsx and move initNetworkStore into NetworkPanel via useDebuggerConfig, so store init only runs when the module is actually mounted.",
+          "type": "human",
+          "by": "task-human-review",
+          "fix": {
+            "startedAt": "2026-05-21T10:54:41.876Z",
+            "endedAt": "2026-05-21T10:55:27.005Z",
+            "status": "fixed",
+            "filesChanged": [
+              "src/components/Debugger.tsx",
+              "src/modules/predefined/network/NetworkPanel.tsx"
+            ],
+            "comment": "Removed initNetworkStore from Debugger.tsx. Moved call into NetworkPanel via useDebuggerConfig so store init only fires when the module is actually mounted.",
+            "by": "task-review-fix"
+          }
+        },
+        {
+          "startedAt": "2026-05-21T11:03:45.759Z",
+          "endedAt": "2026-05-21T11:04:30.675Z",
+          "verdict": "fix-needed",
+          "comment": "Two blockers: (A) initLogsStore called unconditionally in Debugger.tsx — move into LogsPanel. (B) DebuggerModuleRegistryProvider imports pushEntry from logs/logsStore — remove it, move route entry push into LogsPanel route-change subscriber instead.",
+          "type": "human",
+          "by": "task-human-review",
+          "fix": {
+            "startedAt": "2026-05-21T11:27:01.120Z",
+            "endedAt": "2026-05-21T11:28:50.035Z",
+            "status": "fixed",
+            "filesChanged": [
+              "src/components/Debugger.tsx",
+              "src/modules/DebuggerModuleRegistryProvider.tsx",
+              "src/modules/predefined/logs/LogsPanel.tsx"
+            ],
+            "comment": "Removed initLogsStore from Debugger.tsx. Removed pushEntry import from DebuggerModuleRegistryProvider. LogsPanel now self-inits via useDebuggerConfig and pushes route entries via its own route-change subscriber. Registry has zero module imports.",
+            "by": "task-review-fix"
+          }
+        },
+        {
+          "startedAt": "2026-05-21T11:38:12.752Z",
+          "endedAt": "2026-05-21T11:38:57.545Z",
+          "verdict": "approved",
+          "comment": "Architectural invariant verified: Debugger.tsx and DebuggerModuleRegistryProvider have zero module imports. LogsPanel self-inits via useDebuggerConfig and pushes route entries via its own route-change subscriber. NetworkPanel self-inits on mount. Effect ordering correct. Build and lint clean.",
+          "type": "ai",
+          "by": "task-review",
+          "fix": null
+        },
+        {
+          "startedAt": "2026-05-21T11:40:09.642Z",
+          "endedAt": "2026-05-21T11:40:22.979Z",
+          "verdict": "approved",
+          "comment": "Approved. Requested PR creation and merge.",
+          "type": "human",
+          "by": "task-human-review",
+          "fix": null
+        }
+      ],
+      "changesAfterImplementation": [
+        {
+          "requestedAt": "2026-05-21T10:08:34.825Z",
+          "description": "Add networkModule to the dev app/demo setup so it appears in the debugger panel. Configure real test API endpoints (public APIs) in the dev config so the healthcheck requests fire and the panel can be verified visually.",
+          "requestedBy": "task-request-changes",
+          "status": "implemented",
+          "implementedAt": "2026-05-21T10:12:18.209Z",
+          "filesChanged": [
+            "src/main.tsx",
+            "config.debugger.js"
+          ],
+          "comment": null,
+          "implementedBy": "implement-changes"
+        },
+        {
+          "requestedAt": "2026-05-21T10:18:03.583Z",
+          "description": "Add a refetch button per endpoint card in NetworkPanel. Clicking it re-fires the fetch for that single endpoint and resets it to loading state.",
+          "requestedBy": "task-request-changes",
+          "status": "implemented",
+          "implementedAt": "2026-05-21T10:19:47.719Z",
+          "filesChanged": [
+            "src/modules/predefined/network/networkStore.ts",
+            "src/modules/predefined/network/NetworkPanel.tsx",
+            "src/modules/predefined/network/index.ts",
+            "src/modules/predefined/index.ts",
+            "src/index.ts"
+          ],
+          "comment": null,
+          "implementedBy": "implement-changes"
+        }
+      ],
+      "incidents": [],
+      "committedAt": null,
+      "totalDurationMinutes": null,
+      "tags": [
+        "network",
+        "healthcheck",
+        "module",
+        "api"
+      ],
+      "pushes": [
+        {
+          "at": "2026-05-21T09:52:05.385Z",
+          "commitHash": "d3bcdcd",
+          "commitMessage": "feat(N10): add task spec for API healthcheck module with multi-endpoint status"
+        },
+        {
+          "at": "2026-05-21T10:03:57.689Z",
+          "commitHash": "040c36d",
+          "commitMessage": "feat(N10): add API healthcheck module with multi-endpoint status"
+        },
+        {
+          "at": "2026-05-21T10:12:49.299Z",
+          "commitHash": "0caf8af",
+          "commitMessage": "feat(N10): wire networkModule into dev preview with test API endpoints"
+        },
+        {
+          "at": "2026-05-21T10:20:15.173Z",
+          "commitHash": "6bee66c",
+          "commitMessage": "feat(N10): add per-endpoint refetch button to NetworkPanel"
+        },
+        {
+          "at": "2026-05-21T10:29:29.884Z",
+          "commitHash": "16f02d4",
+          "commitMessage": "chore(N10): record AI review (approved)"
+        },
+        {
+          "at": "2026-05-21T10:41:51.237Z",
+          "commitHash": "92b3fc7",
+          "commitMessage": "chore(N10): record human review (approved)"
+        },
+        {
+          "at": "2026-05-21T10:52:24.456Z",
+          "commitHash": "3badcc2",
+          "commitMessage": "chore(N10): record human review round 2 (fix-needed)"
+        },
+        {
+          "at": "2026-05-21T10:55:58.942Z",
+          "commitHash": "f0470b6",
+          "commitMessage": "fix(N10): move initNetworkStore into NetworkPanel — gate init on module presence"
+        },
+        {
+          "at": "2026-05-21T11:04:58.498Z",
+          "commitHash": "294750b",
+          "commitMessage": "chore(N10): record human review round 3 (fix-needed) + CLAUDE.md"
+        },
+        {
+          "at": "2026-05-21T11:29:17.699Z",
+          "commitHash": "f77e28e",
+          "commitMessage": "fix(N10): remove all module imports from Debugger and registry"
+        },
+        {
+          "at": "2026-05-21T11:39:21.169Z",
+          "commitHash": "2d4b0d1",
+          "commitMessage": "chore(N10): record AI review round 2 (approved)"
+        }
+      ],
+      "branch": "feat/N10-add-api-healthcheck-module-with-multi-endpoint-status",
+      "mrUrl": null,
+      "mergedAt": null
+    }
+  ]
+}

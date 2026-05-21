@@ -1,10 +1,11 @@
 {
   "meta": {
-    "nextId": 10,
-    "currentTaskId": "N09",
+    "nextId": 11,
+    "currentTaskId": "N07",
     "nextIncidentId": 1,
     "shards": [
-      "tasks-N00-N09.json"
+      "tasks-N00-N09.json",
+      "tasks-N10-N19.json"
     ]
   }
 }

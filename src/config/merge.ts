@@ -22,6 +22,10 @@ export function mergeWithDefaults(userConfig: DebuggerConfig): ResolvedDebuggerC
     modules: mergeModules(DEFAULT_DEBUGGER_CONFIG.modules, userConfig.modules ?? []),
     logs: userConfig.logs ?? DEFAULT_DEBUGGER_CONFIG.logs,
     persistLogs: userConfig.persistLogs ?? DEFAULT_DEBUGGER_CONFIG.persistLogs,
+    network: {
+      ...DEFAULT_DEBUGGER_CONFIG.network,
+      ...userConfig.network,
+    },
   }
 }
 

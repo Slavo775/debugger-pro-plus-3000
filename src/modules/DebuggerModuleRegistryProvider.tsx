@@ -8,7 +8,6 @@ import type {
   RouteChangePayload,
 } from './types'
 import type { DebuggerModuleConfig } from '../config/types'
-import { pushEntry } from './predefined/logs/logsStore'
 
 interface Props {
   moduleDefinitions: DebuggerModuleDefinition[]
@@ -153,7 +152,6 @@ export function DebuggerModuleRegistryProvider({
       for (const m of modulesRef.current) {
         _send(m.id, 'route-change', payload)
       }
-      pushEntry({ id: '__route__', prefix: 'Navigation', text: path, timestamp: payload.timestamp })
     }
 
     const origPush = history.pushState
