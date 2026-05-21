@@ -9,7 +9,7 @@
       "title": "add-api-healthcheck-module-with-multi-endpoint-status",
       "type": "feat",
       "priority": "medium",
-      "status": "fixed",
+      "status": "approved",
       "folder": "workTasks/N10-add-api-healthcheck-module-with-multi-endpoint-sta",
       "createdAt": "2026-05-21T09:49:46.281Z",
       "statusHistory": [
@@ -162,6 +162,21 @@
           "status": "fixed",
           "at": "2026-05-21T11:28:50.035Z",
           "by": "task-review-fix"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-21T11:29:17.700Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-21T11:38:12.752Z",
+          "by": "task-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-21T11:38:57.545Z",
+          "by": "task-review"
         }
       ],
       "implementation": {
@@ -237,6 +252,15 @@
             "comment": "Removed initLogsStore from Debugger.tsx. Removed pushEntry import from DebuggerModuleRegistryProvider. LogsPanel now self-inits via useDebuggerConfig and pushes route entries via its own route-change subscriber. Registry has zero module imports.",
             "by": "task-review-fix"
           }
+        },
+        {
+          "startedAt": "2026-05-21T11:38:12.752Z",
+          "endedAt": "2026-05-21T11:38:57.545Z",
+          "verdict": "approved",
+          "comment": "Architectural invariant verified: Debugger.tsx and DebuggerModuleRegistryProvider have zero module imports. LogsPanel self-inits via useDebuggerConfig and pushes route entries via its own route-change subscriber. NetworkPanel self-inits on mount. Effect ordering correct. Build and lint clean.",
+          "type": "ai",
+          "by": "task-review",
+          "fix": null
         }
       ],
       "changesAfterImplementation": [
@@ -324,6 +348,11 @@
           "at": "2026-05-21T11:04:58.498Z",
           "commitHash": "294750b",
           "commitMessage": "chore(N10): record human review round 3 (fix-needed) + CLAUDE.md"
+        },
+        {
+          "at": "2026-05-21T11:29:17.699Z",
+          "commitHash": "f77e28e",
+          "commitMessage": "fix(N10): remove all module imports from Debugger and registry"
         }
       ],
       "branch": "feat/N10-add-api-healthcheck-module-with-multi-endpoint-status",
