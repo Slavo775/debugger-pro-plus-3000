@@ -1692,6 +1692,16 @@
           "status": "approved",
           "at": "2026-05-21T07:42:00.000Z",
           "by": "task-review"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-21T07:45:00.000Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-21T07:45:00.000Z",
+          "by": "task-human-review"
         }
       ],
       "implementation": {
@@ -1709,6 +1719,13 @@
           "at": "2026-05-21T07:42:00.000Z",
           "verdict": "approved",
           "comment": "All checklist items satisfied. updateData called with full store buffer in _subs notify closure. activeFilters state initialised and re-synced correctly. Chip row renders per-channel + Navigation chip with correct active/inactive styling using primaryColor. visibleEntries gates on both store.enabled and activeFilters; no store mutations from chip toggles. Build and lint clean. Minor: chips source from store.registered while checkboxes source from cfg.logs — consistent in practice, not a bug."
+        },
+        {
+          "type": "human",
+          "by": "task-human-review",
+          "at": "2026-05-21T07:45:00.000Z",
+          "verdict": "approved",
+          "comment": "approved!"
         }
       ],
       "changesAfterImplementation": [],
