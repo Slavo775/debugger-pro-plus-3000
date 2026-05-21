@@ -1833,6 +1833,12 @@
           "status": "approved",
           "at": "2026-05-21T09:36:00.000Z",
           "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-21T09:40:00.000Z",
+          "by": "task-git",
+          "pr": 9
         }
       ],
       "branch": "feat/N09-persist-logs-to-localstorage-with-config-flag",
@@ -1849,7 +1855,9 @@
       "reviewVerdict": "fix-needed",
       "reviewComment": "Unified LS schema {persistLog, logOutput}; no runtime deletion; snapshot hydration on mount",
       "aiReviewVerdict": "approved",
-      "aiReviewComment": "All blockers resolved. Unified LS schema, no runtime deletion, effective flag logic, snapshot hydration on mount. Build + lint clean."
+      "aiReviewComment": "All blockers resolved. Unified LS schema, no runtime deletion, effective flag logic, snapshot hydration on mount. Build + lint clean.",
+      "pr": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/9",
+      "prNumber": 9
     }
   ]
 }
