@@ -1708,6 +1708,11 @@
           "at": "2026-05-21T06:56:49.871Z",
           "commitHash": "5cf8b6d",
           "commitMessage": "chore(N08): add task spec for log snapshot export and visual filter chips"
+        },
+        {
+          "at": "2026-05-21T07:38:00.000Z",
+          "commitHash": "f0ce599",
+          "commitMessage": "feat(N08): add log snapshot export and visual filter chips to Logs module"
         }
       ],
       "branch": "feat/N08-log-snapshot-filter-chips",
