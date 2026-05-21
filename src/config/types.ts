@@ -31,6 +31,17 @@ export interface LogConfig {
   prefix: string
 }
 
+export interface ApiEndpointConfig {
+  url: string
+  method?: string
+  body?: unknown
+  label?: string
+}
+
+export interface NetworkConfig {
+  apis: ApiEndpointConfig[]
+}
+
 export interface DebuggerConfig {
   style?: DebuggerStyleConfig
   button?: DebuggerButtonConfig
@@ -38,6 +49,7 @@ export interface DebuggerConfig {
   modules?: DebuggerModuleConfig[]
   logs?: LogConfig[]
   persistLogs?: boolean
+  network?: NetworkConfig
 }
 
 export type ResolvedDebuggerConfig = Required<{
@@ -50,4 +62,5 @@ export type ResolvedDebuggerConfig = Required<{
   modules: DebuggerModuleConfig[]
   logs: LogConfig[]
   persistLogs: boolean
+  network: NetworkConfig
 }>

@@ -18,4 +18,5 @@ export const DEFAULT_DEBUGGER_CONFIG: ResolvedDebuggerConfig = {
   modules: [],
   logs: [],
   persistLogs: false,
+  network: { apis: [] },
 }
