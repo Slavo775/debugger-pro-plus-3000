@@ -444,7 +444,7 @@
       "title": "Upgrade insight-flow to 0.4.0 and embed architecture rules in agents",
       "type": "feat",
       "priority": "high",
-      "status": "ready",
+      "status": "implemented",
       "folder": "workTasks/N12-upgrade-insight-flow-to-0-4-0-and-embed-architectu",
       "createdAt": "2026-05-21T18:27:52.906Z",
       "statusHistory": [
@@ -452,12 +452,37 @@
           "status": "ready",
           "at": "2026-05-21T18:27:52.907Z",
           "by": "taskmaster"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-21T18:31:55.781Z",
+          "by": "task-git"
+        },
+        {
+          "status": "in-progress",
+          "at": "2026-05-21T18:32:58.176Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "implemented",
+          "at": "2026-05-21T19:38:55.286Z",
+          "by": "task-implement"
         }
       ],
       "implementation": {
-        "startedAt": null,
-        "completedAt": null,
-        "filesChanged": [],
+        "startedAt": "2026-05-21T18:32:58.176Z",
+        "completedAt": "2026-05-21T19:38:55.286Z",
+        "filesChanged": [
+          "package.json",
+          "pnpm-lock.yaml",
+          "taskflow.config.json",
+          "CLAUDE.md",
+          "AGENT_ENFORCEMENT.md",
+          "workTasks/tasks-N00-N09.json",
+          "workTasks/tasks-N10-N19.json",
+          "workTasks/N12-upgrade-insight-flow-to-0-4-0-and-embed-architectu/TASK.md",
+          "workTasks/N12-upgrade-insight-flow-to-0-4-0-and-embed-architectu/CHECKLIST.md"
+        ],
         "tokensUsed": null
       },
       "reviews": [],
@@ -470,8 +495,14 @@
         "insight-flow",
         "agents"
       ],
-      "pushes": [],
-      "branch": null,
+      "pushes": [
+        {
+          "at": "2026-05-21T18:31:55.780Z",
+          "commitHash": "7069f230bedbcb93a0b35713645d94096bd9a49b",
+          "commitMessage": "chore(N12): create task — upgrade insight-flow to 0.4.0 and embed architecture rules in agents"
+        }
+      ],
+      "branch": "feat/N12-upgrade-insight-flow-0-4-0-agents",
       "mrUrl": null,
       "mergedAt": null
     }

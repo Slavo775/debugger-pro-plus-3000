@@ -50,6 +50,7 @@ and the public `src/index.ts` export.
 the `DebuggerApiContextValue` context.
 
 Modules call `useDebuggerApi()` to get:
+
 - `emit(event, payload)` — fire an event to the outside world (`onModuleEvent` callback)
 - `subscribe(event, handler)` — receive events sent to this module
 - `moduleData` — static + runtime data for this module
@@ -76,7 +77,9 @@ export function NetworkPanel() {
 ```ts
 // ❌ wrong — fires even when the module is absent
 // Debugger.tsx:
-useEffect(() => { initNetworkStore(network.apis) }, [network])
+useEffect(() => {
+  initNetworkStore(network.apis)
+}, [network])
 ```
 
 If the module is not in the `modules` array, its panel never mounts and its init never runs.
@@ -84,6 +87,7 @@ If the module is not in the `modules` array, its panel never mounts and its init
 ### Predefined modules (`src/modules/predefined/`)
 
 Two file patterns:
+
 - **Flat** (simple): `XxxModule.ts` + `XxxPanel.tsx` (e.g. DeviceInfo)
 - **Sub-folder** (complex, has a store): `xxx/xxxModule.ts` + `xxxStore.ts` + `XxxPanel.tsx` + `index.ts`
 
@@ -101,6 +105,7 @@ here. Forgetting this causes runtime `SyntaxError: does not provide an export na
 ---
 
 <!-- taskflow:start -->
+
 ## insight-flow
 
 This project uses **insight-flow** for AI-assisted task lifecycle management.
@@ -117,22 +122,23 @@ insight-flow current                    # Show active task
 insight-flow list                       # List all tasks
 insight-flow stats                      # Aggregate statistics
 insight-flow next                       # Pick next actionable task
-insight-flow                            # Launch dashboard at http://localhost:6006
+insight-flow                            # Launch dashboard at http://localhost:6007
 ```
 
 ## Slash Commands (Claude Code Skills)
 
-| Command | Purpose |
-|---------|---------|
-| `/taskmaster` | Create a new task spec (TASK.md + CHECKLIST.md) |
-| `/task-implement` | Implement a task from its spec |
-| `/task-review` | AI code review of implemented task |
-| `/task-human-review` | Record human review feedback |
-| `/task-review-fix` | Fix issues from review |
-| `/task-git` | Branch, commit, push, PR, merge |
-| `/task-incident` | Track production incidents |
-| `/task-request-changes` | Request post-implementation changes |
-| `/taskmaster-change` | Modify an existing task spec |
+| Command                 | Purpose                                                                                                                |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `/taskmaster`           | Create a new task spec (TASK.md + CHECKLIST.md)                                                                        |
+| `/task-implement`       | Implement a task from its spec                                                                                         |
+| `/task-review`          | AI code review of implemented task                                                                                     |
+| `/task-human-review`    | Record human review feedback                                                                                           |
+| `/task-review-fix`      | Fix issues from review                                                                                                 |
+| `/task-git`             | Branch, commit, push, PR, merge                                                                                        |
+| `/task-incident`        | Track production incidents                                                                                             |
+| `/task-request-changes` | Request post-implementation changes                                                                                    |
+| `/taskmaster-change`    | Modify an existing task spec                                                                                           |
+| `/arch-check`           | Static + structural compliance audit for debugger-pro-plus-3000's host/guest invariant — run before requesting review. |
 
 ## Task Lifecycle
 
@@ -148,5 +154,5 @@ ready -> in-progress -> implemented -> reviewing -> approved -> pushed -> merged
 - Task folders: `workTasks/Nxx-short-title/` containing TASK.md + CHECKLIST.md
 - Branches: `<type>/Nxx-short-title` (e.g., `feat/N00-add-auth`)
 - Commits: conventional commits (feat, fix, refactor, docs, chore, etc.)
-- Tracker commands: `insight-flow <command>` (replaces `node scripts/task-tracker.mjs`)
+- Tracker commands: `insight-flow <command>` (run `insight-flow help` for the full list)
 <!-- taskflow:end -->

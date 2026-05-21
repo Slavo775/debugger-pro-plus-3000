@@ -40,8 +40,8 @@ importers:
         specifier: ^15.0.0
         version: 15.15.0
       insight-flow:
-        specifier: 0.3.1
-        version: 0.3.1
+        specifier: 0.4.0
+        version: 0.4.0
       prettier:
         specifier: ^3.0.0
         version: 3.8.3
@@ -829,8 +829,8 @@ packages:
     resolution: {integrity: sha512-JmXMZ6wuvDmLiHEml9ykzqO6lwFbof0GG4IkcGaENdCRDDmMVnny7s5HsIgHCbaq0w2MyPhDqkhTUgS2LU2PHA==}
     engines: {node: '>=0.8.19'}
 
-  insight-flow@0.3.1:
-    resolution: {integrity: sha512-ZA31+vFd8iloj4A0drOg1N/Tmdx3XRuZ/d3402MzWihhKmYCmqoyO3aiOcN9DxJDR2YO8mudxXCiA2sty8Jk1g==}
+  insight-flow@0.4.0:
+    resolution: {integrity: sha512-kzZ6OtYO9ldUg9dcYwH/gS/OBuZrM9yTWGu0xKThnuo+OAsVgoyL3T5oGl6400neQSJbVJkvzRn9PjGpz4EOyA==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -1101,6 +1101,9 @@ packages:
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  zod@4.4.3:
+    resolution: {integrity: sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ==}
 
 snapshots:
 
@@ -1831,7 +1834,9 @@ snapshots:
 
   imurmurhash@0.1.4: {}
 
-  insight-flow@0.3.1: {}
+  insight-flow@0.4.0:
+    dependencies:
+      zod: 4.4.3
 
   is-extglob@2.1.1: {}
 
@@ -2051,3 +2056,5 @@ snapshots:
   yallist@3.1.1: {}
 
   yocto-queue@0.1.0: {}
+
+  zod@4.4.3: {}

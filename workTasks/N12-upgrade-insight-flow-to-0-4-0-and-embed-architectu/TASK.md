@@ -21,10 +21,12 @@ We need the agents to be **architecture-aware by default**.
 ## Scope
 
 ### `package.json`
+
 - `"insight-flow": "0.3.1"` → `"insight-flow": "0.4.0"` in `devDependencies`.
 - Run `pnpm install` (this project uses pnpm).
 
 ### `taskflow.config.json`
+
 Add an `agents` block at the top level. Keep all existing keys unchanged.
 
 ```jsonc
@@ -32,26 +34,38 @@ Add an `agents` block at the top level. Keep all existing keys unchanged.
   // ... existing keys ...
   "agents": {
     "extend": {
-      "taskmaster": [/* rules — see "Rule content" below */],
-      "task-implement": [/* rules */],
-      "task-review": [/* rules */],
-      "task-review-fix": [/* rules */],
-      "task-request-changes": [/* rules */]
+      "taskmaster": [
+        /* rules — see "Rule content" below */
+      ],
+      "task-implement": [
+        /* rules */
+      ],
+      "task-review": [
+        /* rules */
+      ],
+      "task-review-fix": [
+        /* rules */
+      ],
+      "task-request-changes": [
+        /* rules */
+      ],
     },
     "custom": [
       {
         "name": "arch-check",
         "role": "Architecture Compliance Auditor",
         "description": "Run static and structural checks for debugger-pro-plus-3000's host/guest invariant.",
-        "outputContract": "/* see below */"
-      }
-    ]
-  }
+        "outputContract": "/* see below */",
+      },
+    ],
+  },
 }
 ```
 
 ### Apply changes
+
 Run `./node_modules/.bin/insight-flow init` after editing config. Per the 0.4.0 README:
+
 > Each rule is appended to the corresponding role file under a `## Project Extensions` section. Re-running `insight-flow init` replaces (not duplicates) the section.
 
 So re-init is idempotent and is the canonical way to apply the agents block.
@@ -121,6 +135,7 @@ Every agent that writes, plans, or reviews code MUST know:
 ---
 
 ## Out of scope
+
 - Refactoring any existing module code. This task only changes config + slash-command markdown.
 - Changing the `insight-flow` lifecycle, dashboard port, or sharding rules.
 - Modifying `CLAUDE.md` manually — `insight-flow init` updates the skills table when `agents.custom` entries are added; verify after re-init.
@@ -128,9 +143,11 @@ Every agent that writes, plans, or reviews code MUST know:
 - Anything related to N11 (unified config) — that task lands separately.
 
 ## Breaking change
+
 None for the library itself. Slash-command surface gains one new command (`/arch-check`) and existing commands gain a `## Project Extensions` section — neither is a breaking change for consumers of the npm package.
 
 ## Acceptance
+
 - `./node_modules/.bin/insight-flow --version` prints `0.4.0`.
 - `.claude/commands/taskmaster.md`, `task-implement.md`, `task-review.md`, `task-review-fix.md`, and `task-request-changes.md` each contain a `## Project Extensions` section with the rules above.
 - `.claude/commands/arch-check.md` exists with the role header and the seven-step output contract.
