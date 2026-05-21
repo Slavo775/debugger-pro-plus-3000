@@ -37,6 +37,7 @@ export interface DebuggerConfig {
   panel?: DebuggerPanelConfig
   modules?: DebuggerModuleConfig[]
   logs?: LogConfig[]
+  persistLogs?: boolean
 }
 
 export type ResolvedDebuggerConfig = Required<{
@@ -48,4 +49,5 @@ export type ResolvedDebuggerConfig = Required<{
   }>
   modules: DebuggerModuleConfig[]
   logs: LogConfig[]
+  persistLogs: boolean
 }>

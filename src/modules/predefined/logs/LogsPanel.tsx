@@ -1,7 +1,7 @@
 import { useEffect, useReducer, useState, type CSSProperties } from 'react'
 import { useDebuggerApi } from '../../useDebuggerApi'
 import { useDebuggerConfig } from '../../../config/useDebuggerConfig'
-import { getStore, setEnabled, clearEntries, type LogEntry } from './logsStore'
+import { getStore, setEnabled, clearEntries, setPersistLogs, type LogEntry } from './logsStore'
 
 function formatTime(ts: number): string {
   const d = new Date(ts)
@@ -30,6 +30,7 @@ export function LogsPanel() {
       forceUpdate()
     }
     s._subs.add(notify)
+    notify()
     return () => { s._subs.delete(notify) }
   }, [updateData])
 
@@ -82,6 +83,16 @@ export function LogsPanel() {
             ))}
           </div>
         )}
+        <div style={persistDividerStyle} />
+        <label style={checkboxLabelStyle}>
+          <input
+            type="checkbox"
+            checked={store.persistLogs}
+            onChange={(e) => setPersistLogs(e.target.checked)}
+            style={{ ...checkboxStyle, accentColor: cfg.style.primaryColor }}
+          />
+          <span style={checkboxTextStyle}>Persist log</span>
+        </label>
       </div>
 
       <div style={logHeaderStyle}>
@@ -172,6 +183,11 @@ const codeStyle: CSSProperties = {
   background: '#2a2a3e',
   padding: '1px 4px',
   borderRadius: 3,
+}
+
+const persistDividerStyle: CSSProperties = {
+  borderTop: '1px solid #2a2a3e',
+  margin: '6px 0',
 }
 
 const checkboxGroupStyle: CSSProperties = {
