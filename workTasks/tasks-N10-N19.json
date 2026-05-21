@@ -9,7 +9,7 @@
       "title": "add-api-healthcheck-module-with-multi-endpoint-status",
       "type": "feat",
       "priority": "medium",
-      "status": "approved",
+      "status": "fix-needed",
       "folder": "workTasks/N10-add-api-healthcheck-module-with-multi-endpoint-sta",
       "createdAt": "2026-05-21T09:49:46.281Z",
       "statusHistory": [
@@ -102,6 +102,21 @@
           "status": "approved",
           "at": "2026-05-21T10:41:22.647Z",
           "by": "task-human-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-21T10:41:51.238Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-21T10:51:35.073Z",
+          "by": "task-human-review"
+        },
+        {
+          "status": "fix-needed",
+          "at": "2026-05-21T10:51:55.884Z",
+          "by": "task-human-review"
         }
       ],
       "implementation": {
@@ -135,6 +150,15 @@
           "endedAt": "2026-05-21T10:41:22.647Z",
           "verdict": "approved",
           "comment": "Approved by human reviewer without changes requested.",
+          "type": "human",
+          "by": "task-human-review",
+          "fix": null
+        },
+        {
+          "startedAt": "2026-05-21T10:51:35.073Z",
+          "endedAt": "2026-05-21T10:51:55.884Z",
+          "verdict": "fix-needed",
+          "comment": "Blocker: initNetworkStore fires unconditionally in Debugger.tsx regardless of whether networkModule is in the modules prop. Fix: remove the useEffect from Debugger.tsx and move initNetworkStore into NetworkPanel via useDebuggerConfig, so store init only runs when the module is actually mounted.",
           "type": "human",
           "by": "task-human-review",
           "fix": null
@@ -205,6 +229,11 @@
           "at": "2026-05-21T10:29:29.884Z",
           "commitHash": "16f02d4",
           "commitMessage": "chore(N10): record AI review (approved)"
+        },
+        {
+          "at": "2026-05-21T10:41:51.237Z",
+          "commitHash": "92b3fc7",
+          "commitMessage": "chore(N10): record human review (approved)"
         }
       ],
       "branch": "feat/N10-add-api-healthcheck-module-with-multi-endpoint-status",
