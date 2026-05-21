@@ -80,3 +80,42 @@ useEffect(() => {
 - `LS_KEY`, `LS_MAX` values unchanged.
 - No change to chip filter logic or channel checkboxes.
 - No change to `merge.ts` or `types.ts`.
+
+---
+
+# AI Review
+
+**Verdict:** fix-needed (confirms human review)
+**Date:** 2026-05-21
+
+## Confirmed blockers
+
+All three human review blockers are verified in the current code:
+
+### B1 — LS schema stores bare array, not unified object (`logsStore.ts:42–68`)
+`_loadFromStorage()` returns `LogEntry[]` and validates only array shape.
+`_saveToStorage(entries)` writes `JSON.stringify(entries.slice(-LS_MAX))` — a bare array.
+No `persistLog` flag is written or read from localStorage.
+**Effect:** user's checkbox toggle is lost on reload; config value always wins.
+
+### B2 — Runtime `removeItem` calls in wrong places (`logsStore.ts:108, 117`)
+- `clearEntries` line 108: `if (store.persistLogs) localStorage.removeItem(LS_KEY)` — deletes key at runtime when user presses Clear.
+- `setPersistLogs` line 117: `localStorage.removeItem(LS_KEY)` — deletes key the moment user unchecks the box.
+Both must be replaced with writes (saving `{persistLog, logOutput}`) so the flag survives.
+
+### B3 — No immediate `notify()` on mount (`LogsPanel.tsx:26–34`)
+The `useEffect` adds the subscriber but never calls `notify()` immediately.
+Rehydrated entries in `store.entries` are invisible to the snapshot until the next log push.
+
+## Additional finding
+
+### A1 — `initLogsStore` ignores stored UI override (`logsStore.ts:72`)
+`store.persistLogs = persistLogs` unconditionally uses the config value.
+If a user had checked "Persist log" (stored `persistLog: true`) but `config.persistLogs` is `false`, the checkbox override is silently discarded on reload and localStorage is left orphaned.
+The fix (per REVIEW.md B1 spec) resolves this: effective flag = `stored?.persistLog ?? persistLogs`.
+
+## What is correct
+- `types.ts`, `defaults.ts`, `merge.ts` — `persistLogs` additions are correct.
+- `Debugger.tsx` — `persistLogs` destructured and passed to `initLogsStore` correctly.
+- `LogsPanel.tsx` — "Persist log" checkbox renders, reads `store.persistLogs`, calls `setPersistLogs`, divider present, checkbox visible with no channels. All correct.
+- `pushEntry` — correctly calls `_saveToStorage` when `store.persistLogs` is on (only the save target/args need updating per unified schema).

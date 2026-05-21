@@ -1808,6 +1808,11 @@
           "status": "fix-needed",
           "at": "2026-05-21T09:21:00.000Z",
           "by": "task-human-review"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-21T09:25:00.000Z",
+          "by": "task-review"
         }
       ],
       "branch": "feat/N09-persist-logs-to-localstorage-with-config-flag",
@@ -1822,7 +1827,9 @@
         "src/modules/predefined/logs/LogsPanel.tsx"
       ],
       "reviewVerdict": "fix-needed",
-      "reviewComment": "Unified LS schema {persistLog, logOutput}; no runtime deletion; snapshot hydration on mount"
+      "reviewComment": "Unified LS schema {persistLog, logOutput}; no runtime deletion; snapshot hydration on mount",
+      "aiReviewVerdict": "fix-needed",
+      "aiReviewComment": "Confirms all 3 human blockers: unified LS schema, no runtime removeItem, immediate notify on mount. Plus A1: initLogsStore ignores stored UI override."
     }
   ]
 }
