@@ -590,7 +590,7 @@
       "title": "Upgrade insight-flow to 0.5.0 with notifications, socket.io live updates, and activity log-activity hook",
       "type": "feat",
       "priority": "high",
-      "status": "ready",
+      "status": "changes-requested",
       "folder": "workTasks/N13-upgrade-insight-flow-to-0-5-0-with-notifications-s",
       "createdAt": "2026-05-23T20:03:29.631Z",
       "statusHistory": [
@@ -598,6 +598,16 @@
           "status": "ready",
           "at": "2026-05-23T20:03:29.631Z",
           "by": "taskmaster"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-23T20:18:26.355Z",
+          "by": "task-git"
+        },
+        {
+          "status": "changes-requested",
+          "at": "2026-05-23T20:30:51.696Z",
+          "by": "task-request-changes"
         }
       ],
       "implementation": {
@@ -607,7 +617,18 @@
         "tokensUsed": null
       },
       "reviews": [],
-      "changesAfterImplementation": [],
+      "changesAfterImplementation": [
+        {
+          "requestedAt": "2026-05-23T20:30:51.695Z",
+          "description": "Explicitly cover both hook installs (notify + activity) under insight-flow init, and add a pnpm if:ui script that launches the dashboard",
+          "requestedBy": "task-request-changes",
+          "status": "requested",
+          "implementedAt": null,
+          "filesChanged": [],
+          "comment": null,
+          "implementedBy": null
+        }
+      ],
       "incidents": [],
       "committedAt": null,
       "totalDurationMinutes": null,
@@ -618,9 +639,15 @@
         "notifications",
         "dx"
       ],
-      "pushes": [],
-      "branch": null,
-      "mrUrl": null,
+      "pushes": [
+        {
+          "at": "2026-05-23T20:18:26.354Z",
+          "commitHash": "c4ecf54ef4f6a555ca27471c84622076afb35198",
+          "commitMessage": "spec insight-flow 0.5.0 upgrade (notifications, socket.io, log-activity)"
+        }
+      ],
+      "branch": "feat/N13-upgrade-insight-flow-to-0-5-0-with-notifications-s",
+      "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/12",
       "mergedAt": null
     }
   ]

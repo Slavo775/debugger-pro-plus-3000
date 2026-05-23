@@ -21,6 +21,14 @@
 - [ ] No staging of `docs/architecture-*.svg`, `docs/internal-design-gemini.png`, `docs/architecture-communication-gemini.png`, `docs/architecture-layers-gemini.png`, `docs/architecture-module-lifecycle-gemini.png`, or `.taskflow-activity.jsonl`
 - [ ] No changes under `src/` (runtime code is out of scope)
 
+## Change-request additions (Round 1)
+
+- [ ] `insight-flow init` ran and registered BOTH the notification `Stop` hook (`.claude/hooks/taskflow-notify.sh`) AND the activity `PostToolUse` hook (`.claude/hooks/taskflow-activity.sh`) in `.claude/settings.local.json`
+- [ ] Neither hook was hand-edited into `.claude/settings.local.json` — both came from `init`
+- [ ] `package.json` `scripts` has a new entry `"if:ui": "insight-flow"`
+- [ ] `pnpm if:ui` (and `npm run if:ui`) launches the dashboard on port 6007 with the Socket.IO connection healthy
+- [ ] No other existing script in `package.json` was renamed, removed, or re-aliased
+
 ## Quality gates
 
 - [ ] `npx tsc --noEmit` passes (sanity — runtime untouched)
