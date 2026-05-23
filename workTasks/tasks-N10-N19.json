@@ -584,6 +584,44 @@
       "branch": "feat/N12-upgrade-insight-flow-0-4-0-agents",
       "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/11",
       "mergedAt": "2026-05-21T20:11:43.332Z"
+    },
+    {
+      "id": "N13",
+      "title": "Upgrade insight-flow to 0.5.0 with notifications, socket.io live updates, and activity log-activity hook",
+      "type": "feat",
+      "priority": "high",
+      "status": "ready",
+      "folder": "workTasks/N13-upgrade-insight-flow-to-0-5-0-with-notifications-s",
+      "createdAt": "2026-05-23T20:03:29.631Z",
+      "statusHistory": [
+        {
+          "status": "ready",
+          "at": "2026-05-23T20:03:29.631Z",
+          "by": "taskmaster"
+        }
+      ],
+      "implementation": {
+        "startedAt": null,
+        "completedAt": null,
+        "filesChanged": [],
+        "tokensUsed": null
+      },
+      "reviews": [],
+      "changesAfterImplementation": [],
+      "incidents": [],
+      "committedAt": null,
+      "totalDurationMinutes": null,
+      "tags": [
+        "tooling",
+        "insight-flow",
+        "upgrade",
+        "notifications",
+        "dx"
+      ],
+      "pushes": [],
+      "branch": null,
+      "mrUrl": null,
+      "mergedAt": null
     }
   ]
 }
