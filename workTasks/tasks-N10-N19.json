@@ -703,7 +703,7 @@
       "title": "Add consoleLoggerModule — intercept window.console and surface logs in debugger",
       "type": "feat",
       "priority": "medium",
-      "status": "fix-needed",
+      "status": "fixed",
       "folder": "workTasks/N14-add-consoleloggermodule-intercept-window-console-a",
       "createdAt": "2026-05-24T12:09:07.323Z",
       "statusHistory": [
@@ -816,6 +816,21 @@
           "status": "fix-needed",
           "at": "2026-05-24T13:35:29.799Z",
           "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-24T13:36:14.066Z",
+          "by": "task-git"
+        },
+        {
+          "status": "fixing",
+          "at": "2026-05-24T13:39:56.040Z",
+          "by": "task-review-fix"
+        },
+        {
+          "status": "fixed",
+          "at": "2026-05-24T13:41:02.895Z",
+          "by": "task-review-fix"
         }
       ],
       "implementation": {
@@ -882,6 +897,11 @@
           "at": "2026-05-24T13:31:07.702Z",
           "commitHash": "eaf237d",
           "commitMessage": "fix(N14): opt-in early hooks for console capture and fetch error surfacing"
+        },
+        {
+          "at": "2026-05-24T13:36:14.066Z",
+          "commitHash": "b941d0e",
+          "commitMessage": "docs(N14): round-4 human review — FIX-NEEDED (Error objects lost in snapshot JSON)"
         }
       ],
       "branch": "feat/N14-add-consoleloggermodule-intercept-window-console",

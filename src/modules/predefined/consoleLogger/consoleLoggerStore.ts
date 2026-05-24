@@ -61,6 +61,25 @@ export function getConsoleLoggerStore(): ConsoleLoggerStore {
   return window.__debuggerConsoleLogger
 }
 
+export interface SerializedError {
+  __error: true
+  name: string
+  message: string
+  stack?: string
+}
+
+function serializeArg(arg: unknown): unknown {
+  if (arg instanceof Error) {
+    return {
+      __error: true,
+      name: arg.name,
+      message: arg.message,
+      stack: arg.stack,
+    } as SerializedError
+  }
+  return arg
+}
+
 function pushEntry(level: ConsoleLogLevel, args: unknown[]): void {
   const store = getConsoleLoggerStore()
   store._callCount++
@@ -68,7 +87,7 @@ function pushEntry(level: ConsoleLogLevel, args: unknown[]): void {
     id: store._nextId++,
     ts: Date.now(),
     level,
-    args,
+    args: args.map(serializeArg),
   })
   if (store.entries.length > store.maxEntries) {
     store.entries.splice(0, store.entries.length - store.maxEntries)

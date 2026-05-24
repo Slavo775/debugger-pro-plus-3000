@@ -6,7 +6,7 @@ export {
   patchConsole,
   restoreConsole,
 } from './consoleLoggerStore'
-export type { ConsoleLogEntry, ConsoleLogLevel } from './consoleLoggerStore'
+export type { ConsoleLogEntry, ConsoleLogLevel, SerializedError } from './consoleLoggerStore'
 export { installConsoleCapture } from './installConsoleCapture'
 export type { InstallConsoleCaptureOptions } from './installConsoleCapture'
 export { installNetworkErrorCapture } from './installNetworkErrorCapture'

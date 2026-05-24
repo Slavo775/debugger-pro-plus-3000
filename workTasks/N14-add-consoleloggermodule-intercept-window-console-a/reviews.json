@@ -61,7 +61,20 @@
       "comment": "Round 4: panel UI shows full Error stack trace, but Copy Snapshot serializes Error args to {} because Error properties are non-enumerable. Fix: serialize Error instances to { __error: true, name, message, stack } shape in pushEntry, format the same way in panel's formatArg. Narrow, no public-API change.",
       "type": "human",
       "by": "task-review",
-      "fix": null
+      "fix": {
+        "startedAt": "2026-05-24T13:39:56.040Z",
+        "endedAt": "2026-05-24T13:41:02.894Z",
+        "status": "fixed",
+        "filesChanged": [
+          "src/modules/predefined/consoleLogger/consoleLoggerStore.ts",
+          "src/modules/predefined/consoleLogger/ConsoleLoggerPanel.tsx",
+          "src/modules/predefined/consoleLogger/index.ts",
+          "src/modules/predefined/index.ts",
+          "src/index.ts"
+        ],
+        "comment": "Round 4 fix: Error instances now serialize to { __error: true, name, message, stack } in pushEntry. formatArg detects the shape and renders the stack trace same as before. Panel UI unchanged; snapshot JSON now contains full error text instead of {}. SerializedError type re-exported per INVARIANT 6.",
+        "by": "task-review-fix"
+      }
     }
   ]
 }

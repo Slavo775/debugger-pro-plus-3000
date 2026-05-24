@@ -17,10 +17,23 @@ function formatTime(ts: number): string {
   return `${hh}:${mm}:${ss}.${ms}`
 }
 
+function isSerializedError(
+  arg: unknown,
+): arg is { __error: true; name: string; message: string; stack?: string } {
+  return (
+    typeof arg === 'object' &&
+    arg !== null &&
+    (arg as { __error?: unknown }).__error === true &&
+    typeof (arg as { name?: unknown }).name === 'string' &&
+    typeof (arg as { message?: unknown }).message === 'string'
+  )
+}
+
 function formatArg(arg: unknown): string {
   if (arg === null) return 'null'
   if (arg === undefined) return 'undefined'
   if (arg instanceof Error) return arg.stack ?? `${arg.name}: ${arg.message}`
+  if (isSerializedError(arg)) return arg.stack ?? `${arg.name}: ${arg.message}`
   if (typeof arg === 'string') return arg
   if (typeof arg === 'object') {
     try {

@@ -44,6 +44,7 @@ export type {
   ConsoleLogEntry,
   ConsoleLogLevel,
   InstallConsoleCaptureOptions,
+  SerializedError,
 } from './modules/predefined'
 
 export { useDebuggerApi } from './modules/useDebuggerApi'

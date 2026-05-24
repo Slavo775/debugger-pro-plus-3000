@@ -15,4 +15,5 @@ export type {
   ConsoleLogEntry,
   ConsoleLogLevel,
   InstallConsoleCaptureOptions,
+  SerializedError,
 } from './consoleLogger'
