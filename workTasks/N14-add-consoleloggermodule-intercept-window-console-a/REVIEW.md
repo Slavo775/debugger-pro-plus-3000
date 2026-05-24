@@ -267,3 +267,80 @@ Human ask (verbatim): "can we have all text there as is in module? or it will be
 
 - This is a small, targeted fix entirely inside `consoleLoggerStore.ts` and `ConsoleLoggerPanel.tsx`. No public-API change. No invariant impact.
 - Once shipped, the snapshot becomes a complete record of what the panel showed — which was the whole point of `updateData({ consoleLogs })` in the first place.
+
+
+---
+
+## Round 5 — AI re-review after Round 4 fix: APPROVED
+
+**Reviewer:** Task Reviewer (ai)
+**Date:** 2026-05-24
+**Verdict:** APPROVED
+
+### Summary
+
+Round-4 blocker fully resolved. `serializeArg` (`consoleLoggerStore.ts:71-81`) converts `Error` instances to `{ __error: true, name, message, stack }` before they enter `entry.args`; `pushEntry` calls `args.map(serializeArg)` (`consoleLoggerStore.ts:90`); `formatArg` in the panel grew an `isSerializedError` type guard (`ConsoleLoggerPanel.tsx:20-30`) that renders the serialized shape identically to a real `Error` (`stack ?? "${name}: ${message}"`). The `instanceof Error` branch is kept as a defensive fallback. Result: panel UI is byte-identical to before; the Copy Snapshot JSON now contains full error context instead of `{}`. The new `SerializedError` type is properly re-exported through the public surface per INVARIANT 6.
+
+Risk after Round 4: **very low**. Diff is two helpers + one type guard + two re-exports.
+
+### Round 4 blocker verification
+
+- [x] **Blocker 1 — Error objects serialize to `{}`** — **FIXED**.
+  - `serializeArg` helper present at `consoleLoggerStore.ts:71-81` and converts `arg instanceof Error` to the documented shape.
+  - `pushEntry` applies it via `args.map(serializeArg)` at `consoleLoggerStore.ts:90` — store now always holds JSON-safe data.
+  - `isSerializedError` type guard at `ConsoleLoggerPanel.tsx:20-30` correctly checks the `__error`, `name`, `message` discriminators (defensive against accidentally-matched POJOs).
+  - `formatArg` handles the serialized shape at `ConsoleLoggerPanel.tsx:36` with the same output as the live-Error branch.
+  - `instanceof Error` branch retained at `ConsoleLoggerPanel.tsx:35` as a fallback for any future code path that bypasses `pushEntry`.
+  - `SerializedError` re-exported through `consoleLogger/index.ts` → `modules/predefined/index.ts` → `src/index.ts` per INVARIANT 6.
+
+### Full invariant compliance (after all 4 rounds of fixes)
+
+| # | Invariant | Status | Notes |
+|---|---|---|---|
+| 1 | Host/Guest — no `predefined/*` imports in host | ✅ | `grep` returns exit 1 (zero matches) |
+| 2 | Single Channel — `useDebuggerApi()` only | ✅ | panel uses `updateData` only; install fns operate on `window.console`/`window.fetch`, not on a sibling module's store |
+| 3 | Module Init — side-effects in panel `useEffect` | ⚠️ **Intentionally relaxed** | Per REVIEW.md Round 3 decision, patching happens at module-load via consumer-called `installConsoleCapture()` / `installNetworkErrorCapture()`. The panel itself is now pure UI. This trade-off was explicitly approved to capture pre-mount messages. Documented in code comments. |
+| 4 | Config Four-File Rule | ✅ | `consoleLogger` field present in all four files |
+| 5 | Unified Module Config | ⚠️ (pre-existing, non-blocking) | panel still reads `maxEntries` from `useDebuggerConfig()`; matches `logs`/`network` precedent; N11 will migrate all three together |
+| 6 | Public Re-export | ✅ | All new symbols (`installConsoleCapture`, `installNetworkErrorCapture`, `SerializedError`, `InstallConsoleCaptureOptions`) are re-exported from `src/index.ts` |
+| 7 | Sub-folder pattern | ✅ | `consoleLogger/` contains `consoleLoggerModule.ts`, `consoleLoggerStore.ts`, `ConsoleLoggerPanel.tsx`, `index.ts` + two opt-in helpers; store is a `window.__debuggerConsoleLogger` lazy singleton with `_subs: Set<() => void>`; panel uses `useReducer` forceUpdate |
+| 8 | No Cross-Module Imports | ✅ | `grep -rE "from ['\"](\.\./)+predefined/" src/modules/predefined/consoleLogger/` returns exit 1 |
+| 9 | System Events — no new broadcasts | ✅ | no `_send`/`_emit` additions; `installNetworkErrorCapture` calls global `console.error`, not a system event |
+| 10 | Ordering via `modules[].order` | ✅ | no parallel mechanism |
+
+### Quality gate results
+
+- `npx tsc --noEmit` — ✅ pass (zero errors)
+- `npm run lint` — ✅ pass (zero warnings, `--max-warnings 0`)
+- `npm run build` — ✅ pass (52.24 kB / 13.01 kB gzip)
+- Prettier on N14-touched files — ✅ clean (`prettier --list-different` returns no output for `src/modules/predefined/consoleLogger/`, `modules/predefined/index.ts`, `src/index.ts`, `src/main.tsx`)
+- Host/guest grep (INVARIANT 1) — ✅ exit 1
+- Cross-module grep (INVARIANT 8) — ✅ exit 1
+
+The 12 project-wide prettier-dirty files remain pre-existing tech debt in untouched files (Debugger.tsx, DebuggerFab.tsx, LogsPanel.tsx, etc.) — not introduced by N14.
+
+### Non-blocking observations (not required to ship)
+
+1. **`installNetworkErrorCapture` calls bare `console.error` without `installConsoleCapture` being installed → silent partial functionality.** If a consumer calls `installNetworkErrorCapture()` but forgets `installConsoleCapture()`, fetch errors go to DevTools (native console) but never reach the panel. The JSDoc on `installNetworkErrorCapture` already documents this pairing, but consider adding a defensive `console.warn('[debugger] installNetworkErrorCapture called without installConsoleCapture — failures will show in DevTools but not in the panel')` once at install time. Minor.
+
+2. **`installNetworkErrorCapture` stores `original = window.fetch.bind(window)` in `window.__debuggerNetworkErrorCapture.original` but never exposes a `uninstallNetworkErrorCapture()` to restore.** Symmetric with the missing-public `restoreConsole` in the original spec — fine for an internal helper, worth noting if consumers later need an opt-out.
+
+3. **Nested errors / circular refs / Symbols / BigInts** in deeply-nested args still drop on `JSON.stringify` (already called out in Round 4 REVIEW). Acceptable.
+
+4. **`installConsoleCapture` exports a `DEFAULT_MAX_ENTRIES = 500` constant in the file but it's not used as a public default**, since the same default lives in `defaults.ts` (`consoleLogger.maxEntries`). Two sources of truth. Trivial — could be deduped by importing from defaults, but it's fine for the scope.
+
+### Security & edge cases
+
+- **`installNetworkErrorCapture` wrapper `throw err`s re-throws** — preserves caller error-handling semantics. ✅
+- **Fetch wrapper logs URL but not request body or headers** — good, avoids leaking auth tokens / PII to the panel snapshot.
+- **`SerializedError.stack`** can contain absolute file paths from source maps. Same dev-tool caveat as before — acceptable.
+- **`installNetworkErrorCapture` idempotency check** is on `window.__debuggerNetworkErrorCapture?.installed` — correct. Repeat calls become no-ops.
+
+### Next actions
+
+None required. PR is ready for human re-verification and merge.
+
+### Notes
+
+- Five-round history is fully documented in this REVIEW.md. The N14 PR (#13) carries: Round-1 AI approve, Round-2 human fix-needed (effect-thrash → fixed Round 2), Round-3 human fix-needed (scope decision to relax INVARIANT 3 + add `installConsoleCapture` + `installNetworkErrorCapture`), Round-4 human fix-needed (Error serialization → fixed), Round-5 AI approve.
+- Recommend handoff to `/task-human-review` for final UI verification (re-trigger 503 fetch, confirm Copy Snapshot JSON has full `stack`, then merge).
