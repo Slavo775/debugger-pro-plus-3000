@@ -407,3 +407,26 @@ Diff vs. Round 5: 6 files, +122/-14 lines. All four Round-5 non-blocking suggest
 
 - Sixth round (and likely last AI round) closes out everything Round 5 flagged. PR is fully ready for final human verification and merge.
 - Recommend `/task-human-review` to: trigger 503 fetch + verify Copy Snapshot has full `stack`, run the nested-object DevTools probe (`console.error({ wrapper: { cause: new Error('x'), sym: Symbol('y'), big: 1n, fn: function f(){} } })`) and confirm the panel shows readable output. After that, merge.
+
+
+---
+
+## Round 7 — Human final verification: APPROVED — ready to merge
+
+**Reviewer:** Human (Project Owner)
+**Date:** 2026-05-24
+**Verdict:** APPROVED
+
+### Summary
+
+Human verbatim: "approved done we can merge it into main". Manual browser verification confirms the final polished build behaves correctly — opt-in early capture works, snapshot includes full `SerializedError` text, recursive walker handles nested/exotic args.
+
+### Verdict
+
+APPROVED for merge into `main` via `insight-flow merge --id N14`.
+
+### Notes
+
+- Closes the seven-round review cycle: 1 AI initial → 4 human fix cycles → 2 AI re-reviews → final human approval.
+- Public-API surface shipped: `consoleLoggerModule`, `installConsoleCapture(opts?)`, `installNetworkErrorCapture()`, `uninstallNetworkErrorCapture()`, `getConsoleLoggerStore`, `subscribeConsoleLogger`, `clearConsoleLogEntries`, types `ConsoleLogEntry`, `ConsoleLogLevel`, `SerializedError`, `InstallConsoleCaptureOptions`.
+- INVARIANT 3 intentionally relaxed for `consoleLogger` (Round-3 decision); INVARIANT 5 stays on the existing logs/network precedent (to be cleaned up in N11).
