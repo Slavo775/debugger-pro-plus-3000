@@ -590,7 +590,7 @@
       "title": "Upgrade insight-flow to 0.5.0 with notifications, socket.io live updates, and activity log-activity hook",
       "type": "feat",
       "priority": "high",
-      "status": "implemented",
+      "status": "pushed",
       "folder": "workTasks/N13-upgrade-insight-flow-to-0-5-0-with-notifications-s",
       "createdAt": "2026-05-23T20:03:29.631Z",
       "statusHistory": [
@@ -623,6 +623,11 @@
           "status": "implemented",
           "at": "2026-05-24T11:43:22.876Z",
           "by": "task-implement"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-24T11:45:35.688Z",
+          "by": "task-git"
         }
       ],
       "implementation": {
@@ -682,10 +687,53 @@
           "at": "2026-05-23T20:31:49.382Z",
           "commitHash": "090e29bf25b7ed33a806bcad00d2da1d7db98c39",
           "commitMessage": "record change request — explicit init hook coverage + pnpm if:ui script"
+        },
+        {
+          "at": "2026-05-24T11:45:35.687Z",
+          "commitHash": "34d495a80e2e26f878e958181bffbbb6372b6182",
+          "commitMessage": "upgrade insight-flow to 0.5.0 (socket.io, notifications, log-activity)"
         }
       ],
       "branch": "feat/N13-upgrade-insight-flow-to-0-5-0-with-notifications-s",
       "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/12",
+      "mergedAt": null
+    },
+    {
+      "id": "N14",
+      "title": "Add consoleLoggerModule — intercept window.console and surface logs in debugger",
+      "type": "feat",
+      "priority": "medium",
+      "status": "ready",
+      "folder": "workTasks/N14-add-consoleloggermodule-intercept-window-console-a",
+      "createdAt": "2026-05-24T12:09:07.323Z",
+      "statusHistory": [
+        {
+          "status": "ready",
+          "at": "2026-05-24T12:09:07.323Z",
+          "by": "taskmaster"
+        }
+      ],
+      "implementation": {
+        "startedAt": null,
+        "completedAt": null,
+        "filesChanged": [],
+        "tokensUsed": null
+      },
+      "changesAfterImplementation": [],
+      "reviewCount": 0,
+      "lastReviewVerdict": null,
+      "openIncidentCount": 0,
+      "committedAt": null,
+      "totalDurationMinutes": null,
+      "tags": [
+        "console",
+        "logging",
+        "module",
+        "snapshot"
+      ],
+      "pushes": [],
+      "branch": null,
+      "mrUrl": null,
       "mergedAt": null
     }
   ]
