@@ -344,3 +344,66 @@ None required. PR is ready for human re-verification and merge.
 
 - Five-round history is fully documented in this REVIEW.md. The N14 PR (#13) carries: Round-1 AI approve, Round-2 human fix-needed (effect-thrash → fixed Round 2), Round-3 human fix-needed (scope decision to relax INVARIANT 3 + add `installConsoleCapture` + `installNetworkErrorCapture`), Round-4 human fix-needed (Error serialization → fixed), Round-5 AI approve.
 - Recommend handoff to `/task-human-review` for final UI verification (re-trigger 503 fetch, confirm Copy Snapshot JSON has full `stack`, then merge).
+
+
+---
+
+## Round 6 — AI re-review after non-blocking polish: APPROVED
+
+**Reviewer:** Task Reviewer (ai)
+**Date:** 2026-05-24
+**Verdict:** APPROVED
+
+### Summary
+
+Diff vs. Round 5: 6 files, +122/-14 lines. All four Round-5 non-blocking suggestions are implemented and verified correct. No new public-API surface beyond `uninstallNetworkErrorCapture` (already re-exported through the full chain). All 10 invariants still hold. All quality gates pass. Bundle size grew from 52.24 kB → 53.52 kB (gzip 13.01 → 13.40 kB), accounted for by the deeper `serializeValue` walker.
+
+### Round-5 follow-up verification
+
+- [x] **Suggestion 1 — defensive warn in `installNetworkErrorCapture`.** Implemented at `installNetworkErrorCapture.ts:33-40`. Guard `if (!getConsoleLoggerStore()._patched)` correctly fires only when patch is absent; calls `window.console.warn` directly (which is safe because `_patched=false` implies the wrapper is not installed). ✅
+- [x] **Suggestion 2 — `uninstallNetworkErrorCapture()`.** Implemented at `installNetworkErrorCapture.ts:71-76`. Idempotent guard `if (!cap?.installed) return`. Restores `window.fetch = cap.original` and flips `cap.installed = false` (does not delete the holder, which is fine — re-install sees `installed: false` and proceeds). Re-exported through `consoleLogger/index.ts → modules/predefined/index.ts → src/index.ts` (verified by `grep` — appears at `src/index.ts:39`). INVARIANT 6 ✅.
+- [x] **Suggestion 3 — deeper `serializeArg` walker.** Implemented at `consoleLoggerStore.ts:71-110`. Handles in priority order: primitives → BigInt (`"{value}n"`) → Symbol (`String(symbol)`) → Function (`"[Function: name]"`) → Error (`SerializedError` shape) → object branch (cycle detection via WeakSet, depth cap `MAX_SERIALIZE_DEPTH = 6` → `"[Circular]"` / `"[MaxDepth]"`, arrays recursed, plain-object check via `getPrototypeOf === Object.prototype || null`, non-plain → `String(value)`). Each top-level `serializeArg` call gets a fresh `WeakSet` so cross-arg shared references aren't false-flagged. ✅
+- [x] **Suggestion 4 — `DEFAULT_MAX_ENTRIES` dedup.** `installConsoleCapture.ts` now imports `DEFAULT_DEBUGGER_CONFIG` from `../../../config/defaults` and reads `DEFAULT_DEBUGGER_CONFIG.consoleLogger.maxEntries`. Single source of truth. ✅
+
+### Invariant compliance (post-polish)
+
+| # | Invariant | Status |
+|---|---|---|
+| 1 | Host/Guest | ✅ host-grep exit 1 |
+| 2 | Single Channel | ✅ no new comm path; `installNetworkErrorCapture` uses global `console.error` (the patched wrapper if installed) |
+| 3 | Module Init | ⚠️ intentionally relaxed (Round-3 decision) — unchanged |
+| 4 | Config Four-File Rule | ✅ no new config field |
+| 5 | Unified Module Config | ⚠️ pre-existing precedent (N11 follow-up) — unchanged |
+| 6 | Public Re-export | ✅ `uninstallNetworkErrorCapture` added to `src/index.ts:39` |
+| 7 | Sub-folder pattern | ✅ unchanged |
+| 8 | No Cross-Module Imports | ✅ cross-module-grep exit 1; only intra-folder imports added |
+| 9 | System Events | ✅ unchanged |
+| 10 | Ordering | ✅ unchanged |
+
+### Quality gate results
+
+- `npx tsc --noEmit` — ✅ pass
+- `npm run lint` — ✅ pass (zero warnings)
+- `npm run build` — ✅ pass (53.52 kB / 13.40 kB gzip; +1.28 kB / +0.39 kB gzip for the walker)
+- Prettier on N14 files — ✅ clean
+- Host/guest grep — ✅ exit 1
+- Cross-module grep — ✅ exit 1
+
+### Non-blocking observations
+
+1. **Walker treats repeated (non-cyclic) references within one arg as `"[Circular]"`.** E.g., `console.log({ a: shared, b: shared })` flags `b: "[Circular]"`. Native `JSON.stringify` actually tolerates shared refs (only throws on actual cycles). The walker is strictly more conservative. Acceptable — keeps the implementation simple, prevents pathological deep duplication, and the output is still readable. Worth noting if users complain. Cross-arg shared refs are NOT affected (fresh WeakSet per arg).
+
+2. **Defensive-warn comment could be tightened.** The inline comment in `installNetworkErrorCapture.ts:36-37` reads "Use the native warn directly: if the patched console were installed, this would route through us, defeating the purpose of the warning." Slightly misleading — by the time we reach that branch we already know `_patched === false`, so `window.console.warn` is in fact the native function. The comment defends a concern that doesn't apply at this code path. Cosmetic; not worth changing.
+
+3. **`uninstallNetworkErrorCapture` leaves `window.__debuggerNetworkErrorCapture` in place with `installed: false`.** This is fine and lets a subsequent `installNetworkErrorCapture()` re-install correctly. Worth knowing for anyone inspecting `window.*` state.
+
+### Security & edge cases
+
+- **Walker is unbounded in BREADTH within a single object level** — a plain object with 10k keys would expand to a 10k-key result. Not a defect (matches `JSON.stringify` behavior), but consumers tuning `maxEntries` high should be aware of memory implications when logging huge objects.
+- **Function `name` property** — for arrow functions and lambdas this is the assigned variable name or `""`. The walker substitutes `"anonymous"` for empty names. ✅
+- **`String(value)` fallback for non-plain objects** — e.g., `String(new Map())` returns `"[object Map]"`. Loses contents but is safe and JSON-serializable. Documented intent in the inline comment.
+
+### Notes
+
+- Sixth round (and likely last AI round) closes out everything Round 5 flagged. PR is fully ready for final human verification and merge.
+- Recommend `/task-human-review` to: trigger 503 fetch + verify Copy Snapshot has full `stack`, run the nested-object DevTools probe (`console.error({ wrapper: { cause: new Error('x'), sym: Symbol('y'), big: 1n, fn: function f(){} } })`) and confirm the panel shows readable output. After that, merge.
