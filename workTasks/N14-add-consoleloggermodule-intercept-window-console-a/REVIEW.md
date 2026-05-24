@@ -203,3 +203,67 @@ The Round-2 fix met the spec. The remaining gap is a scope question, not a bug. 
 
 - The wrapper is confirmed live: DevTools attribution `consoleLoggerStore.ts:104` for `[Auth]`/`[API]` lines proves `console.log` → wrapper → `original(...args)` is the active call path.
 - If the human picks **Option A**, mark N14 approved and proceed to merge. If **Option B**, mark N14 approved as-is and run `/taskmaster` for a follow-up task — N14 itself is not the place to grow that feature.
+
+
+---
+
+## Round 4 — Human verification: FIX-NEEDED (snapshot loses Error context)
+
+**Reviewer:** Human (Project Owner)
+**Date:** 2026-05-24
+**Verdict:** FIX-NEEDED
+
+### Summary
+
+Round-3 opt-in works: `installConsoleCapture` captures pre-mount messages and `installNetworkErrorCapture` surfaces failed fetches via `console.error`. The Console panel UI shows the full failure with the stack trace (image attached: `[ERROR] [fetch] GET https://httpstat.us/503 failed: TypeError: Failed to fetch` followed by 10+ stack frames at `installNetworkErrorCapture.ts:14:30`, `_fetchOne`, `refetchEndpoint`, etc.).
+
+**Gap:** the Copy Snapshot JSON loses the Error context. Each entry looks like:
+
+```json
+{
+  "id": 1,
+  "ts": 1779629539537,
+  "level": "error",
+  "args": [
+    "[fetch] GET https://httpstat.us/503 failed:",
+    {}
+  ]
+}
+```
+
+The second arg shows as `{}`. That's because `Error` instances have non-enumerable `name`/`message`/`stack` properties, so `JSON.stringify(error)` returns `"{}"`. The UI renders the stack trace because `formatArg` does `if (arg instanceof Error) return arg.stack ?? …` directly. But once the raw `Error` object lands in `updateData({ consoleLogs })` and gets serialized by the snapshot copier, the context is gone.
+
+Human ask (verbatim): "can we have all text there as is in module? or it will be the long json?"
+
+### Blockers
+
+**Blocker 1 — Error objects serialize to `{}` in the copy snapshot**
+
+- **File:** `src/modules/predefined/consoleLogger/consoleLoggerStore.ts` (`pushEntry`) + `src/modules/predefined/consoleLogger/ConsoleLoggerPanel.tsx` (`formatArg`)
+- **Symptom:** Snapshot JSON contains `"args": ["...failed:", {}]` instead of the full `TypeError: Failed to fetch\n  at …` text that the panel UI shows.
+- **Root cause:** `pushEntry` stores raw `Error` instances in `entry.args`. The panel's `formatArg` handles `instanceof Error` correctly for rendering. But `JSON.stringify` cannot serialize an `Error` (non-enumerable properties), so anything that consumes the store via `JSON.stringify` (the snapshot Copy button, any persistence layer) gets `{}`.
+- **Fix path (recommended, narrow):**
+  1. In `consoleLoggerStore.ts`, add a `serializeArg(arg: unknown): unknown` helper that detects `arg instanceof Error` and returns a plain serializable shape:
+     ```ts
+     { __error: true, name: arg.name, message: arg.message, stack: arg.stack }
+     ```
+     For any other arg, return as-is. (No need to recurse into nested objects for now — that's an unbounded problem and out of scope.)
+  2. In `pushEntry`, store `args.map(serializeArg)` instead of `args`. The store now always contains JSON-safe data.
+  3. In `ConsoleLoggerPanel.tsx`, update `formatArg` to detect the `{ __error: true, … }` shape and format it the same way the current `instanceof Error` branch does (`stack ?? "${name}: ${message}"`). Keep the `instanceof Error` branch as a defensive fallback for any code path that bypasses `pushEntry`.
+  4. Result: panel UI renders full stack trace (unchanged); snapshot JSON contains `{ "__error": true, "name": "TypeError", "message": "Failed to fetch", "stack": "…" }` instead of `{}`. Both surfaces are now 1:1.
+
+### Non-blocking
+
+- **Nested errors / circular references in deep object args** — `serializeArg` only handles top-level Errors. If an app logs `console.error({ wrapper: { cause: new Error('x') } })`, the nested Error still serializes to `{}`. Acceptable for current scope; if it becomes a problem, a deeper walker can be added later.
+- **`Symbol`, `BigInt`, `Function` args** — also drop on `JSON.stringify`. Same scope decision — out of scope unless reported.
+
+### Verification (run after the fix)
+
+- [ ] In dev preview, click "Refetch" on the failing 503 endpoint
+- [ ] Open the Console panel — confirm full stack trace still renders
+- [ ] Copy Snapshot — confirm the JSON contains `{ "__error": true, "name": "TypeError", "message": "Failed to fetch", "stack": "…" }` instead of `{}`
+
+### Notes
+
+- This is a small, targeted fix entirely inside `consoleLoggerStore.ts` and `ConsoleLoggerPanel.tsx`. No public-API change. No invariant impact.
+- Once shipped, the snapshot becomes a complete record of what the panel showed — which was the whole point of `updateData({ consoleLogs })` in the first place.

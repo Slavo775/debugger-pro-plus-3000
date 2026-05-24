@@ -53,6 +53,15 @@
         "comment": "Round 3 fix: Option B opt-in. Added installConsoleCapture() and installNetworkErrorCapture() exported from src/index.ts. Panel no longer eagerly patches — consumers must call install functions before createRoot. installNetworkErrorCapture wraps fetch and surfaces failures via console.error so the consoleLogger panel captures them. Dev preview opts in. All gates pass.",
         "by": "task-review-fix"
       }
+    },
+    {
+      "startedAt": "2026-05-24T13:34:41.242Z",
+      "endedAt": "2026-05-24T13:35:29.798Z",
+      "verdict": "fix-needed",
+      "comment": "Round 4: panel UI shows full Error stack trace, but Copy Snapshot serializes Error args to {} because Error properties are non-enumerable. Fix: serialize Error instances to { __error: true, name, message, stack } shape in pushEntry, format the same way in panel's formatArg. Narrow, no public-API change.",
+      "type": "human",
+      "by": "task-review",
+      "fix": null
     }
   ]
 }
