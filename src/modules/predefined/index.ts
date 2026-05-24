@@ -8,5 +8,11 @@ export {
   getConsoleLoggerStore,
   subscribeConsoleLogger,
   clearConsoleLogEntries,
+  installConsoleCapture,
+  installNetworkErrorCapture,
 } from './consoleLogger'
-export type { ConsoleLogEntry, ConsoleLogLevel } from './consoleLogger'
+export type {
+  ConsoleLogEntry,
+  ConsoleLogLevel,
+  InstallConsoleCaptureOptions,
+} from './consoleLogger'

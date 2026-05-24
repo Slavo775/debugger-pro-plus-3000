@@ -34,6 +34,8 @@ export {
   getConsoleLoggerStore,
   subscribeConsoleLogger,
   clearConsoleLogEntries,
+  installConsoleCapture,
+  installNetworkErrorCapture,
 } from './modules/predefined'
 export type {
   LogEntry,
@@ -41,6 +43,7 @@ export type {
   ApiStatusState,
   ConsoleLogEntry,
   ConsoleLogLevel,
+  InstallConsoleCaptureOptions,
 } from './modules/predefined'
 
 export { useDebuggerApi } from './modules/useDebuggerApi'

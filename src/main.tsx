@@ -10,8 +10,15 @@ import {
   networkModule,
   consoleLoggerModule,
   useDebuggerLog,
+  installConsoleCapture,
+  installNetworkErrorCapture,
 } from './index'
 import debuggerConfig from '../config.debugger.js'
+
+// Opt-in early hooks — installed BEFORE createRoot so pre-mount messages
+// (Vite client, framework boot) and fetch failures are captured by the panel.
+installConsoleCapture()
+installNetworkErrorCapture()
 
 function ConfigPanel() {
   const cfg = useDebuggerConfig()

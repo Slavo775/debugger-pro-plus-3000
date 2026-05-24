@@ -9,7 +9,10 @@
 - [ ] `assert` entries only recorded when first argument is falsy
 - [ ] `restoreConsole()` fully restores all 8 patched methods on `window.console`
 - [ ] `window.__debuggerConsoleLogger` is a lazy-init singleton with `_subs: Set<() => void>`
-- [ ] `ConsoleLoggerPanel.tsx` patches console on mount via `useEffect`, restores on unmount
+- [ ] `ConsoleLoggerPanel.tsx` only subscribes to the store on mount; **does NOT call `patchConsole`** (per Round 3 opt-in design)
+- [ ] `installConsoleCapture(opts?)` exported from `src/index.ts` — consumer-callable eager patch
+- [ ] `installNetworkErrorCapture()` exported from `src/index.ts` — wraps `window.fetch` and surfaces failures via `console.error`
+- [ ] `src/main.tsx` calls both `installConsoleCapture()` and `installNetworkErrorCapture()` before `createRoot`
 - [ ] Panel calls `updateData({ consoleLogs: store.entries })` on every new entry
 - [ ] Panel uses `useReducer` forceUpdate pattern (same as LogsPanel)
 - [ ] Panel reads `maxEntries` from `useDebuggerConfig().consoleLogger.maxEntries`
@@ -40,5 +43,7 @@
 - [ ] `console.assert(false, 'fail')` → red-bold assert entry appears
 - [ ] `console.assert(true, 'no record')` → NO entry added (condition truthy)
 - [ ] Copy Snapshot → paste JSON → `consoleLogs` array present with correct entries
-- [ ] Remove `consoleLoggerModule` from `modules` in `src/main.tsx` → rebuild → no console patching (native console untouched)
+- [ ] Without calling `installConsoleCapture()`: panel mounts but stays empty (opt-in semantics confirmed)
+- [ ] With `installConsoleCapture()` called before `createRoot`: pre-mount messages (Vite `[vite] connecting…`, etc.) appear in panel
+- [ ] With `installNetworkErrorCapture()` called: a failed `fetch()` produces an `[ERROR]` entry in the panel via `console.error`
 - [ ] Add 600 log entries → only last 500 retained (maxEntries cap enforced)

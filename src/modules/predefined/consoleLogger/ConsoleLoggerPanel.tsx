@@ -4,7 +4,6 @@ import { useDebuggerConfig } from '../../../config/useDebuggerConfig'
 import {
   clearConsoleLogEntries,
   getConsoleLoggerStore,
-  patchConsole,
   type ConsoleLogEntry,
   type ConsoleLogLevel,
 } from './consoleLoggerStore'
@@ -70,10 +69,11 @@ export function ConsoleLoggerPanel() {
   const updateDataRef = useRef(updateData)
   updateDataRef.current = updateData
 
-  // Patch is persistent across mount/unmount cycles (StrictMode-safe).
-  // Subscribe once on mount; never restore in cleanup.
+  // Panel only subscribes — it does NOT install the console patch. Consumers
+  // must call `installConsoleCapture()` from their entry file to enable capture
+  // (see installConsoleCapture.ts). Without that call, the store stays empty
+  // and the panel renders the "No console output yet." state.
   useEffect(() => {
-    patchConsole(getConsoleLoggerStore().maxEntries)
     const store = getConsoleLoggerStore()
     const notify = () => {
       updateDataRef.current({ consoleLogs: [...store.entries] })
@@ -86,10 +86,10 @@ export function ConsoleLoggerPanel() {
     }
   }, [])
 
-  // Propagate maxEntries changes by mutating the store; no patch tear-down needed.
+  // Propagate maxEntries to the store so the (already-installed) wrapper trims
+  // correctly. No-op if the consumer never called `installConsoleCapture`.
   useEffect(() => {
     getConsoleLoggerStore().maxEntries = maxEntries
-    patchConsole(maxEntries)
   }, [maxEntries])
 
   const entries = [...getConsoleLoggerStore().entries].reverse()

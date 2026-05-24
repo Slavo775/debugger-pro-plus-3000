@@ -36,7 +36,23 @@
       "comment": "Round 2 fix verified working (wrapper installed, JS-initiated console.log captured). Remaining gap: pre-mount messages and browser-emitted entries are not in panel. Human accepted INVARIANT 3 trade-off and chose to fold early-capture into N14: move patchConsole to module-load top-level. Categories (2)/(3) remain architecturally unreachable.",
       "type": "human",
       "by": "task-review",
-      "fix": null
+      "fix": {
+        "startedAt": "2026-05-24T13:27:33.625Z",
+        "endedAt": "2026-05-24T13:30:19.799Z",
+        "status": "fixed",
+        "filesChanged": [
+          "src/modules/predefined/consoleLogger/installConsoleCapture.ts",
+          "src/modules/predefined/consoleLogger/installNetworkErrorCapture.ts",
+          "src/modules/predefined/consoleLogger/ConsoleLoggerPanel.tsx",
+          "src/modules/predefined/consoleLogger/index.ts",
+          "src/modules/predefined/index.ts",
+          "src/index.ts",
+          "src/main.tsx",
+          "workTasks/N14-add-consoleloggermodule-intercept-window-console-a/CHECKLIST.md"
+        ],
+        "comment": "Round 3 fix: Option B opt-in. Added installConsoleCapture() and installNetworkErrorCapture() exported from src/index.ts. Panel no longer eagerly patches — consumers must call install functions before createRoot. installNetworkErrorCapture wraps fetch and surfaces failures via console.error so the consoleLogger panel captures them. Dev preview opts in. All gates pass.",
+        "by": "task-review-fix"
+      }
     }
   ]
 }
