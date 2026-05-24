@@ -1,3 +1,5 @@
+import { getConsoleLoggerStore } from './consoleLoggerStore'
+
 declare global {
   interface Window {
     __debuggerNetworkErrorCapture?: { installed: boolean; original: typeof fetch }
@@ -23,10 +25,20 @@ function getRequestInfo(args: Parameters<typeof fetch>): { url: string; method: 
  * wrapper produces equivalent entries via `console.error` so they ARE
  * visible inside the debugger panel.
  *
- * Idempotent — safe to call multiple times.
+ * Idempotent — safe to call multiple times. If `installConsoleCapture`
+ * has not yet been called, emits a one-time warning so the operator knows
+ * fetch failures will show in DevTools but not in the panel.
  */
 export function installNetworkErrorCapture(): void {
   if (window.__debuggerNetworkErrorCapture?.installed) return
+
+  if (!getConsoleLoggerStore()._patched) {
+    // Use the native warn directly: if the patched console were installed,
+    // this would route through us, defeating the purpose of the warning.
+    window.console.warn(
+      '[debugger-pro-plus-3000] installNetworkErrorCapture() called before installConsoleCapture() — fetch failures will appear in DevTools but not in the consoleLogger panel.',
+    )
+  }
 
   const original = window.fetch.bind(window)
   window.__debuggerNetworkErrorCapture = { installed: true, original }
@@ -45,4 +57,15 @@ export function installNetworkErrorCapture(): void {
       throw err
     }
   }
+}
+
+/**
+ * Restore the original `window.fetch`, undoing `installNetworkErrorCapture`.
+ * Idempotent — no-op if capture was never installed (or already uninstalled).
+ */
+export function uninstallNetworkErrorCapture(): void {
+  const cap = window.__debuggerNetworkErrorCapture
+  if (!cap?.installed) return
+  window.fetch = cap.original
+  cap.installed = false
 }

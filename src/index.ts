@@ -36,6 +36,7 @@ export {
   clearConsoleLogEntries,
   installConsoleCapture,
   installNetworkErrorCapture,
+  uninstallNetworkErrorCapture,
 } from './modules/predefined'
 export type {
   LogEntry,

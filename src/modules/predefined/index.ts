@@ -10,6 +10,7 @@ export {
   clearConsoleLogEntries,
   installConsoleCapture,
   installNetworkErrorCapture,
+  uninstallNetworkErrorCapture,
 } from './consoleLogger'
 export type {
   ConsoleLogEntry,

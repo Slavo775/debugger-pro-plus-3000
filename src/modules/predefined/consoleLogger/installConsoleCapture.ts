@@ -1,10 +1,9 @@
 import { patchConsole } from './consoleLoggerStore'
+import { DEFAULT_DEBUGGER_CONFIG } from '../../../config/defaults'
 
 export interface InstallConsoleCaptureOptions {
   maxEntries?: number
 }
-
-const DEFAULT_MAX_ENTRIES = 500
 
 /**
  * Eagerly install the `window.console` patch so messages fired before React
@@ -17,5 +16,5 @@ const DEFAULT_MAX_ENTRIES = 500
  * Idempotent — safe to call multiple times.
  */
 export function installConsoleCapture(opts: InstallConsoleCaptureOptions = {}): void {
-  patchConsole(opts.maxEntries ?? DEFAULT_MAX_ENTRIES)
+  patchConsole(opts.maxEntries ?? DEFAULT_DEBUGGER_CONFIG.consoleLogger.maxEntries)
 }

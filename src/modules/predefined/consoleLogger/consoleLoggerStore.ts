@@ -68,16 +68,54 @@ export interface SerializedError {
   stack?: string
 }
 
-function serializeArg(arg: unknown): unknown {
-  if (arg instanceof Error) {
+const MAX_SERIALIZE_DEPTH = 6
+
+function isPlainObject(value: object): boolean {
+  const proto = Object.getPrototypeOf(value) as object | null
+  return proto === Object.prototype || proto === null
+}
+
+function serializeValue(value: unknown, depth: number, seen: WeakSet<object>): unknown {
+  if (value === null || value === undefined) return value
+  const t = typeof value
+  if (t === 'string' || t === 'number' || t === 'boolean') return value
+  if (t === 'bigint') return `${String(value)}n`
+  if (t === 'symbol') return String(value)
+  if (t === 'function') {
+    const fn = value as { name?: string }
+    return `[Function: ${fn.name || 'anonymous'}]`
+  }
+  if (value instanceof Error) {
     return {
       __error: true,
-      name: arg.name,
-      message: arg.message,
-      stack: arg.stack,
-    } as SerializedError
+      name: value.name,
+      message: value.message,
+      stack: value.stack,
+    } satisfies SerializedError
   }
-  return arg
+  if (typeof value === 'object') {
+    const obj = value as object
+    if (seen.has(obj)) return '[Circular]'
+    if (depth >= MAX_SERIALIZE_DEPTH) return '[MaxDepth]'
+    seen.add(obj)
+    if (Array.isArray(value)) {
+      return value.map((item) => serializeValue(item, depth + 1, seen))
+    }
+    if (isPlainObject(obj)) {
+      const out: Record<string, unknown> = {}
+      for (const [key, val] of Object.entries(value as Record<string, unknown>)) {
+        out[key] = serializeValue(val, depth + 1, seen)
+      }
+      return out
+    }
+    // Non-plain object (Date, RegExp, Map, Set, custom class, etc.) — stringify
+    return String(value)
+  }
+  return value
+}
+
+function serializeArg(arg: unknown): unknown {
+  return serializeValue(arg, 0, new WeakSet())
 }
 
 function pushEntry(level: ConsoleLogLevel, args: unknown[]): void {
