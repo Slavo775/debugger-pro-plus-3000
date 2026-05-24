@@ -590,7 +590,7 @@
       "title": "Upgrade insight-flow to 0.5.0 with notifications, socket.io live updates, and activity log-activity hook",
       "type": "feat",
       "priority": "high",
-      "status": "changes-requested",
+      "status": "implemented",
       "folder": "workTasks/N13-upgrade-insight-flow-to-0-5-0-with-notifications-s",
       "createdAt": "2026-05-23T20:03:29.631Z",
       "statusHistory": [
@@ -608,12 +608,45 @@
           "status": "changes-requested",
           "at": "2026-05-23T20:30:51.696Z",
           "by": "task-request-changes"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-23T20:31:49.383Z",
+          "by": "task-git"
+        },
+        {
+          "status": "in-progress",
+          "at": "2026-05-23T20:40:41.965Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "implemented",
+          "at": "2026-05-24T11:43:22.876Z",
+          "by": "task-implement"
         }
       ],
       "implementation": {
-        "startedAt": null,
-        "completedAt": null,
-        "filesChanged": [],
+        "startedAt": "2026-05-23T20:40:41.965Z",
+        "completedAt": "2026-05-24T11:43:22.875Z",
+        "filesChanged": [
+          "package.json",
+          "pnpm-lock.yaml",
+          "taskflow.config.json",
+          ".claude/hooks/taskflow-notify.sh",
+          ".claude/hooks/taskflow-done.sh",
+          ".claude/hooks/taskflow-classify.sh",
+          ".claude/hooks/taskflow-skill.sh",
+          ".claude/settings.local.json",
+          ".claude/roles/AGENT_NOTIFY.md",
+          ".claude/roles/AGENT_PROTOCOL.md",
+          ".claude/roles/TASKMASTER_ROLE.md",
+          ".claude/roles/TASK_IMPLEMENTER_ROLE.md",
+          ".claude/roles/TASK_REVIEWER_ROLE.md",
+          ".claude/roles/TASK_REVIEW_FIXER_ROLE.md",
+          ".claude/roles/TASK_REQUEST_CHANGES_ROLE.md",
+          ".claude/commands/arch-check.md",
+          "CLAUDE.md"
+        ],
         "tokensUsed": null
       },
       "reviews": [],
@@ -644,6 +677,11 @@
           "at": "2026-05-23T20:18:26.354Z",
           "commitHash": "c4ecf54ef4f6a555ca27471c84622076afb35198",
           "commitMessage": "spec insight-flow 0.5.0 upgrade (notifications, socket.io, log-activity)"
+        },
+        {
+          "at": "2026-05-23T20:31:49.382Z",
+          "commitHash": "090e29bf25b7ed33a806bcad00d2da1d7db98c39",
+          "commitMessage": "record change request — explicit init hook coverage + pnpm if:ui script"
         }
       ],
       "branch": "feat/N13-upgrade-insight-flow-to-0-5-0-with-notifications-s",
