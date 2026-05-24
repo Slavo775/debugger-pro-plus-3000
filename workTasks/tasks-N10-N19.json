@@ -703,7 +703,7 @@
       "title": "Add consoleLoggerModule — intercept window.console and surface logs in debugger",
       "type": "feat",
       "priority": "medium",
-      "status": "approved",
+      "status": "done",
       "folder": "workTasks/N14-add-consoleloggermodule-intercept-window-console-a",
       "createdAt": "2026-05-24T12:09:07.323Z",
       "statusHistory": [
@@ -896,6 +896,21 @@
           "status": "approved",
           "at": "2026-05-24T19:53:58.090Z",
           "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-24T19:54:50.639Z",
+          "by": "task-git"
+        },
+        {
+          "status": "merged",
+          "at": "2026-05-24T19:56:14.041Z",
+          "by": "task-git"
+        },
+        {
+          "status": "done",
+          "at": "2026-05-24T19:56:19.931Z",
+          "by": "git-agent"
         }
       ],
       "implementation": {
@@ -937,8 +952,8 @@
       "reviewCount": 7,
       "lastReviewVerdict": "approved",
       "openIncidentCount": 0,
-      "committedAt": null,
-      "totalDurationMinutes": null,
+      "committedAt": "2026-05-24T19:56:19.930Z",
+      "totalDurationMinutes": 467,
       "tags": [
         "console",
         "logging",
@@ -1005,11 +1020,16 @@
           "at": "2026-05-24T16:39:22.439Z",
           "commitHash": "8227b85",
           "commitMessage": "docs(N14): round-6 AI re-review — APPROVED (all 4 non-blocking polishes verified)"
+        },
+        {
+          "at": "2026-05-24T19:54:50.639Z",
+          "commitHash": "4b44b99",
+          "commitMessage": "docs(N14): round-7 human final approval — ready to merge"
         }
       ],
       "branch": "feat/N14-add-consoleloggermodule-intercept-window-console",
       "mrUrl": null,
-      "mergedAt": null
+      "mergedAt": "2026-05-24T19:56:14.041Z"
     }
   ]
 }
