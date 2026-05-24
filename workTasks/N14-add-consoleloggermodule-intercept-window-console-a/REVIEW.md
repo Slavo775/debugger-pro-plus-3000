@@ -79,3 +79,62 @@ Adds a stateful sub-folder predefined module (`consoleLogger`) that intercepts 8
 - Manual browser verification (`npm run dev` + DevTools console + Copy Snapshot) was NOT performed in this AI review pass — it requires a human running the dev server and exercising the console. The CHECKLIST.md "Verification" section lists the steps; please run them before merging or hand off to `/task-human-review`.
 - Pre-existing project-wide prettier debt (12 files) is out of scope for N14 and should be cleaned up in a separate `chore(format)` PR — not a regression introduced here.
 - Related tasks: **N11** (unify module config — will migrate `consoleLogger` along with `logs`/`network`), **N13** (snapshot/notification infra that this module integrates with).
+
+
+---
+
+## Round 2 — Human verification: FIX-NEEDED
+
+**Reviewer:** Human (Project Owner)
+**Date:** 2026-05-24
+**Verdict:** FIX-NEEDED
+
+### Summary
+
+Human ran `npm run dev` and opened the Console accordion in the debugger panel. The panel mounted correctly and shows "Console output / Clear / No console output yet.", but **no console entries appear** even though DevTools shows active `console.log` traffic (e.g., `[Auth] token refreshed`, `[API] fetch /api/users — <ts>` originating from `useDebuggerLog.ts:22`, plus Vite client logs and React DevTools warnings). The patch appears not to be intercepting `window.console` at runtime.
+
+### Blockers
+
+**Blocker 1 — Console panel does not capture any entries despite active console traffic**
+
+- **File:** `src/modules/predefined/consoleLogger/consoleLoggerStore.ts` (`patchConsole`) + `src/modules/predefined/consoleLogger/ConsoleLoggerPanel.tsx` (panel `useEffect`)
+- **Symptom:** Panel renders, accordion is expanded, `useEffect` is presumably running — but no entries land in the store. DevTools clearly shows ongoing `console.log` calls (with source attribution `useDebuggerLog.ts:22`) that are not being captured.
+- **Why it likely happens (ranked):**
+  1. **StrictMode patch/restore race.** In dev, React 18 StrictMode invokes effects twice: mount → cleanup → mount. Our effect calls `patchConsole` on mount and `restoreConsole` in cleanup. If any `console.log` fires between the cleanup-restore and the second-mount-patch (e.g., from another component's effect that runs in between), it's missed. Worse, if a component logs to console *as a side effect of being remounted*, the timing window can repeat indefinitely. The patch is technically reinstalled at the end of the StrictMode cycle, but the *originals stored in `_originals` on the second pass are the freshly restored natives* — that part is correct. The bigger risk: any component-tree-driven re-render that causes `updateData` reference to change re-runs the effect and re-cycles restore/patch.
+  2. **Effect re-thrash on context churn.** `useDebuggerApi().updateData` depends on `[registry, moduleId]`. The registry context value (`ctx`) is re-memoized whenever `modules` (which include `expanded` state) changes. The user opening/closing any other accordion causes ctx to re-create → `updateData` reference changes → my effect's `[maxEntries, updateData]` triggers cleanup+rerun → console temporarily un-patched.
+  3. **Possible:** `console` method-replacement assignment via the type-cast `consoleRef[level] = wrapper` could be silently dropping on some browser flavors if `console` properties are non-writable in that engine (unlikely in Chrome but worth defending against).
+- **Diagnostic asks for the human (paste into DevTools at the live page):**
+  ```js
+  // 1) Is the store created and patched?
+  window.__debuggerConsoleLogger
+  // expect: { entries: [...], maxEntries: 500, _patched: true, _originals: { log: fn, … }, _subs: Set(>=1), … }
+
+  // 2) Is the wrapper actually installed on window.console.log?
+  window.console.log.toString()
+  // expect: a function source string that mentions `original(...args)` and `pushEntry`
+
+  // 3) Does a direct call land in the store?
+  console.log('manual-test')
+  window.__debuggerConsoleLogger.entries
+  // expect: last entry has level='log', args=['manual-test']
+  ```
+  The output of those three commands pins down whether the patch is installed and whether `pushEntry` fires.
+- **Fix path (recommended, to be implemented by `/task-review-fix`):**
+  1. **Make the patch persistent across mount/unmount cycles.** Once `patchConsole(maxEntries)` runs, do NOT call `restoreConsole()` in the `useEffect` cleanup. Only restore via an explicit `unpatchConsole()` API (for tests / consumer opt-out). This eliminates StrictMode and effect-thrash entirely. The store's `_subs` set is still added/removed per mount so React rendering is correct; only the global `console` patch stays put.
+  2. **Stabilize the subscription side.** Subscribe with `useEffect(() => { … }, [])` (mount-once) instead of `[maxEntries, updateData]`. Read `maxEntries` via `useRef` so changes propagate to the store without re-running the effect. The wrapper already reads `store.maxEntries` at call time, so this just needs `useEffect` to update `store.maxEntries = maxEntries` separately when `maxEntries` changes.
+  3. **Defensive method-replacement.** Use `Object.defineProperty(window.console, level, { configurable: true, writable: true, value: wrapper })` as a fallback if direct assignment fails — defends against the unlikely "non-writable property" path.
+  4. **Add an explicit `_callCount` counter** to the store (incremented on every wrapper invocation) so future debugging can confirm the wrapper fires.
+
+### Checklist verification (regression)
+
+- [x] Round-1 static checklist items still pass (code structure unchanged)
+- [ ] **Verification — `console.log('test', 123)` in DevTools → entry appears in panel** — FAIL (no entries appear)
+- [ ] **Verification — `console.warn('oops')` → yellow entry appears** — FAIL (not captured)
+- [ ] **Verification — `console.error(new Error('boom'))` → red entry appears** — FAIL (not captured)
+- [ ] **Verification — Copy Snapshot includes `consoleLogs` array** — UNVERIFIED (store stays empty so the array is just `[]`)
+
+### Notes
+
+- The round-1 AI review was code-level only and did not catch this runtime regression; that's exactly the gap manual verification is meant to close.
+- The simplest, least-invasive fix is option 1 above (make patch persistent). It does not require any spec/contract change.
+- Once fixed, re-verify by repeating the 10 verification steps in `CHECKLIST.md` end-to-end before re-approving.

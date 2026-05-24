@@ -9,6 +9,15 @@
       "type": "ai",
       "by": "task-review",
       "fix": null
+    },
+    {
+      "startedAt": "2026-05-24T12:37:17.429Z",
+      "endedAt": "2026-05-24T12:46:44.100Z",
+      "verdict": "fix-needed",
+      "comment": "Console panel mounts but captures zero entries despite active DevTools console traffic ([Auth], [API], Vite logs). Patch likely not surviving StrictMode/effect-thrash cycles. Recommended fix: make patchConsole persistent (no restore in useEffect cleanup), subscribe with mount-once effect, propagate maxEntries via store mutation. See REVIEW.md Round 2 for diagnostic steps and full fix path.",
+      "type": "human",
+      "by": "task-review",
+      "fix": null
     }
   ]
 }
