@@ -19,10 +19,34 @@ export type {
   ResolvedDebuggerConfig,
   ApiEndpointConfig,
   NetworkConfig,
+  ConsoleLoggerConfig,
 } from './config/types'
 
-export { deviceInfoModule, logsModule, networkModule, useDebuggerLog, subscribeNetwork, getNetworkApis, refetchEndpoint } from './modules/predefined'
-export type { LogEntry, ApiStatus, ApiStatusState } from './modules/predefined'
+export {
+  deviceInfoModule,
+  logsModule,
+  networkModule,
+  consoleLoggerModule,
+  useDebuggerLog,
+  subscribeNetwork,
+  getNetworkApis,
+  refetchEndpoint,
+  getConsoleLoggerStore,
+  subscribeConsoleLogger,
+  clearConsoleLogEntries,
+  installConsoleCapture,
+  installNetworkErrorCapture,
+  uninstallNetworkErrorCapture,
+} from './modules/predefined'
+export type {
+  LogEntry,
+  ApiStatus,
+  ApiStatusState,
+  ConsoleLogEntry,
+  ConsoleLogLevel,
+  InstallConsoleCaptureOptions,
+  SerializedError,
+} from './modules/predefined'
 
 export { useDebuggerApi } from './modules/useDebuggerApi'
 export type {

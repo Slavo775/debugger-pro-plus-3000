@@ -19,4 +19,5 @@ export const DEFAULT_DEBUGGER_CONFIG: ResolvedDebuggerConfig = {
   logs: [],
   persistLogs: false,
   network: { apis: [] },
+  consoleLogger: { maxEntries: 500 },
 }

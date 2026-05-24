@@ -26,6 +26,10 @@ export function mergeWithDefaults(userConfig: DebuggerConfig): ResolvedDebuggerC
       ...DEFAULT_DEBUGGER_CONFIG.network,
       ...userConfig.network,
     },
+    consoleLogger: {
+      ...DEFAULT_DEBUGGER_CONFIG.consoleLogger,
+      ...userConfig.consoleLogger,
+    },
   }
 }
 

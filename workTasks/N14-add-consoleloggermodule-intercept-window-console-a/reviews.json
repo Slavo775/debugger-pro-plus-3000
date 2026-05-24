@@ -1,0 +1,107 @@
+{
+  "taskId": "N14",
+  "reviews": [
+    {
+      "startedAt": "2026-05-24T12:27:35.912Z",
+      "endedAt": "2026-05-24T12:33:49.611Z",
+      "verdict": "approved",
+      "comment": "All 10 invariants hold; 20/20 checklist items pass; tsc/lint/build green; INVARIANT 5 drift is non-blocking (matches logs/network precedent, will be migrated under N11). Manual browser verification pending — recommend handoff to /task-human-review.",
+      "type": "ai",
+      "by": "task-review",
+      "fix": null
+    },
+    {
+      "startedAt": "2026-05-24T12:37:17.429Z",
+      "endedAt": "2026-05-24T12:46:44.100Z",
+      "verdict": "fix-needed",
+      "comment": "Console panel mounts but captures zero entries despite active DevTools console traffic ([Auth], [API], Vite logs). Patch likely not surviving StrictMode/effect-thrash cycles. Recommended fix: make patchConsole persistent (no restore in useEffect cleanup), subscribe with mount-once effect, propagate maxEntries via store mutation. See REVIEW.md Round 2 for diagnostic steps and full fix path.",
+      "type": "human",
+      "by": "task-review",
+      "fix": {
+        "startedAt": "2026-05-24T12:47:54.807Z",
+        "endedAt": "2026-05-24T12:49:28.244Z",
+        "status": "fixed",
+        "filesChanged": [
+          "src/modules/predefined/consoleLogger/consoleLoggerStore.ts",
+          "src/modules/predefined/consoleLogger/ConsoleLoggerPanel.tsx"
+        ],
+        "comment": "Blocker 1 fixed: made patchConsole persistent (no restore in cleanup), subscriber effect now mount-once with updateDataRef, added defensive Object.defineProperty fallback, added _callCount diagnostic. tsc + lint + build + prettier all green.",
+        "by": "task-review-fix"
+      }
+    },
+    {
+      "startedAt": "2026-05-24T12:54:12.048Z",
+      "endedAt": "2026-05-24T12:56:43.810Z",
+      "verdict": "fix-needed",
+      "comment": "Round 2 fix verified working (wrapper installed, JS-initiated console.log captured). Remaining gap: pre-mount messages and browser-emitted entries are not in panel. Human accepted INVARIANT 3 trade-off and chose to fold early-capture into N14: move patchConsole to module-load top-level. Categories (2)/(3) remain architecturally unreachable.",
+      "type": "human",
+      "by": "task-review",
+      "fix": {
+        "startedAt": "2026-05-24T13:27:33.625Z",
+        "endedAt": "2026-05-24T13:30:19.799Z",
+        "status": "fixed",
+        "filesChanged": [
+          "src/modules/predefined/consoleLogger/installConsoleCapture.ts",
+          "src/modules/predefined/consoleLogger/installNetworkErrorCapture.ts",
+          "src/modules/predefined/consoleLogger/ConsoleLoggerPanel.tsx",
+          "src/modules/predefined/consoleLogger/index.ts",
+          "src/modules/predefined/index.ts",
+          "src/index.ts",
+          "src/main.tsx",
+          "workTasks/N14-add-consoleloggermodule-intercept-window-console-a/CHECKLIST.md"
+        ],
+        "comment": "Round 3 fix: Option B opt-in. Added installConsoleCapture() and installNetworkErrorCapture() exported from src/index.ts. Panel no longer eagerly patches — consumers must call install functions before createRoot. installNetworkErrorCapture wraps fetch and surfaces failures via console.error so the consoleLogger panel captures them. Dev preview opts in. All gates pass.",
+        "by": "task-review-fix"
+      }
+    },
+    {
+      "startedAt": "2026-05-24T13:34:41.242Z",
+      "endedAt": "2026-05-24T13:35:29.798Z",
+      "verdict": "fix-needed",
+      "comment": "Round 4: panel UI shows full Error stack trace, but Copy Snapshot serializes Error args to {} because Error properties are non-enumerable. Fix: serialize Error instances to { __error: true, name, message, stack } shape in pushEntry, format the same way in panel's formatArg. Narrow, no public-API change.",
+      "type": "human",
+      "by": "task-review",
+      "fix": {
+        "startedAt": "2026-05-24T13:39:56.040Z",
+        "endedAt": "2026-05-24T13:41:02.894Z",
+        "status": "fixed",
+        "filesChanged": [
+          "src/modules/predefined/consoleLogger/consoleLoggerStore.ts",
+          "src/modules/predefined/consoleLogger/ConsoleLoggerPanel.tsx",
+          "src/modules/predefined/consoleLogger/index.ts",
+          "src/modules/predefined/index.ts",
+          "src/index.ts"
+        ],
+        "comment": "Round 4 fix: Error instances now serialize to { __error: true, name, message, stack } in pushEntry. formatArg detects the shape and renders the stack trace same as before. Panel UI unchanged; snapshot JSON now contains full error text instead of {}. SerializedError type re-exported per INVARIANT 6.",
+        "by": "task-review-fix"
+      }
+    },
+    {
+      "startedAt": "2026-05-24T14:05:38.972Z",
+      "endedAt": "2026-05-24T14:07:58.672Z",
+      "verdict": "approved",
+      "comment": "Round 5 AI re-review: APPROVED. Round-4 Error serialization fix verified at consoleLoggerStore.ts:71-90 and ConsoleLoggerPanel.tsx:20-36. All gates green. Invariants 1,2,4,6,7,8,9,10 hold; INVARIANT 3 intentionally relaxed (Round-3 decision); INVARIANT 5 pre-existing precedent. Ready for final human verification + merge.",
+      "type": "ai",
+      "by": "task-review",
+      "fix": null
+    },
+    {
+      "startedAt": "2026-05-24T16:20:47.247Z",
+      "endedAt": "2026-05-24T16:38:28.258Z",
+      "verdict": "approved",
+      "comment": "Round 6 AI re-review: APPROVED. All four Round-5 non-blocking suggestions verified implemented correctly. Bundle +1.28 kB / +0.39 kB gzip for the deeper walker. All 10 invariants hold (3 intentionally relaxed, 5 pre-existing precedent). All gates green. Ready for final human verification + merge.",
+      "type": "ai",
+      "by": "task-review",
+      "fix": null
+    },
+    {
+      "startedAt": "2026-05-24T19:53:21.021Z",
+      "endedAt": "2026-05-24T19:53:58.090Z",
+      "verdict": "approved",
+      "comment": "Approved — ready to merge into main. Verbatim: 'approved done we can merge it into main'.",
+      "type": "human",
+      "by": "task-review",
+      "fix": null
+    }
+  ]
+}

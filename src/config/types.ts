@@ -43,6 +43,10 @@ export interface NetworkConfig {
   apis: ApiEndpointConfig[]
 }
 
+export interface ConsoleLoggerConfig {
+  maxEntries?: number
+}
+
 export interface DebuggerConfig {
   style?: DebuggerStyleConfig
   button?: DebuggerButtonConfig
@@ -51,6 +55,7 @@ export interface DebuggerConfig {
   logs?: LogConfig[]
   persistLogs?: boolean
   network?: NetworkConfig
+  consoleLogger?: ConsoleLoggerConfig
 }
 
 export type ResolvedDebuggerConfig = Required<{
@@ -64,4 +69,5 @@ export type ResolvedDebuggerConfig = Required<{
   logs: LogConfig[]
   persistLogs: boolean
   network: NetworkConfig
+  consoleLogger: Required<ConsoleLoggerConfig>
 }>

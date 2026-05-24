@@ -105,7 +105,6 @@ here. Forgetting this causes runtime `SyntaxError: does not provide an export na
 ---
 
 <!-- taskflow:start -->
-
 ## insight-flow
 
 This project uses **insight-flow** for AI-assisted task lifecycle management.
@@ -127,18 +126,18 @@ insight-flow                            # Launch dashboard at http://localhost:6
 
 ## Slash Commands (Claude Code Skills)
 
-| Command                 | Purpose                                                                                                                |
-| ----------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `/taskmaster`           | Create a new task spec (TASK.md + CHECKLIST.md)                                                                        |
-| `/task-implement`       | Implement a task from its spec                                                                                         |
-| `/task-review`          | AI code review of implemented task                                                                                     |
-| `/task-human-review`    | Record human review feedback                                                                                           |
-| `/task-review-fix`      | Fix issues from review                                                                                                 |
-| `/task-git`             | Branch, commit, push, PR, merge                                                                                        |
-| `/task-incident`        | Track production incidents                                                                                             |
-| `/task-request-changes` | Request post-implementation changes                                                                                    |
-| `/taskmaster-change`    | Modify an existing task spec                                                                                           |
-| `/arch-check`           | Static + structural compliance audit for debugger-pro-plus-3000's host/guest invariant — run before requesting review. |
+| Command | Purpose |
+|---------|---------|
+| `/taskmaster` | Create a new task spec (TASK.md + CHECKLIST.md) |
+| `/task-implement` | Implement a task from its spec |
+| `/task-review` | AI code review of implemented task |
+| `/task-human-review` | Record human review feedback |
+| `/task-review-fix` | Fix issues from review |
+| `/task-git` | Branch, commit, push, PR, merge |
+| `/task-incident` | Track production incidents |
+| `/task-request-changes` | Request post-implementation changes |
+| `/taskmaster-change` | Modify an existing task spec |
+| `/arch-check` | Static + structural compliance audit for debugger-pro-plus-3000's host/guest invariant — run before requesting review. |
 
 ## Task Lifecycle
 

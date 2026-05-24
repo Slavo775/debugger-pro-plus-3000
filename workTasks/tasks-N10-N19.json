@@ -584,6 +584,432 @@
       "branch": "feat/N12-upgrade-insight-flow-0-4-0-agents",
       "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/11",
       "mergedAt": "2026-05-21T20:11:43.332Z"
+    },
+    {
+      "id": "N13",
+      "title": "Upgrade insight-flow to 0.5.0 with notifications, socket.io live updates, and activity log-activity hook",
+      "type": "feat",
+      "priority": "high",
+      "status": "pushed",
+      "folder": "workTasks/N13-upgrade-insight-flow-to-0-5-0-with-notifications-s",
+      "createdAt": "2026-05-23T20:03:29.631Z",
+      "statusHistory": [
+        {
+          "status": "ready",
+          "at": "2026-05-23T20:03:29.631Z",
+          "by": "taskmaster"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-23T20:18:26.355Z",
+          "by": "task-git"
+        },
+        {
+          "status": "changes-requested",
+          "at": "2026-05-23T20:30:51.696Z",
+          "by": "task-request-changes"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-23T20:31:49.383Z",
+          "by": "task-git"
+        },
+        {
+          "status": "in-progress",
+          "at": "2026-05-23T20:40:41.965Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "implemented",
+          "at": "2026-05-24T11:43:22.876Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-24T11:45:35.688Z",
+          "by": "task-git"
+        }
+      ],
+      "implementation": {
+        "startedAt": "2026-05-23T20:40:41.965Z",
+        "completedAt": "2026-05-24T11:43:22.875Z",
+        "filesChanged": [
+          "package.json",
+          "pnpm-lock.yaml",
+          "taskflow.config.json",
+          ".claude/hooks/taskflow-notify.sh",
+          ".claude/hooks/taskflow-done.sh",
+          ".claude/hooks/taskflow-classify.sh",
+          ".claude/hooks/taskflow-skill.sh",
+          ".claude/settings.local.json",
+          ".claude/roles/AGENT_NOTIFY.md",
+          ".claude/roles/AGENT_PROTOCOL.md",
+          ".claude/roles/TASKMASTER_ROLE.md",
+          ".claude/roles/TASK_IMPLEMENTER_ROLE.md",
+          ".claude/roles/TASK_REVIEWER_ROLE.md",
+          ".claude/roles/TASK_REVIEW_FIXER_ROLE.md",
+          ".claude/roles/TASK_REQUEST_CHANGES_ROLE.md",
+          ".claude/commands/arch-check.md",
+          "CLAUDE.md"
+        ],
+        "tokensUsed": null
+      },
+      "reviews": [],
+      "changesAfterImplementation": [
+        {
+          "requestedAt": "2026-05-23T20:30:51.695Z",
+          "description": "Explicitly cover both hook installs (notify + activity) under insight-flow init, and add a pnpm if:ui script that launches the dashboard",
+          "requestedBy": "task-request-changes",
+          "status": "requested",
+          "implementedAt": null,
+          "filesChanged": [],
+          "comment": null,
+          "implementedBy": null
+        }
+      ],
+      "incidents": [],
+      "committedAt": null,
+      "totalDurationMinutes": null,
+      "tags": [
+        "tooling",
+        "insight-flow",
+        "upgrade",
+        "notifications",
+        "dx"
+      ],
+      "pushes": [
+        {
+          "at": "2026-05-23T20:18:26.354Z",
+          "commitHash": "c4ecf54ef4f6a555ca27471c84622076afb35198",
+          "commitMessage": "spec insight-flow 0.5.0 upgrade (notifications, socket.io, log-activity)"
+        },
+        {
+          "at": "2026-05-23T20:31:49.382Z",
+          "commitHash": "090e29bf25b7ed33a806bcad00d2da1d7db98c39",
+          "commitMessage": "record change request — explicit init hook coverage + pnpm if:ui script"
+        },
+        {
+          "at": "2026-05-24T11:45:35.687Z",
+          "commitHash": "34d495a80e2e26f878e958181bffbbb6372b6182",
+          "commitMessage": "upgrade insight-flow to 0.5.0 (socket.io, notifications, log-activity)"
+        }
+      ],
+      "branch": "feat/N13-upgrade-insight-flow-to-0-5-0-with-notifications-s",
+      "mrUrl": "https://github.com/Slavo775/debugger-pro-plus-3000/pull/12",
+      "mergedAt": null
+    },
+    {
+      "id": "N14",
+      "title": "Add consoleLoggerModule — intercept window.console and surface logs in debugger",
+      "type": "feat",
+      "priority": "medium",
+      "status": "approved",
+      "folder": "workTasks/N14-add-consoleloggermodule-intercept-window-console-a",
+      "createdAt": "2026-05-24T12:09:07.323Z",
+      "statusHistory": [
+        {
+          "status": "ready",
+          "at": "2026-05-24T12:09:07.323Z",
+          "by": "taskmaster"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-24T12:11:25.426Z",
+          "by": "task-git"
+        },
+        {
+          "status": "in-progress",
+          "at": "2026-05-24T12:12:47.418Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "implemented",
+          "at": "2026-05-24T12:17:53.643Z",
+          "by": "task-implement"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-24T12:18:30.675Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-24T12:27:35.911Z",
+          "by": "task-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-24T12:33:49.611Z",
+          "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-24T12:34:22.897Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-24T12:37:17.429Z",
+          "by": "task-review"
+        },
+        {
+          "status": "fix-needed",
+          "at": "2026-05-24T12:46:44.101Z",
+          "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-24T12:47:16.551Z",
+          "by": "task-git"
+        },
+        {
+          "status": "fixing",
+          "at": "2026-05-24T12:47:54.807Z",
+          "by": "task-review-fix"
+        },
+        {
+          "status": "fixed",
+          "at": "2026-05-24T12:49:28.245Z",
+          "by": "task-review-fix"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-24T12:50:26.799Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-24T12:54:12.047Z",
+          "by": "task-review"
+        },
+        {
+          "status": "fix-needed",
+          "at": "2026-05-24T12:56:43.811Z",
+          "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-24T12:57:34.505Z",
+          "by": "task-git"
+        },
+        {
+          "status": "fixing",
+          "at": "2026-05-24T13:27:33.625Z",
+          "by": "task-review-fix"
+        },
+        {
+          "status": "fixed",
+          "at": "2026-05-24T13:30:19.800Z",
+          "by": "task-review-fix"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-24T13:31:07.702Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-24T13:34:41.240Z",
+          "by": "task-review"
+        },
+        {
+          "status": "fix-needed",
+          "at": "2026-05-24T13:35:29.799Z",
+          "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-24T13:36:14.066Z",
+          "by": "task-git"
+        },
+        {
+          "status": "fixing",
+          "at": "2026-05-24T13:39:56.040Z",
+          "by": "task-review-fix"
+        },
+        {
+          "status": "fixed",
+          "at": "2026-05-24T13:41:02.895Z",
+          "by": "task-review-fix"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-24T13:41:59.338Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-24T14:05:38.972Z",
+          "by": "task-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-24T14:07:58.672Z",
+          "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-24T14:08:45.848Z",
+          "by": "task-git"
+        },
+        {
+          "status": "changes-requested",
+          "at": "2026-05-24T15:10:24.533Z",
+          "by": "task-request-changes"
+        },
+        {
+          "status": "changes-implementing",
+          "at": "2026-05-24T15:10:32.417Z",
+          "by": "implement-changes"
+        },
+        {
+          "status": "changes-implemented",
+          "at": "2026-05-24T15:12:15.084Z",
+          "by": "implement-changes"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-24T15:13:07.847Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-24T16:20:47.246Z",
+          "by": "task-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-24T16:38:28.259Z",
+          "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-24T16:39:22.440Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-24T19:53:21.020Z",
+          "by": "task-review"
+        },
+        {
+          "status": "approved",
+          "at": "2026-05-24T19:53:58.090Z",
+          "by": "task-review"
+        }
+      ],
+      "implementation": {
+        "startedAt": "2026-05-24T12:12:47.418Z",
+        "completedAt": "2026-05-24T12:17:53.642Z",
+        "filesChanged": [
+          "src/modules/predefined/consoleLogger/consoleLoggerStore.ts",
+          "src/modules/predefined/consoleLogger/ConsoleLoggerPanel.tsx",
+          "src/modules/predefined/consoleLogger/consoleLoggerModule.ts",
+          "src/modules/predefined/consoleLogger/index.ts",
+          "src/modules/predefined/index.ts",
+          "src/config/types.ts",
+          "src/config/defaults.ts",
+          "src/config/merge.ts",
+          "src/index.ts",
+          "src/main.tsx"
+        ],
+        "tokensUsed": null
+      },
+      "changesAfterImplementation": [
+        {
+          "requestedAt": "2026-05-24T15:10:24.532Z",
+          "description": "Fix all Round 5 non-blocking suggestions: defensive warn in installNetworkErrorCapture, uninstallNetworkErrorCapture export, deeper serializeArg walker (nested Errors, Symbols, BigInts, Functions, circular refs), dedup DEFAULT_MAX_ENTRIES",
+          "requestedBy": "task-request-changes",
+          "status": "implemented",
+          "implementedAt": "2026-05-24T15:12:15.084Z",
+          "filesChanged": [
+            "src/modules/predefined/consoleLogger/consoleLoggerStore.ts",
+            "src/modules/predefined/consoleLogger/installConsoleCapture.ts",
+            "src/modules/predefined/consoleLogger/installNetworkErrorCapture.ts",
+            "src/modules/predefined/consoleLogger/index.ts",
+            "src/modules/predefined/index.ts",
+            "src/index.ts"
+          ],
+          "comment": "All 4 Round-5 non-blocking suggestions addressed: (1) installNetworkErrorCapture emits one-time warning via native console.warn if installConsoleCapture wasn't called first, (2) uninstallNetworkErrorCapture exported from src/index.ts for symmetric opt-out, (3) serializeArg now walks args recursively (depth cap 6, WeakSet circular-ref detection) and handles Error/Symbol/BigInt/Function/non-plain-objects, (4) DEFAULT_MAX_ENTRIES in installConsoleCapture.ts now sourced from DEFAULT_DEBUGGER_CONFIG.consoleLogger.maxEntries (single source of truth). All gates green: tsc, lint, build, prettier on N14 files, host/guest grep zero matches.",
+          "implementedBy": "implement-changes"
+        }
+      ],
+      "reviewCount": 7,
+      "lastReviewVerdict": "approved",
+      "openIncidentCount": 0,
+      "committedAt": null,
+      "totalDurationMinutes": null,
+      "tags": [
+        "console",
+        "logging",
+        "module",
+        "snapshot"
+      ],
+      "pushes": [
+        {
+          "at": "2026-05-24T12:11:25.426Z",
+          "commitHash": "6570151",
+          "commitMessage": "feat(N14): spec consoleLoggerModule — window.console intercept + snapshot integration"
+        },
+        {
+          "at": "2026-05-24T12:18:30.674Z",
+          "commitHash": "7bce0d8",
+          "commitMessage": "feat(N14): implement consoleLoggerModule — patch window.console + snapshot integration"
+        },
+        {
+          "at": "2026-05-24T12:34:22.897Z",
+          "commitHash": "40279c2",
+          "commitMessage": "docs(N14): AI review — APPROVED (20/20 checklist, 10/10 invariants)"
+        },
+        {
+          "at": "2026-05-24T12:47:16.551Z",
+          "commitHash": "a1cc4b4",
+          "commitMessage": "docs(N14): human review — FIX-NEEDED (console patch not capturing entries at runtime)"
+        },
+        {
+          "at": "2026-05-24T12:50:26.799Z",
+          "commitHash": "6cf31be",
+          "commitMessage": "fix(N14): persistent console patch — capture entries reliably across mount cycles"
+        },
+        {
+          "at": "2026-05-24T12:57:34.505Z",
+          "commitHash": "761b573",
+          "commitMessage": "docs(N14): round-3 human review — fold early-capture into N14 (INVARIANT 3 relaxed)"
+        },
+        {
+          "at": "2026-05-24T13:31:07.702Z",
+          "commitHash": "eaf237d",
+          "commitMessage": "fix(N14): opt-in early hooks for console capture and fetch error surfacing"
+        },
+        {
+          "at": "2026-05-24T13:36:14.066Z",
+          "commitHash": "b941d0e",
+          "commitMessage": "docs(N14): round-4 human review — FIX-NEEDED (Error objects lost in snapshot JSON)"
+        },
+        {
+          "at": "2026-05-24T13:41:59.337Z",
+          "commitHash": "3d80b44",
+          "commitMessage": "fix(N14): serialize Error args so snapshot JSON keeps full stack trace"
+        },
+        {
+          "at": "2026-05-24T14:08:45.848Z",
+          "commitHash": "64563a6",
+          "commitMessage": "docs(N14): round-5 AI re-review — APPROVED (Error serialization verified, all gates green)"
+        },
+        {
+          "at": "2026-05-24T15:13:07.847Z",
+          "commitHash": "87ff666",
+          "commitMessage": "refactor(N14): polish — fix all Round-5 non-blocking suggestions"
+        },
+        {
+          "at": "2026-05-24T16:39:22.439Z",
+          "commitHash": "8227b85",
+          "commitMessage": "docs(N14): round-6 AI re-review — APPROVED (all 4 non-blocking polishes verified)"
+        }
+      ],
+      "branch": "feat/N14-add-consoleloggermodule-intercept-window-console",
+      "mrUrl": null,
+      "mergedAt": null
     }
   ]
 }
