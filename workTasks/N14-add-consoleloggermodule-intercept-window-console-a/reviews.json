@@ -17,7 +17,17 @@
       "comment": "Console panel mounts but captures zero entries despite active DevTools console traffic ([Auth], [API], Vite logs). Patch likely not surviving StrictMode/effect-thrash cycles. Recommended fix: make patchConsole persistent (no restore in useEffect cleanup), subscribe with mount-once effect, propagate maxEntries via store mutation. See REVIEW.md Round 2 for diagnostic steps and full fix path.",
       "type": "human",
       "by": "task-review",
-      "fix": null
+      "fix": {
+        "startedAt": "2026-05-24T12:47:54.807Z",
+        "endedAt": "2026-05-24T12:49:28.244Z",
+        "status": "fixed",
+        "filesChanged": [
+          "src/modules/predefined/consoleLogger/consoleLoggerStore.ts",
+          "src/modules/predefined/consoleLogger/ConsoleLoggerPanel.tsx"
+        ],
+        "comment": "Blocker 1 fixed: made patchConsole persistent (no restore in cleanup), subscriber effect now mount-once with updateDataRef, added defensive Object.defineProperty fallback, added _callCount diagnostic. tsc + lint + build + prettier all green.",
+        "by": "task-review-fix"
+      }
     }
   ]
 }

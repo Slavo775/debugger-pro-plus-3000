@@ -703,7 +703,7 @@
       "title": "Add consoleLoggerModule — intercept window.console and surface logs in debugger",
       "type": "feat",
       "priority": "medium",
-      "status": "fix-needed",
+      "status": "fixed",
       "folder": "workTasks/N14-add-consoleloggermodule-intercept-window-console-a",
       "createdAt": "2026-05-24T12:09:07.323Z",
       "statusHistory": [
@@ -756,6 +756,21 @@
           "status": "fix-needed",
           "at": "2026-05-24T12:46:44.101Z",
           "by": "task-review"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-24T12:47:16.551Z",
+          "by": "task-git"
+        },
+        {
+          "status": "fixing",
+          "at": "2026-05-24T12:47:54.807Z",
+          "by": "task-review-fix"
+        },
+        {
+          "status": "fixed",
+          "at": "2026-05-24T12:49:28.245Z",
+          "by": "task-review-fix"
         }
       ],
       "implementation": {
@@ -802,6 +817,11 @@
           "at": "2026-05-24T12:34:22.897Z",
           "commitHash": "40279c2",
           "commitMessage": "docs(N14): AI review — APPROVED (20/20 checklist, 10/10 invariants)"
+        },
+        {
+          "at": "2026-05-24T12:47:16.551Z",
+          "commitHash": "a1cc4b4",
+          "commitMessage": "docs(N14): human review — FIX-NEEDED (console patch not capturing entries at runtime)"
         }
       ],
       "branch": "feat/N14-add-consoleloggermodule-intercept-window-console",

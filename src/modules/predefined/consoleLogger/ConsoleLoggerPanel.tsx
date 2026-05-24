@@ -1,11 +1,10 @@
-import { useEffect, useReducer, type CSSProperties } from 'react'
+import { useEffect, useReducer, useRef, type CSSProperties } from 'react'
 import { useDebuggerApi } from '../../useDebuggerApi'
 import { useDebuggerConfig } from '../../../config/useDebuggerConfig'
 import {
   clearConsoleLogEntries,
   getConsoleLoggerStore,
   patchConsole,
-  restoreConsole,
   type ConsoleLogEntry,
   type ConsoleLogLevel,
 } from './consoleLoggerStore'
@@ -67,20 +66,31 @@ export function ConsoleLoggerPanel() {
   const [, forceUpdate] = useReducer((x: number) => x + 1, 0)
   const maxEntries = consoleLogger.maxEntries
 
+  // Keep the latest updateData in a ref so the subscriber effect can stay mount-once.
+  const updateDataRef = useRef(updateData)
+  updateDataRef.current = updateData
+
+  // Patch is persistent across mount/unmount cycles (StrictMode-safe).
+  // Subscribe once on mount; never restore in cleanup.
   useEffect(() => {
-    patchConsole(maxEntries)
+    patchConsole(getConsoleLoggerStore().maxEntries)
     const store = getConsoleLoggerStore()
     const notify = () => {
-      updateData({ consoleLogs: [...store.entries] })
+      updateDataRef.current({ consoleLogs: [...store.entries] })
       forceUpdate()
     }
     store._subs.add(notify)
     notify()
     return () => {
       store._subs.delete(notify)
-      restoreConsole()
     }
-  }, [maxEntries, updateData])
+  }, [])
+
+  // Propagate maxEntries changes by mutating the store; no patch tear-down needed.
+  useEffect(() => {
+    getConsoleLoggerStore().maxEntries = maxEntries
+    patchConsole(maxEntries)
+  }, [maxEntries])
 
   const entries = [...getConsoleLoggerStore().entries].reverse()
 

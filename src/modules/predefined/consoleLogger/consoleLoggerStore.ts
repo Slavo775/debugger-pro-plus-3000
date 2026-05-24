@@ -24,6 +24,7 @@ interface ConsoleLoggerStore {
   _originals: Partial<Record<ConsoleLogLevel, ConsoleMethod>>
   _nextId: number
   _patched: boolean
+  _callCount: number
 }
 
 declare global {
@@ -54,6 +55,7 @@ export function getConsoleLoggerStore(): ConsoleLoggerStore {
       _originals: {},
       _nextId: 1,
       _patched: false,
+      _callCount: 0,
     }
   }
   return window.__debuggerConsoleLogger
@@ -61,6 +63,7 @@ export function getConsoleLoggerStore(): ConsoleLoggerStore {
 
 function pushEntry(level: ConsoleLogLevel, args: unknown[]): void {
   const store = getConsoleLoggerStore()
+  store._callCount++
   store.entries.push({
     id: store._nextId++,
     ts: Date.now(),
@@ -71,6 +74,20 @@ function pushEntry(level: ConsoleLogLevel, args: unknown[]): void {
     store.entries.splice(0, store.entries.length - store.maxEntries)
   }
   store._subs.forEach((cb) => cb())
+}
+
+function assignConsoleMethod(level: ConsoleLogLevel, fn: ConsoleMethod): void {
+  // Prefer defineProperty so a non-writable descriptor (rare, but possible with
+  // sandboxes or other monkey-patches) doesn't silently swallow the assignment.
+  try {
+    Object.defineProperty(window.console, level, {
+      configurable: true,
+      writable: true,
+      value: fn,
+    })
+  } catch {
+    ;(window.console as unknown as Record<ConsoleLogLevel, ConsoleMethod>)[level] = fn
+  }
 }
 
 export function patchConsole(maxEntries: number): void {
@@ -93,7 +110,7 @@ export function patchConsole(maxEntries: number): void {
       }
       pushEntry(level, args)
     }
-    consoleRef[level] = wrapper
+    assignConsoleMethod(level, wrapper)
   }
   store._patched = true
 }
@@ -101,11 +118,10 @@ export function patchConsole(maxEntries: number): void {
 export function restoreConsole(): void {
   const store = getConsoleLoggerStore()
   if (!store._patched) return
-  const consoleRef = window.console as unknown as Record<ConsoleLogLevel, ConsoleMethod>
   for (const level of LEVELS) {
     const original = store._originals[level]
     if (original) {
-      consoleRef[level] = original
+      assignConsoleMethod(level, original)
     }
   }
   store._originals = {}
