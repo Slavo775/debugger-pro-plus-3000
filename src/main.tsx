@@ -1,7 +1,16 @@
 /* eslint-disable react-refresh/only-export-components -- dev preview entry, not consumed by HMR boundaries */
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { Debugger, useDebuggerConfig, useDebuggerApi, deviceInfoModule, logsModule, networkModule, useDebuggerLog } from './index'
+import {
+  Debugger,
+  useDebuggerConfig,
+  useDebuggerApi,
+  deviceInfoModule,
+  logsModule,
+  networkModule,
+  consoleLoggerModule,
+  useDebuggerLog,
+} from './index'
 import debuggerConfig from '../config.debugger.js'
 
 function ConfigPanel() {
@@ -26,20 +35,37 @@ function DemoLogger() {
     <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', margin: '16px 0' }}>
       <button
         onClick={() => logApi(`fetch /api/users — ${Date.now()}`)}
-        style={{ background: '#1a2a3e', border: '1px solid #1a6eb5', color: '#7ab8f5', borderRadius: 4, padding: '4px 10px', cursor: 'pointer', fontFamily: 'monospace', fontSize: 12 }}
+        style={{
+          background: '#1a2a3e',
+          border: '1px solid #1a6eb5',
+          color: '#7ab8f5',
+          borderRadius: 4,
+          padding: '4px 10px',
+          cursor: 'pointer',
+          fontFamily: 'monospace',
+          fontSize: 12,
+        }}
       >
         Log API
       </button>
       <button
         onClick={() => logAuth('token refreshed')}
-        style={{ background: '#1a2a3e', border: '1px solid #1a6eb5', color: '#7ab8f5', borderRadius: 4, padding: '4px 10px', cursor: 'pointer', fontFamily: 'monospace', fontSize: 12 }}
+        style={{
+          background: '#1a2a3e',
+          border: '1px solid #1a6eb5',
+          color: '#7ab8f5',
+          borderRadius: 4,
+          padding: '4px 10px',
+          cursor: 'pointer',
+          fontFamily: 'monospace',
+          fontSize: 12,
+        }}
       >
         Log Auth
       </button>
     </div>
   )
 }
-
 
 function StatePanel() {
   const { moduleData } = useDebuggerApi()
@@ -59,8 +85,8 @@ createRoot(document.getElementById('root')!).render(
       <h1>Debugger Pro Plus 3000 — Dev Preview</h1>
       <p>
         Click the floating button to open the debugger. Each section in the panel is a module —
-        click the header to expand/collapse. Modules are registered via the{' '}
-        <code>modules</code> prop.
+        click the header to expand/collapse. Modules are registered via the <code>modules</code>{' '}
+        prop.
       </p>
       <p style={{ color: '#666', fontSize: 13 }}>
         Loaded <code>config.debugger.js</code> →{' '}
@@ -73,6 +99,7 @@ createRoot(document.getElementById('root')!).render(
       config={debuggerConfig}
       modules={[
         logsModule,
+        consoleLoggerModule,
         deviceInfoModule,
         networkModule,
         { id: 'state', render: () => <StatePanel /> },
