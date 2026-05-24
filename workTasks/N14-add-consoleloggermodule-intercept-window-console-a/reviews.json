@@ -28,6 +28,15 @@
         "comment": "Blocker 1 fixed: made patchConsole persistent (no restore in cleanup), subscriber effect now mount-once with updateDataRef, added defensive Object.defineProperty fallback, added _callCount diagnostic. tsc + lint + build + prettier all green.",
         "by": "task-review-fix"
       }
+    },
+    {
+      "startedAt": "2026-05-24T12:54:12.048Z",
+      "endedAt": "2026-05-24T12:56:43.810Z",
+      "verdict": "fix-needed",
+      "comment": "Round 2 fix verified working (wrapper installed, JS-initiated console.log captured). Remaining gap: pre-mount messages and browser-emitted entries are not in panel. Human accepted INVARIANT 3 trade-off and chose to fold early-capture into N14: move patchConsole to module-load top-level. Categories (2)/(3) remain architecturally unreachable.",
+      "type": "human",
+      "by": "task-review",
+      "fix": null
     }
   ]
 }

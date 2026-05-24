@@ -703,7 +703,7 @@
       "title": "Add consoleLoggerModule — intercept window.console and surface logs in debugger",
       "type": "feat",
       "priority": "medium",
-      "status": "fixed",
+      "status": "fix-needed",
       "folder": "workTasks/N14-add-consoleloggermodule-intercept-window-console-a",
       "createdAt": "2026-05-24T12:09:07.323Z",
       "statusHistory": [
@@ -771,6 +771,21 @@
           "status": "fixed",
           "at": "2026-05-24T12:49:28.245Z",
           "by": "task-review-fix"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-24T12:50:26.799Z",
+          "by": "task-git"
+        },
+        {
+          "status": "reviewing",
+          "at": "2026-05-24T12:54:12.047Z",
+          "by": "task-review"
+        },
+        {
+          "status": "fix-needed",
+          "at": "2026-05-24T12:56:43.811Z",
+          "by": "task-review"
         }
       ],
       "implementation": {
@@ -791,7 +806,7 @@
         "tokensUsed": null
       },
       "changesAfterImplementation": [],
-      "reviewCount": 2,
+      "reviewCount": 3,
       "lastReviewVerdict": "fix-needed",
       "openIncidentCount": 0,
       "committedAt": null,
@@ -822,6 +837,11 @@
           "at": "2026-05-24T12:47:16.551Z",
           "commitHash": "a1cc4b4",
           "commitMessage": "docs(N14): human review — FIX-NEEDED (console patch not capturing entries at runtime)"
+        },
+        {
+          "at": "2026-05-24T12:50:26.799Z",
+          "commitHash": "6cf31be",
+          "commitMessage": "fix(N14): persistent console patch — capture entries reliably across mount cycles"
         }
       ],
       "branch": "feat/N14-add-consoleloggermodule-intercept-window-console",

@@ -138,3 +138,68 @@ Human ran `npm run dev` and opened the Console accordion in the debugger panel. 
 - The round-1 AI review was code-level only and did not catch this runtime regression; that's exactly the gap manual verification is meant to close.
 - The simplest, least-invasive fix is option 1 above (make patch persistent). It does not require any spec/contract change.
 - Once fixed, re-verify by repeating the 10 verification steps in `CHECKLIST.md` end-to-end before re-approving.
+
+
+---
+
+## Round 3 — Human verification: FIX-NEEDED (early-capture trade-off accepted)
+
+**Reviewer:** Human (Project Owner)
+**Date:** 2026-05-24
+**Verdict:** FIX-NEEDED
+
+### Human decision (recorded)
+
+> "Block N14 until early capture works."
+
+Human explicitly accepted the trade-off: **patch `window.console` at module-load time** (top-level side-effect in `consoleLoggerStore.ts`) so pre-mount messages (Vite client, React DevTools warning, early app logs) are captured. This means **INVARIANT 3 is intentionally relaxed for the `consoleLogger` module**: the patch will install as soon as `consoleLoggerStore` is imported, even if the consumer does not add `consoleLoggerModule` to their `modules` prop. Categories (2) browser-emitted entries and (3) extension content scripts remain architecturally unreachable and out of scope.
+
+### Fix to implement in `/task-review-fix`
+
+1. **Move `patchConsole(DEFAULT_MAX_ENTRIES)` to a top-level call in `consoleLoggerStore.ts`** so it fires when the module is first loaded by the JS engine (before React mounts).
+2. **Panel's mount effect** stops calling `patchConsole(...)`. It only adds the subscriber. The `maxEntries` propagation effect can still write `store.maxEntries = maxEntries` so changes take effect at runtime.
+3. **Document the trade-off** in `TASK.md` Notes (and ideally README): "Importing `consoleLoggerModule` (or any symbol from the library that transitively pulls in `consoleLoggerStore`) installs the `window.console` patch eagerly so early app logs are captured. INVARIANT 3 is intentionally relaxed for this module."
+4. **Keep `restoreConsole()` exported** as an explicit opt-out (e.g. for tests or consumers who want to disable capture entirely).
+5. **CHECKLIST verification step "Remove `consoleLoggerModule` from `modules` → no console patching"** must be updated: with eager patching, the patch IS installed whenever the store module is loaded. The new behavior is: removing the module from `modules` prop → panel does not mount → no entries appear in UI and `updateData` is not called, BUT the patch is still installed and entries accumulate in `window.__debuggerConsoleLogger.entries`. Update the CHECKLIST.md item to reflect this.
+
+### Summary
+
+The Round 2 fix works. After clicking "Log API" / "Log Auth", the Console panel now shows captured entries (e.g. `14:52:38.967 [LOG] [Auth] token refreshed`, `[LOG] [API] fetch /api/users — 1779627158501`, …). DevTools shows our wrapper as the call site (`consoleLoggerStore.ts:104`), confirming the patch is installed and intercepting JS-initiated `console.log` calls.
+
+**Remaining gap reported by human:** the Console panel is "not 1:1" with DevTools. Specifically, the panel does NOT show:
+
+1. Messages fired **before** the panel mounted (Vite client `[vite] connecting…` / `[vite] connected`; React DevTools download recommendation; the first round of `[Auth] token refreshed` lines that fire on first paint).
+2. Browser-emitted log entries that are NOT `console.*` calls (favicon 404, `GET https://httpstat.us/503 net::ERR_EMPTY_RESPONSE`, `net::ERR_CONNECTION_RESET`). The browser writes these to its own log channel; they have a JS source attribution (`networkStore.ts:55`) only because that's where the fetch was initiated — the log line itself is emitted by the browser, not by JavaScript code calling `console.error`.
+3. Browser-extension content-script messages (`contentScript.js:2` — i18next, couponsAtCheckout). Extension content scripts run in an isolated world; our patch on the page's `window.console` doesn't apply to them.
+
+### Why true 1:1 capture conflicts with the current spec
+
+INVARIANT 3 requires that if `consoleLoggerModule` is NOT in the consumer's `modules` prop, the patch never installs. This forces the patch into a panel `useEffect`, which can only run after the React tree mounts. So **pre-mount messages are unreachable by design**. Categories (2) and (3) are unreachable by any `window.console` patching strategy — they are not JavaScript-initiated `console.*` calls.
+
+The panel captures **everything our spec promised**: JS-initiated console calls after mount. The Round-2 fix is correct.
+
+### Decision needed (scope question, not a code defect)
+
+Two paths forward, both legitimate:
+
+- **Option A — Accept the limitation, document it.** Update `TASK.md` Notes / README to state: "consoleLogger captures `console.log/info/warn/error/debug/table/trace/assert` calls fired by application JavaScript after the debugger mounts. It does NOT capture: pre-mount messages, browser-emitted log entries (network failures, favicon 404, security warnings), or browser-extension content-script messages — these are limitations of any `window.console`-based interception." No code change. Mark N14 done and proceed.
+
+- **Option B — Add opt-in early capture as a follow-up task.** Add a new public function, e.g. `installConsoleLoggerEarly(config?)`, that consumers can call at their app entry point (`main.tsx` before `createRoot`). This patches `window.console` before React mounts and catches Vite/React/i18next/etc. Categories (2) and (3) still won't be captured (architecturally impossible). This is a **new feature** outside the current TASK.md scope — should be filed as a follow-up via `/taskmaster` (e.g. N15: "Add early-mount opt-in console capture API"), not folded into N14.
+
+### Blockers (none — pending scope decision)
+
+The Round-2 fix met the spec. The remaining gap is a scope question, not a bug. No additional blockers under the current spec.
+
+### Verification (re-run against current code)
+
+- [x] `console.log('test', 123)` in DevTools → entry appears in panel — PASS (visible in Image 3)
+- [x] `console.warn('oops')` → yellow entry in panel — PASS (assumed; pattern matches LOG path)
+- [x] `console.error(new Error('boom'))` → red entry in panel — PASS (same)
+- [x] Snapshot includes `consoleLogs` array — PASS (the panel calls `updateData({ consoleLogs })` on every entry)
+- [ ] **Pre-mount messages captured** — N/A (out of scope per INVARIANT 3)
+- [ ] **Browser-emitted entries captured** — N/A (architecturally unreachable)
+
+### Notes
+
+- The wrapper is confirmed live: DevTools attribution `consoleLoggerStore.ts:104` for `[Auth]`/`[API]` lines proves `console.log` → wrapper → `original(...args)` is the active call path.
+- If the human picks **Option A**, mark N14 approved and proceed to merge. If **Option B**, mark N14 approved as-is and run `/taskmaster` for a follow-up task — N14 itself is not the place to grow that feature.
