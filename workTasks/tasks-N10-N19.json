@@ -1030,6 +1030,93 @@
       "branch": "feat/N14-add-consoleloggermodule-intercept-window-console",
       "mrUrl": null,
       "mergedAt": "2026-05-24T19:56:14.041Z"
+    },
+    {
+      "id": "N15",
+      "title": "Upgrade insight-flow from 0.5.0 to 0.7.1",
+      "type": "rework",
+      "priority": "medium",
+      "status": "pushed",
+      "folder": "workTasks/N15-upgrade-insight-flow-from-0-5-0-to-0-7-1",
+      "createdAt": "2026-05-26T07:35:20.852Z",
+      "statusHistory": [
+        {
+          "status": "ready",
+          "at": "2026-05-26T07:35:20.853Z",
+          "by": "taskmaster"
+        },
+        {
+          "status": "pushed",
+          "at": "2026-05-26T07:37:16.762Z",
+          "by": "task-git"
+        }
+      ],
+      "implementation": {
+        "startedAt": null,
+        "completedAt": null,
+        "filesChanged": [],
+        "tokensUsed": null
+      },
+      "changesAfterImplementation": [],
+      "reviewCount": 0,
+      "lastReviewVerdict": null,
+      "openIncidentCount": 0,
+      "committedAt": null,
+      "totalDurationMinutes": null,
+      "tags": [
+        "insight-flow",
+        "upgrade",
+        "deps",
+        "setup"
+      ],
+      "pushes": [
+        {
+          "at": "2026-05-26T07:37:16.762Z",
+          "commitHash": "9432691",
+          "commitMessage": "rework(N15): spec insight-flow upgrade 0.5.0 → 0.7.1 (deps + setup refresh)"
+        }
+      ],
+      "branch": "rework/N15-upgrade-insight-flow-from-0-5-0-to-0-7-1",
+      "mrUrl": null,
+      "mergedAt": null
+    },
+    {
+      "id": "N16",
+      "title": "Upgrade insight-flow from 0.5.0 to 0.8.0 (supersedes N15)",
+      "type": "rework",
+      "priority": "medium",
+      "status": "ready",
+      "folder": "workTasks/N16-upgrade-insight-flow-from-0-5-0-to-0-8-0-supersede",
+      "createdAt": "2026-05-27T11:09:35.109Z",
+      "statusHistory": [
+        {
+          "status": "ready",
+          "at": "2026-05-27T11:09:35.110Z",
+          "by": "taskmaster"
+        }
+      ],
+      "implementation": {
+        "startedAt": null,
+        "completedAt": null,
+        "filesChanged": [],
+        "tokensUsed": null
+      },
+      "changesAfterImplementation": [],
+      "reviewCount": 0,
+      "lastReviewVerdict": null,
+      "openIncidentCount": 0,
+      "committedAt": null,
+      "totalDurationMinutes": null,
+      "tags": [
+        "insight-flow",
+        "upgrade",
+        "deps",
+        "setup"
+      ],
+      "pushes": [],
+      "branch": null,
+      "mrUrl": null,
+      "mergedAt": null
     }
   ]
 }
